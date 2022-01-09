@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import "../styles/prism-night-owl.css";
+import "../styles/prism-darcula.css";
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
