@@ -43,4 +43,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - Vercel
 
 ## References
-- carlosazaustre.es
+- https://github.com/carlosazaustre
