@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { getAllFilesMetadata } from "../lib/mdx";
+import Link from "next/Link";
 
 export default function Home({ posts }) {
   return (
@@ -16,10 +17,18 @@ export default function Home({ posts }) {
         <h1 className={styles.title}>Titulo de ejemplo</h1>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          {posts.map((post) => (
+            <Link
+              key={post.slug}
+              href={`/${post.slug}`}
+              className={styles.card}
+            >
+              <a>
+                <h2>{post.title} &rarr;</h2>
+                <p>{post.date}</p>
+              </a>
+            </Link>
+          ))}
         </div>
       </main>
 
