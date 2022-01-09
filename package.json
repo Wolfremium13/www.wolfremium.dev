@@ -2,7 +2,7 @@
   "name": "blog-react",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 8080",
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
