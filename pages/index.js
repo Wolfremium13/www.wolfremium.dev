@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { getAllFilesMetadata } from "../lib/mdx";
 import Link from "next/Link";
+import { orderByDate } from "../lib/order-by-date";
 
 export default function Home({ posts }) {
   return (
@@ -49,7 +50,8 @@ export default function Home({ posts }) {
 }
 
 export async function getStaticProps() {
-  const posts = await getAllFilesMetadata();
+  const allPosts = await getAllFilesMetadata();
+  const posts = allPosts.sort(orderByDate).slice(0, 5);
   console.log(posts);
   return {
     props: {
