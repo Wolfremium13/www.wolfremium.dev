@@ -4,7 +4,7 @@ export const Podcast = ({ episode }) => {
       src={`https://open.spotify.com/embed/episode/${episode}`}
       width="100%"
       height="232"
-      frameborder="0"
+      frameBorder="0"
       allow="encrypted-media"
     ></iframe>
   );
