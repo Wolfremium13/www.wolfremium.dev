@@ -1,9 +1,9 @@
 import { Fragment } from "react";
 
-import { Heading, Container, Flex, Box, Text, Stack } from "./elements";
+import { Heading, Container, Flex, Box, Text, Stack } from "../elements";
 import { PageHeader } from "./PageHeader";
 import { Footer } from "./Footer";
-import { PostMetadata } from "./PostMetadata";
+import { PostMetadata } from "../blog/PostMetadata";
 import { OpenGraph } from "./OpenGraph";
 
 export const Layout = ({ children, metadata = {}, type = "post" }) => {

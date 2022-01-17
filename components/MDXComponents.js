@@ -1,4 +1,4 @@
-import { Podcast } from "./Podcast";
+import { Podcast } from "./blog/Podcast";
 
 export const MDXComponents = {
   Podcast,

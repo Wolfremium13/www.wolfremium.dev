@@ -4,7 +4,7 @@ import {
   IconYoutube,
   IconTwitter,
   IconGithub,
-} from "./icons";
+} from "../icons";
 import {
   Container,
   Flex,
@@ -14,7 +14,7 @@ import {
   UnorderedList,
   ListItem,
   Heading,
-} from "./elements";
+} from "../elements";
 
 const StyledFooter = styled.footer`
   background-color: var(--chakra-colors-secondary-900);
@@ -89,18 +89,8 @@ export const Footer = () => {
             </Heading>
             <UnorderedList styleType="none">
               <ListItem>
-                <NextLink href="/rss.xml">
-                  <Link>RSS</Link>
-                </NextLink>
-              </ListItem>
-              <ListItem>
                 <NextLink href="/">
                   <Link>Home</Link>
-                </NextLink>
-              </ListItem>
-              <ListItem>
-                <NextLink href="/p/mentoria">
-                  <Link>Mentoría</Link>
                 </NextLink>
               </ListItem>
               <ListItem>

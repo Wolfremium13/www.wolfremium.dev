@@ -1,8 +1,8 @@
 import NextLink from "next/link";
 import styled from "@emotion/styled";
 
-import sections from "../data/sections";
-import { Flex } from "./elements";
+import sections from "../../data/sections";
+import { Flex } from "../elements";
 
 const SectionLinkItem = styled.a`
   font-family: var(--chakra-fonts-heading);

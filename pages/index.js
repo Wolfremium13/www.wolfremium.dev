@@ -7,7 +7,7 @@ import { BlogCardHome } from "../components/cards/BlogCardHome";
 export default function Home({ posts }) {
   return (
     <Fragment>
-      <Box bg="grayblue.900" position="relative" zIndex="1">
+      <Box bg="gray.600" position="relative" zIndex="1">
         <Container maxW="container.2xl" px={[0, 4]}>
           <Flex direction={["column"]} justify="space-between">
             <BlogCardHome posts={posts} />

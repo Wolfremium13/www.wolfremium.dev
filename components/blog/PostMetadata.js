@@ -1,6 +1,6 @@
-import { formatDate } from "../lib/format-date";
-import { Flex, Text, Tag, Link } from "./elements";
-import { IconCalendar, IconComment, IconClock } from "./icons";
+import { formatDate } from "../../lib/format-date";
+import { Flex, Text, Tag, Link } from "../elements";
+import { IconCalendar, IconComment, IconClock } from "../icons";
 
 export const PostMetadata = ({ metadata }) => {
   return (

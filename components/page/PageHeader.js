@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 
-import { Flex, Text } from "./elements";
+import { Flex, Text } from "../elements";
 import { SectionLinks } from "./SectionLinks";
 
 export const PageHeader = () => {

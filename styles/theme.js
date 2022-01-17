@@ -19,8 +19,8 @@ const theme = extendTheme({
     },
   },
   fonts: {
-    heading: "Poppins",
-    body: "Roboto",
+    heading: "montserrat",
+    body: "montserrat",
   },
   sizes: {
     container: {
