@@ -5,7 +5,7 @@ export const Card = ({
   children,
   type = "aside",
   bgColor = "white",
-  headerColor = "secondary.900",
+  headerColor = "gray.900",
   headerTitle,
 }) => {
   const CardContent = () => (

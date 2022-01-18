@@ -9,7 +9,7 @@ export const PostMetadata = ({ metadata }) => {
         direction={["column", "column", "row"]}
         align={["left", "left", "center"]}
         justify="flex-start"
-        color="grayblue.100"
+        color="gray.100"
         fontSize={["xs", "sm"]}
       >
         <Flex align="center">

@@ -5,7 +5,7 @@ import { formatDate } from "../lib/format-date";
 import { orderByDate } from "../lib/order-by-date";
 import { getAllFilesMetadata } from "../lib/mdx";
 import { usePagination } from "../lib/use-pagination";
-import { Layout, PostListItem } from "../components";
+import { PostListItem } from "../components/blog/PostListItem";
 
 export default function Blog({ posts }) {
   const { next, currentPage, currentData, maxPage } = usePagination(posts, 10);
@@ -45,12 +45,8 @@ export default function Blog({ posts }) {
     };
   }, [element]);
 
-  const metadata = {
-    title: "Últimos Artículos",
-  };
-
   return (
-    <Layout type="post" metadata={metadata}>
+    <>
       {currentPosts &&
         currentPosts.map((post) => (
           <NextLink href={post.slug} key={post.slug}>
@@ -68,7 +64,7 @@ export default function Blog({ posts }) {
           Cargando...
         </Text>
       )}
-    </Layout>
+    </>
   );
 }
 

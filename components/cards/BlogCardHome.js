@@ -5,13 +5,13 @@ import { Text, Link, Box } from "../elements";
 
 export const BlogCardHome = ({ posts }) => {
   return (
-    <Card type="home" headerTitle="Blog">
+    <Card type="home" headerTitle="Blog" color="gray">
       {posts.map((post) => (
         <NextLink href={post.slug} key={post.slug}>
           <a>
             <Box my={2}>
-              <Text isTruncated>{post.title}</Text>
-              <Text fontSize="xs" color="grayblue.900">
+              <Text color="gray.900" isTruncated>{post.title}</Text>
+              <Text fontSize="xs" color="gray">
                 {post.date}
               </Text>
             </Box>
@@ -19,7 +19,7 @@ export const BlogCardHome = ({ posts }) => {
         </NextLink>
       ))}
       <NextLink href="/blog">
-        <Link color="brand.900">Ir al Blog →</Link>
+        <Link color="gray.900">Ir al Blog →</Link>
       </NextLink>
     </Card>
   );
