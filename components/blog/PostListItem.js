@@ -4,7 +4,7 @@ import { IconCalendar } from "../icons";
 export const PostListItem = ({ title, date, tags }) => {
   console.log(tags)
   return (
-    <Box borderBottom="1px" borderColor="purple.200" p="6">
+    <Box borderBottom="1px" p="6">
       <Heading as="h3" size="md" my={2}>
         {title}
       </Heading>

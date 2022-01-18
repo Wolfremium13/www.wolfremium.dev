@@ -34,3 +34,12 @@ const Search = () => {
 };
 
 export default Search;
+
+export async function getStaticProps() {
+  const unorderedPosts = await getAllFilesMetadata();
+  const posts = unorderedPosts.sort(orderByDate);
+  console.log(posts);
+  return {
+    props: { posts },
+  };
+}

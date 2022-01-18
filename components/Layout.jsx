@@ -6,7 +6,7 @@ import Footer from "./Footer";
 const Layout = ({ children }) => (
   <>
     <PageTags />
-    <Box maxWith="1280px" m="auto">
+    <Box>
       <header>
         <Navbar></Navbar>
       </header>
