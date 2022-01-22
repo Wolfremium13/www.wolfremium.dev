@@ -1,6 +1,7 @@
 const sections = [
-    { name: "Blog", url: "/blog" },
-    { name: "About", url: "/about" },
-  ];
-  
-  export default sections;
+  { name: "Home", path: "/" },
+  { name: "Blog", path: "/blog" },
+  { name: "About", path: "/about" },
+];
+
+export default sections;

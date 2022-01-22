@@ -1,17 +1,6 @@
 import Link from "next/link";
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  IconButton,
-  Flex,
-  Box,
-  Spacer,
-} from "@chakra-ui/react";
-import { FcMenu, FcHome, FcAbout } from "react-icons/fc";
-import { BsSearch } from "react-icons/bs";
-import { MdComment } from "react-icons/md";
+import { Flex, Box, Spacer, Text } from "@chakra-ui/react";
+import sections from "../data/sections";
 
 const Navbar = () => (
   <Flex p="2" borderBottom="1px" borderColor="gray.100">
@@ -22,28 +11,11 @@ const Navbar = () => (
     </Box>
     <Spacer />
     <Box>
-      <Menu>
-        <MenuButton
-          as={IconButton}
-          icon={<FcMenu />}
-          variant="outlined"
-          color="red.400"
-        />
-        <MenuList>
-          <Link href="/" passHref>
-            <MenuItem icon={<FcHome />}>Home</MenuItem>
-          </Link>
-          <Link href="/search?type=post" passHref>
-            <MenuItem icon={<BsSearch />}>Search</MenuItem>
-          </Link>
-          <Link href="/blog" passHref>
-            <MenuItem icon={<MdComment />}>Blog</MenuItem>
-          </Link>
-          <Link href="/about" passHref>
-            <MenuItem icon={<FcAbout />}>About</MenuItem>
-          </Link>
-        </MenuList>
-      </Menu>
+      {sections.map(({ name, path }) => {
+        return (
+          <a href={path}>{name}</a>
+        );
+      })}
     </Box>
   </Flex>
 );

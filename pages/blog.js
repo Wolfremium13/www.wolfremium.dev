@@ -6,6 +6,7 @@ import { orderByDate } from "../lib/order-by-date";
 import { getAllFilesMetadata } from "../lib/mdx";
 import { usePagination } from "../lib/use-pagination";
 import { PostListItem } from "../components/blog/PostListItem";
+import Search from "../components/Search";
 
 export default function Blog({ posts }) {
   const { next, currentPage, currentData, maxPage } = usePagination(posts, 10);
@@ -47,6 +48,7 @@ export default function Blog({ posts }) {
 
   return (
     <>
+      {/*     <Search /> */}
       {currentPosts &&
         currentPosts.map((post) => (
           <NextLink href={post.slug} key={post.slug}>
@@ -69,7 +71,7 @@ export default function Blog({ posts }) {
 }
 
 export async function getStaticProps() {
-  const unorderedPosts = await getAllFilesMetadata();
+  const unorderedPosts = getAllFilesMetadata();
   const posts = unorderedPosts.sort(orderByDate);
   console.log(posts);
   return {
