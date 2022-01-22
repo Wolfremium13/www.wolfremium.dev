@@ -7,7 +7,7 @@ import { BlogCardHome } from "../components/cards/BlogCardHome";
 export default function Home({ posts }) {
   return (
     <Fragment>
-      <Box bg="gray.600" position="relative" zIndex="1">
+      <Box bg="gray.600" position="relative">
         <Container maxW="container.2xl" px={[0, 4]}>
           <Flex direction={["column"]} justify="space-between">
             <BlogCardHome posts={posts} />
@@ -20,7 +20,8 @@ export default function Home({ posts }) {
 
 export async function getStaticProps() {
   const allPosts = await getAllFilesMetadata();
-  const posts = allPosts.sort(orderByDate).slice(0, 2);
+  const maxPosts = 3
+  const posts = allPosts.sort(orderByDate).slice(0, maxPosts);
   console.log(posts);
   return {
     props: {
