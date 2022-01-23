@@ -41,7 +41,7 @@ const Navbar = () => {
               display={{ base: "none", md: "flex" }}
             >
               {pageLinks.map(({ name, path }) => (
-                <NavItem name={name} path={path}>
+                <NavItem key={name} name={name} path={path}>
                   {name}
                 </NavItem>
               ))}
@@ -61,7 +61,7 @@ const Navbar = () => {
               <MenuList>
                 {pageLinks.map(({ name, path }) => {
                   return (
-                    <MenuItem as={Link} href={path}>
+                    <MenuItem key={name} as={Link} href={path}>
                       {name}
                     </MenuItem>
                   );
@@ -75,7 +75,7 @@ const Navbar = () => {
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
               {pageLinks.map(({ name, path }) => (
-                <NavItem name={name} path={path}>
+                <NavItem key={name} name={name} path={path}>
                   {name}
                 </NavItem>
               ))}

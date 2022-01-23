@@ -7,17 +7,43 @@ tags:
 
 # This is a test
 
+Hace unos pocos meses he dejado bastante desatendido el blog, debido en parte a qué estaba usando toda mi fuerza para adaptarme al cambio de rol. Os contaré mi experiencia en estos últimos 2 meses y medio, intentaré ser breve.
 
-> Welp
+Nunca me imaginaría trabajando con datos cuándo me gradué del grado superior, me ha llamado mucho la atención la profesión, sobre todo en el aspecto de aportar valor con información crítica para el negocio.
+
+Si me **preguntasen** ¿cómo de duro fue el cambio? te diría qué me costó bastante no controlaba absolutamente nada del stack tecnológico a expeción de gitlab. También te digo qué tengo muy buenos mentores, y qué por suerte sabía de algunos lenguajes de programación y me fue fácil adaptarme a Python de manera rápida. Por otro lado, la librería pandas me costó un poquito más adaptarme debido a qué es enorme y con muchas posibilidades. Y por último hacer test en Python al principio me confundía por el naming qué siempre empezaban por “test\_” me gustaba el hecho de jugar con el nombre de la clase y el test como en Java.
+
+Creo qué ser junior a veces es una ventaja porqué te permite adaptarte a todo, cómo en este caso, pero empiezo a sentir qué estaría bien especializarse un poco más en este ámbito, le veo tanto futuro a este rol qué se convertirá en uno de los pilares fundamentales del día de mañana.
+
+> Realmente la metodología en sí se basa en metodologías de otro tipo de ingenierías o del ámbito científico haciendo una aproximación de cómo debería ser en el software.
 
 - 1
 - 2
 
-# Test for podcast:
+## Test for podcast:
 
 <Podcast episode="25Cy2HgrD0KFxRdnUNzs7x" />
 
-# Test for code
+### Test for code
+
 ```shell
 $ npm init vite@latest <nombre-de-mi-proyecto>
+```
+
+```javascript
+export const getAllFilesMetadata = () => {
+  const files = getFiles();
+
+  return files.reduce((allPosts, postSlug) => {
+    console.log(postSlug);
+    const mdxSource = fs.readFileSync(
+      path.join(root, "data", "posts", postSlug),
+      "utf8"
+    );
+
+    const { data } = matter(mdxSource);
+
+    return [{ ...data, slug: postSlug.replace(".mdx", "") }, ...allPosts];
+  }, []);
+};
 ```

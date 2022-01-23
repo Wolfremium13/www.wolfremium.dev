@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export const PageTags = ({ metadata = {} }) => {
+const HeadTags = ({ metadata = {} }) => {
   const SEO = {
     title: metadata.title || "Kevin Hierro - Wolfremium",
     description: metadata.description || "Blog personal",
@@ -24,6 +24,12 @@ export const PageTags = ({ metadata = {} }) => {
       <meta property="og:title" content={SEO.title} />
       <meta property="og:image" content={SEO.image} />
       <meta property="article:published_time" content={SEO.date} />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+      ></meta>
     </Head>
   );
 };
+
+export default HeadTags;
