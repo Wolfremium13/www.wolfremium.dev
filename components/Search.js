@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
 import NextLink from "next/link";
-import { PostListItem } from "./blog/PostListItem";
+import { PostListItem } from "./blog/PostCompact";
 import { formatDate } from "../lib/format-date";
 
 export default function Search() {

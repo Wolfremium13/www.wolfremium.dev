@@ -1,15 +1,8 @@
 import {
   Box,
   Flex,
-  Avatar,
   HStack,
-  Link,
   IconButton,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   useDisclosure,
   useColorModeValue,
   Stack,
@@ -20,8 +13,6 @@ import pageLinks from "../../data/page-links";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const profileIcon =
-    "https://media-exp1.licdn.com/dms/image/C5603AQHqs-MJVtbQmw/profile-displayphoto-shrink_200_200/0/1641548979394?e=1648080000&v=beta&t=ohEMcFRBWliKVdutRSW3oMeiLWdZrvZ7SCWGe_TpZAg";
 
   return (
     <>
@@ -47,28 +38,6 @@ const Navbar = () => {
               ))}
             </HStack>
           </HStack>
-          <Flex alignItems={"center"}>
-            <Menu>
-              <MenuButton
-                as={Button}
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-                minW={0}
-              >
-                <Avatar size={"md"} src={profileIcon} />
-              </MenuButton>
-              <MenuList>
-                {pageLinks.map(({ name, path }) => {
-                  return (
-                    <MenuItem key={name} as={Link} href={path}>
-                      {name}
-                    </MenuItem>
-                  );
-                })}
-              </MenuList>
-            </Menu>
-          </Flex>
         </Flex>
 
         {isOpen ? (

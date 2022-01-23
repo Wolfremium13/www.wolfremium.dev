@@ -1,6 +1,6 @@
 import { getFilesBySlug, getFiles } from "../lib/mdx";
 import { MDXRemote } from "next-mdx-remote";
-import { MDXComponents } from "../components/MDXComponents";
+import { MDXComponents } from "../components/mdx/MDXComponents";
 
 export default function Post({ source, frontmatter }) {
   return (

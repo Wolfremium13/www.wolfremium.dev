@@ -11,11 +11,11 @@ import PostTags from "../blog/PostTags";
 const Welcome = () => {
   return (
     <>
-      <Heading as="h1">Bienvenido 💗!!</Heading>
+      <Heading as="h1">👋 Bienvenido!!</Heading>
       <Box
         marginTop={{ base: "1", sm: "5" }}
         display="flex"
-        flexDirection={{ base: "column", sm: "row" }}
+        flexDirection={{ base: "column", md: "row" }}
         justifyContent="space-between"
       >
         <Box
@@ -31,20 +31,18 @@ const Welcome = () => {
             marginLeft={{ base: "0", sm: "5%" }}
             marginTop="5%"
           >
-            <Link textDecoration="none" _hover={{ textDecoration: "none" }}>
-              <Image
-                borderRadius="lg"
-                src={"/assets/profile-image.jpg"}
-                alt="Home image"
-                objectFit="contain"
-              />
-            </Link>
+            <Image
+              borderRadius="lg"
+              src={"/assets/profile-image.jpg"}
+              alt="Home image"
+              objectFit="contain"
+            />
           </Box>
           <Box zIndex="1" width="100%" position="absolute" height="100%">
             <Box
               bgGradient={useColorModeValue(
-                "radial(orange.600 1px, transparent 1px)",
-                "radial(orange.300 1px, transparent 1px)"
+                "radial(teal.600 1px, transparent 1px)",
+                "radial(teal.300 1px, transparent 1px)"
               )}
               backgroundSize="20px 20px"
               opacity="0.4"
@@ -57,7 +55,7 @@ const Welcome = () => {
           flex="1"
           flexDirection="column"
           justifyContent="center"
-          marginTop={{ base: "3", sm: "0" }}
+          marginTop={{ base: "5", sm: "2" }}
         >
           <PostTags tags={["👩‍💻 Junior Full Stack", "❤ Software Crafter"]} />
           <Heading marginTop="1">

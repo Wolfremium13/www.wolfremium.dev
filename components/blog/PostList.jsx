@@ -1,26 +1,11 @@
 import React from "react";
-import {
-  Box,
-  Heading,
-  Link,
-  Image,
-  Text,
-  Divider,
-  Wrap,
-  WrapItem,
-  useColorModeValue,
-  Container,
-  VStack,
-} from "@chakra-ui/react";
-import PostTags from "./PostTags";
-import PostDate from "./PostDate";
+import { Heading, Divider, Wrap, WrapItem } from "@chakra-ui/react";
 import Post from "./Post";
 
 const PostList = ({ posts }) => {
   // console.log(posts);
   return (
     <>
-      
       <Heading as="h2" marginTop="5">
         Últimos articulos
       </Heading>

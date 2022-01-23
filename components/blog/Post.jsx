@@ -1,12 +1,13 @@
-import {
-  Box,
-  Heading,
-  Link,
-  Image,
-} from "@chakra-ui/react";
+import { Box, Heading, Link, Image } from "@chakra-ui/react";
 import PostTags from "./PostTags";
 import PostDate from "./PostDate";
+import PostReadingTime from "./PostReadingTime";
 import { formatDate } from "../../lib/format-date";
+
+const defaultImage =
+  "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80";
+
+const hasPreviewImage = (post) => post.preview ?? defaultImage;
 
 const Post = ({ post }) => {
   return (
@@ -19,10 +20,8 @@ const Post = ({ post }) => {
         >
           <Image
             transform="scale(1.0)"
-            src={
-              "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80"
-            }
-            alt="some text"
+            src={hasPreviewImage(post)}
+            alt={post.preview}
             objectFit="contain"
             width="100%"
             transition="0.3s ease-in-out"
@@ -40,6 +39,7 @@ const Post = ({ post }) => {
         </Link>
       </Heading>
       <PostDate date={formatDate(post.date)} />
+      <PostReadingTime readingTime={post.readingTime}></PostReadingTime>
     </Box>
   );
 };

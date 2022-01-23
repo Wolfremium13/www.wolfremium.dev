@@ -28,7 +28,7 @@ export async function getStaticProps() {
   const allPosts = getAllFilesMetadata();
   const maxPosts = 3;
   const posts = allPosts.sort(orderByDate).slice(0, maxPosts);
-  // console.log(posts);
+  console.log(posts);
   return {
     props: {
       posts,
