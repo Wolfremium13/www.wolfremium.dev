@@ -1,12 +1,9 @@
 import "../styles/prism-darcula.css";
-import Head from "next/head";
-import Router from "next/router";
-import { NProgress } from "nprogress";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "../styles/theme.js";
 import { PageTags } from "../components/PageTags";
 
-import Layout from "../components/Layout";
+import Layout from "../components/page/Layout";
 
 function MyApp({ Component, pageProps }) {
   return (

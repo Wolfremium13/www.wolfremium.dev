@@ -20,12 +20,9 @@ import {
 import React from "react";
 import { BsGithub, BsLinkedin, BsPerson, BsTwitter } from "react-icons/bs";
 import { MdEmail, MdOutlineEmail } from "react-icons/md";
+import  {linkedInUrl, githubUrl, gmailUrl, twitterUrl} from "../data/social-links"
 
 export default function About() {
-  const linkedInUrl = "https://www.linkedin.com/in/kevin-h-3950071bb/";
-  const githubUrl = "https://github.com/Wolfremium13";
-  const gmailUrl = "wolfremiuminformatica@gmail.com";
-  const twitterUrl = "https://twitter.com/KevinHierro";
   const { hasCopied, onCopy } = useClipboard(gmailUrl);
 
   return (

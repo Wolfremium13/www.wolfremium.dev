@@ -10,18 +10,18 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuDivider,
   useDisclosure,
   useColorModeValue,
   Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import NavItem from "./NavItem";
-import sections from "../data/sections";
+import pageLinks from "../../data/page-links";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const profileIcon = "https://media-exp1.licdn.com/dms/image/C5603AQHqs-MJVtbQmw/profile-displayphoto-shrink_200_200/0/1641548979394?e=1648080000&v=beta&t=ohEMcFRBWliKVdutRSW3oMeiLWdZrvZ7SCWGe_TpZAg";
+  const profileIcon =
+    "https://media-exp1.licdn.com/dms/image/C5603AQHqs-MJVtbQmw/profile-displayphoto-shrink_200_200/0/1641548979394?e=1648080000&v=beta&t=ohEMcFRBWliKVdutRSW3oMeiLWdZrvZ7SCWGe_TpZAg";
 
   return (
     <>
@@ -40,7 +40,7 @@ const Navbar = () => {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {sections.map(({ name, path }) => (
+              {pageLinks.map(({ name, path }) => (
                 <NavItem name={name} path={path}>
                   {name}
                 </NavItem>
@@ -59,7 +59,7 @@ const Navbar = () => {
                 <Avatar size={"md"} src={profileIcon} />
               </MenuButton>
               <MenuList>
-                {sections.map(({ name, path }) => {
+                {pageLinks.map(({ name, path }) => {
                   return (
                     <MenuItem as={Link} href={path}>
                       {name}
@@ -74,7 +74,7 @@ const Navbar = () => {
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
-              {sections.map(({ name, path }) => (
+              {pageLinks.map(({ name, path }) => (
                 <NavItem name={name} path={path}>
                   {name}
                 </NavItem>
