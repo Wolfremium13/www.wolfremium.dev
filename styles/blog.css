@@ -1,0 +1,11 @@
+.post-body {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.markdown-body {
+    max-width: 52rem;
+    padding: 1rem;
+    border-radius: 1rem;
+}

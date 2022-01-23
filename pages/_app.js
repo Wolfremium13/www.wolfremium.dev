@@ -1,14 +1,15 @@
-import "../styles/prism-darcula.css";
+import "github-markdown-css";
+import "../styles/blog.css";
+import "../styles/prism-material-oceanic.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "../styles/theme.js";
-import { PageTags } from "../components/PageTags";
-
 import Layout from "../components/page/Layout";
+import HeadTags from "../components/page/HeadTags";
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <PageTags />
+      <HeadTags />
       <ChakraProvider theme={theme}>
         <Layout>
           <Component {...pageProps} />
