@@ -1,13 +1,11 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project bootstrapped.
 
-## Getting Started
+## Development
 
-First, run the development server:
+Development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -37,10 +35,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 - Next.js
 - React.js
-- @emotion/styled
+- Chakra Templates
 - ChakraUI
 - MarkdownX
 - Vercel
 
 ## References
+- https://github.com/midudev
 - https://github.com/carlosazaustre
+- https://chakra-templates.dev/
+- 
