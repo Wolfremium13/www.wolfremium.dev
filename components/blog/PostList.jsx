@@ -14,7 +14,7 @@ const PostList = ({ posts }) => {
         {posts.map((post) => (
           <WrapItem
             key={post.slug}
-            width={{ base: "100%", sm: "45%", md: "45%", lg: "30%" }}
+            width={{ base: "100%", sm: "100%", md: "29%", lg: "30%" }}
           >
             <Post key={post.slug} post={post}></Post>
           </WrapItem>

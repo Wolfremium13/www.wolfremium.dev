@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react";
-import NextLink from "next/link";
-import { formatDate } from "../lib/format-date";
+import PostList from "./blog/PostList";
+import { Input } from "@chakra-ui/react";
 
 export default function Search() {
   const searchRef = useRef(null);
@@ -38,14 +38,14 @@ export default function Search() {
 
   return (
     <div ref={searchRef}>
-      <input
+      <Input
         onChange={onChange}
         onFocus={onFocus}
         placeholder="Search posts"
         type="text"
         value={query}
       />
-      {active && results.length > 0 && results.map((post) => <></>)}
+      {active && results.length > 0 && <PostList posts={results}></PostList>}
     </div>
   );
 }

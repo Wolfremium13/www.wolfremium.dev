@@ -1,4 +1,4 @@
-import { Podcast } from "./Podcast";
+import Podcast from "./Podcast";
 import { Image, Box } from "@chakra-ui/react";
 import MdxImage from "./MdxImage";
 
