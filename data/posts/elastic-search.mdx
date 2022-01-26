@@ -1,0 +1,85 @@
+---
+title: "Introducción básica a ElasticSearch"
+date: "2021-07-11"
+preview: "/assets/tech/elasticsearch-logo.svg"
+tags:
+  - "👨‍💻 Aprendizaje"
+---
+
+# Introducción básica a ElasticSearch
+
+El ultimo mes estuve trabajando con elasticsearch, se me ha ocurrido hacer una introducción básica porque he visto a muchos de mis compañeros qué les puede interesar.
+
+## ¿Qué es y por qué surge?
+
+El surgimiento de Elasticsearch se debió a problemas de escalabilidad, este es un motor de búsqueda diseñado para escalar horizontalmente, de forma que se puedan ir añadiendo más nodos al clúster a medida que aumente el volumen de datos requerido.
+
+## Características
+
+Aparte de la característica fundamental de la escalabilidad horizontal, otras características de Elasticsearch son:
+
+- Tiempos próximos al tiempo real: latencias menores que 1 segundo.
+- Tolerancia a fallos: hay alta disponibilidad de los datos al replicar los datos en distintos nodos.
+- Búsquedas de texto completo: capaz de analizar todo el contenido de documentos y no solo campos concretos.
+- Orientado a documentos JSON
+- No requiere esquemas, se auto-detectan los tipos de los campos de los documentos
+- Desarrollo amigable al disponer de APIs sencillas
+
+## Búsquedas
+
+Queries: pensadas para búsquedas sobre frases. Mide cuánto se parece frase buscada a la almacenada.
+
+Filtros: para búsquedas binarias (sí/no). Más rápidas y se cachean en memoria. Utilizamos campos no sean texto.
+
+API unificada: filter se usa dentro de query. Podemos tener query sólo con filter o parte con score y parte con filter
+
+Frases se dividen en tokens, en minúscula: - “Pedro Santos González” [“pedro”,”santos”,”gonzález”]
+
+Al hacer consulta “Pedro García”, token “pedro” coincide: asigna una puntuación aunque no coincida exactamente.
+
+## Sintaxis de la query
+
+```http
+GET indice/tipo/_search
+```
+
+```json
+{
+    {
+        "query": {
+            <tipoClausula>:{<campoConsultado>:<valor>}
+        }
+    }
+}
+```
+
+## Sintaxis de filters como único elemento de la query
+
+```http
+GET indice/tipo/_search
+```
+
+```json
+{
+    {
+        "query": {
+            "bool":{
+                "filter"{
+                    <tipoClausula>:{<campoConsultado>:<valor>}
+                }
+            }
+        }
+    }
+}
+```
+
+## Cláusulas comunes en queries
+
+- Campo igual a valor: term
+- Texto contiene palabra (token): match
+- Texto contiene palabras en orden dado: match_phrase
+- Campo en un rango: (gt, gte, lt, lte)
+- Búsquedas compuestas: bool
+- Operador OR `<>` should (condicion1 || condicion2)
+- Operador AND `<>` must (condicion1 && condicion2)
+- También agregaciones (aggs, como media, avg)

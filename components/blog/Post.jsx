@@ -11,7 +11,12 @@ const hasPreviewImage = (post) => post.preview ?? defaultImage;
 const Post = ({ post }) => {
   return (
     <Box w="100%">
-      <Box borderRadius="lg" overflow="hidden">
+      <Box
+        borderRadius="3xl"
+        overflow="hidden"
+        border="2px"
+        borderColor="gray.400"
+      >
         <Link
           textDecoration="none"
           _hover={{ textDecoration: "none" }}
@@ -21,19 +26,24 @@ const Post = ({ post }) => {
             transform="scale(1.0)"
             src={hasPreviewImage(post)}
             alt={post.preview}
-            objectFit="contain"
+            objectFit="cover"
             width="100%"
-            transition="0.3s ease-in-out"
+            transition="0.5s ease-in-out"
             _hover={{
               transform: "scale(1.05)",
             }}
+            height="280"
           />
         </Link>
       </Box>
 
       <PostTags tags={post.tags} marginTop="3" />
       <Heading fontSize="xl" marginTop="2">
-        <Link textDecoration="none" _hover={{ textDecoration: "none" }}>
+        <Link
+          textDecoration="none"
+          _hover={{ textDecoration: "none" }}
+          href={post.slug}
+        >
           {post.title}
         </Link>
       </Heading>

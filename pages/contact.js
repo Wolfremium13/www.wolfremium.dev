@@ -27,7 +27,6 @@ export default function About() {
 
   return (
     <Flex
-      bg={useColorModeValue("gray.100", "gray.900")}
       align="center"
       justify="center"
       id="contact"
