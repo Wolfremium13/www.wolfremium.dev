@@ -1,10 +1,14 @@
 import { getFilesBySlug, getFiles } from "../lib/mdx";
 import { MDXRemote } from "next-mdx-remote";
 import { MDXComponents } from "../components/mdx/MDXComponents";
+import { Heading } from "@chakra-ui/react";
+import { formatDate } from "../lib/format-date";
 
 export default function Post({ source, frontmatter }) {
+  console.log(frontmatter);
   return (
     <>
+      <Heading mt="4" align="center">📅 {formatDate(frontmatter.date)}</Heading>
       <section className="post-body">
         <article className="markdown-body">
           <MDXRemote

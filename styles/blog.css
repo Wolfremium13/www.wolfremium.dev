@@ -1,5 +1,7 @@
 main {
   min-height: 100vh;
+  background-image: url("/assets/layout/bg-confetti.svg");
+  background-attachment: fixed;
 }
 
 .post-body {
