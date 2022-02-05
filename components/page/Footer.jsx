@@ -8,7 +8,15 @@ import {
 import { FaTwitter, FaYoutube } from "react-icons/fa";
 import { BsGithub, BsLinkedin } from "react-icons/bs";
 import SocialButton from "./SocialButton";
-import  {linkedInUrl, githubUrl, youtubeUrl, twitterUrl} from "../../data/social-links"
+import {
+  linkedInUrl,
+  githubUrl,
+  youtubeUrl,
+  twitterUrl,
+  gmailUrl,
+} from "../../data/social-links";
+import CopyButton from "./CopyButton";
+import { MdEmail } from "react-icons/md";
 
 const Footer = () => {
   return (
@@ -27,6 +35,9 @@ const Footer = () => {
       >
         <Text>🐺 {new Date().getFullYear()} - Kevin Hierro Carrasco</Text>
         <Stack direction={"row"} spacing={6}>
+          <CopyButton label={"Mail"} href={gmailUrl}>
+            <MdEmail></MdEmail>
+          </CopyButton>
           <SocialButton label={"Twitter"} href={twitterUrl}>
             <FaTwitter />
           </SocialButton>
