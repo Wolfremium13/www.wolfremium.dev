@@ -1,70 +1,76 @@
-import { useRef, useEffect, useState } from "react";
-import { Text, Container } from "@chakra-ui/react";
-import { orderByDate } from "../lib/order-by-date";
+import { useCallback, useRef, useState } from "react";
+import PostsPagination from "../components/blog/PostsPagination";
 import { getAllFilesMetadata } from "../lib/mdx";
-import { usePagination } from "../lib/use-pagination";
-import PostList from "../components/blog/PostList";
-import Search from "../components/Search";
+import { orderByDate } from "../lib/order-by-date";
+import {
+  Container,
+  Input,
+  InputGroup,
+  InputLeftElement,
+} from "@chakra-ui/react";
+import { MdSearch } from "react-icons/md";
 
 export default function Blog({ posts }) {
-  const maxPostsInPage = 6;
-  const { next, currentPage, currentData, maxPage } = usePagination(
-    posts,
-    maxPostsInPage
-  );
-  const [element, setElement] = useState(null);
-  const observer = useRef();
-  const prevY = useRef(0);
+  const searchRef = useRef(null);
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState(posts);
 
-  const currentPosts = currentData();
-
-  useEffect(() => {
-    observer.current = new IntersectionObserver(
-      (entries) => {
-        const firstEntry = entries[0];
-        const y = firstEntry.boundingClientRect.y;
-
-        if (prevY.current > y) {
-          next();
-        }
-        prevY.current = y;
-      },
-      { threshold: 0.5 }
-    );
+  const onChange = useCallback((event) => {
+    const query = event.target.value;
+    setQuery(query);
+    if (query.length) {
+      const res = query
+        ? posts.filter(
+            (post) =>
+              post.title.toLowerCase().includes(query) ||
+              post.tags.some((tag) => tag.toLowerCase().includes(query))
+          )
+        : [];
+      setResults(res);
+    } else {
+      setResults(posts);
+    }
   }, []);
 
-  useEffect(() => {
-    const currentElement = element;
-    const currentObserver = observer.current;
-
-    if (currentElement) {
-      currentObserver.observe(currentElement);
+  const onClick = useCallback((event) => {
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setActive(false);
+      window.removeEventListener("click", onClick);
     }
-
-    return () => {
-      if (currentElement) {
-        currentObserver.unobserve(currentElement);
-      }
-    };
-  }, [element]);
+  }, []);
 
   return (
-    <Container maxW={"7xl"} p="12">
-      {/*     <Search /> */}
-      {currentPosts && <PostList posts={currentPosts}></PostList>}
-      {currentPage !== maxPage && (
-        <Text fontSize="xl" fontWeight="bold" p={6} ref={setElement}>
-          🐢 Cargando...
-        </Text>
+    <>
+      <Container ref={searchRef} mt="10" maxW={"2xl"}>
+        <InputGroup>
+          <InputLeftElement
+            pointerEvents="none"
+            children={<MdSearch color="gray.200" />}
+          />
+          <Input
+            onChange={onChange}
+            placeholder="¿Estás buscando algo?"
+            type="text"
+            value={query}
+            borderColor="teal.600"
+            border={"2px"}
+          />
+        </InputGroup>
+      </Container>
+      {results.length > 0 && (
+        <PostsPagination posts={results}></PostsPagination>
       )}
-    </Container>
+      
+    </>
   );
 }
 
 export async function getStaticProps() {
-  const unorderedPosts = getAllFilesMetadata();
-  const posts = unorderedPosts.sort(orderByDate);
+  const allPosts = getAllFilesMetadata();
+  const posts = allPosts.sort(orderByDate);
   return {
-    props: { posts },
+    props: {
+      posts,
+    },
   };
 }

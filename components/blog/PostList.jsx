@@ -3,7 +3,6 @@ import { Heading, Divider, Wrap, WrapItem } from "@chakra-ui/react";
 import Post from "./Post";
 
 const PostList = ({ posts }) => {
-  // console.log(posts);
   return (
     <>
       <Heading as="h2" marginTop="5">
