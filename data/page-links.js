@@ -1,5 +1,5 @@
 const pageLinks = [
-  { name: "Home", path: "/" },
+  { name: "Inicio", path: "/" },
   { name: "Blog", path: "/blog" },
 ];
 

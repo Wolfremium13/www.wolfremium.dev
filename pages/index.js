@@ -1,23 +1,38 @@
 import { getAllFilesMetadata } from "../lib/mdx";
 import { orderByDate } from "../lib/order-by-date";
-import { Container, VStack, Heading, Text } from "@chakra-ui/react";
+import { Container, VStack, Heading, Text, Link } from "@chakra-ui/react";
 import PostList from "../components/blog/PostList";
 import Welcome from "../components/home/Welcome";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 export default function Home({ posts }) {
   return (
     <Container maxW={"7xl"} p="12">
       <Welcome></Welcome>
       <PostList posts={posts}></PostList>
-      <VStack paddingTop="40px" spacing="2" alignItems="flex-start">
+      <VStack paddingTop="50px" spacing="6" alignItems="flex-start">
         <Heading as="h2">¿De qué suelo escribir?</Heading>
         <Text as="p" fontSize="lg">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-          condimentum quam arcu, eu tempus tortor molestie at. Vestibulum
-          pretium condimentum dignissim. Vestibulum ultrices vitae nisi sed
-          imperdiet. Mauris quis erat consequat, commodo massa quis, feugiat
-          sapien. Suspendisse placerat vulputate posuere. Curabitur neque
-          tortor, mattis nec lacus non, placerat congue elit.
+          Me gusta ir comentando cosas relevantes o de importancia a medida qué
+          las voy aprendiendo (un poco de todo 😂). Normalmente es algo bastante
+          asíncrono con respecto a la publicación así qué no se esperen un post
+          de algo qué salió ayer. Tampoco soy en genio de la redacción, lo iré
+          escribiendo con la finalidad de qué los artículos sean apuntes.
+        </Text>
+
+        <Heading as="h2">¿Te gusta la página?</Heading>
+        <Text as="p" fontSize="lg">
+          Aquí te dejo un enlace al{" "}
+          {
+            <Link
+              href={"https://github.com/Wolfremium13/blog-react"}
+              color="teal.200"
+              isExternal
+            >
+              repositorio <ExternalLinkIcon w={3} h={3} color="teal.200" />
+            </Link>
+          }{" "}
+          por si lo quiere clonar, no tiene nada del otro mundo (de momento 😎).
         </Text>
       </VStack>
     </Container>

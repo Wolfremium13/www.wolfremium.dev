@@ -33,7 +33,7 @@ const Welcome = () => {
           >
             <Image
               borderRadius="lg"
-              src={"/assets/profile-image.jpg"}
+              src={"/assets/lean-image.jpg"}
               alt="Home image"
               objectFit="contain"
             />
@@ -57,10 +57,10 @@ const Welcome = () => {
           justifyContent="center"
           marginTop={{ base: "5", sm: "2" }}
         >
-          <PostTags tags={["👩‍💻 Junior Full Stack", "❤ Software Crafter"]} />
+          <PostTags tags={["❤ Software Crafter"]} />
           <Heading marginTop="1">
             <Link textDecoration="none" _hover={{ textDecoration: "none" }}>
-              Pequeña presentación
+              ¿Quién soy?
             </Link>
           </Heading>
           <Text
@@ -69,10 +69,14 @@ const Welcome = () => {
             color={useColorModeValue("gray.700", "gray.200")}
             fontSize="lg"
           >
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+            Soy un desarrollador nuevo en el sector, aunque ya algunas cosas he
+            visto, back end y data enginnering con sus respectivos stacks
+            tecnológicos. Me gusta mucho el trabajo en este sector, el
+            teletrabajo y la comunicación en ingles con otras personas del mundo
+            es muy interesante. Me gustaría decir qué suelo girar alrededor del
+            marco Agile, aprendiendo cómo se aplica. Empecé el camino sel
+            software crafter sin tener mucha idea pero aspirando a hacer las
+            cosas lo mejor qué se puede y mejorando.
           </Text>
         </Box>
       </Box>

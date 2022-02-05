@@ -15,7 +15,7 @@ const Post = ({ post }) => {
         borderRadius="3xl"
         overflow="hidden"
         border="2px"
-        borderColor="gray.400"
+        borderColor="teal.200"
       >
         <Link
           textDecoration="none"
