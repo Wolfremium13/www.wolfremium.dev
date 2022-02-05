@@ -1,5 +1,5 @@
-import { useRef, useEffect, useState, useCallback } from "react";
-import { Text, Container, Input } from "@chakra-ui/react";
+import { useRef, useEffect, useState } from "react";
+import { Text, Container } from "@chakra-ui/react";
 import { usePagination } from "../../lib/use-pagination";
 import PostList from "./PostList";
 
@@ -45,13 +45,6 @@ const PostsPagination = ({ posts }) => {
       }
     };
   }, [element]);
-
-  const onClick = useCallback((event) => {
-    if (searchRef.current && !searchRef.current.contains(event.target)) {
-      setActive(false);
-      window.removeEventListener("click", onClick);
-    }
-  }, []);
 
   return (
     <Container maxW={"7xl"} p="12">
