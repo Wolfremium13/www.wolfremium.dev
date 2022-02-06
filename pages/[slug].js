@@ -5,7 +5,6 @@ import { Heading } from "@chakra-ui/react";
 import { formatDate } from "../lib/format-date";
 
 export default function Post({ source, frontmatter }) {
-  console.log(frontmatter);
   return (
     <>
       <Heading mt="4" align="center">📅 {formatDate(frontmatter.date)}</Heading>

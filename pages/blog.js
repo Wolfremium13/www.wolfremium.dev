@@ -43,10 +43,9 @@ export default function Blog({ posts }) {
     <>
       <Container ref={searchRef} mt="10" maxW={"2xl"}>
         <InputGroup>
-          <InputLeftElement
-            pointerEvents="none"
-            children={<MdSearch color="gray.200" />}
-          />
+          <InputLeftElement pointerEvents="none">
+            <MdSearch color="gray.200" />
+          </InputLeftElement>
           <Input
             onChange={onChange}
             placeholder="¿Estás buscando algo?"
@@ -60,14 +59,12 @@ export default function Blog({ posts }) {
       {results.length > 0 && (
         <PostsPagination posts={results}></PostsPagination>
       )}
-      
     </>
   );
 }
 
 export async function getStaticProps() {
-  const allPosts = getAllFilesMetadata();
-  const posts = allPosts.sort(orderByDate);
+  const posts = await getAllFilesMetadata().sort(orderByDate);
   return {
     props: {
       posts,

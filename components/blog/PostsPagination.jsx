@@ -4,7 +4,6 @@ import { usePagination } from "../../lib/use-pagination";
 import PostList from "./PostList";
 
 const PostsPagination = ({ posts }) => {
-  console.log(posts);
   const maxPostsInPage = 6;
   const { next, currentPage, currentData, maxPage } = usePagination(
     posts,
