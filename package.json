@@ -24,7 +24,7 @@
     "gray-matter": "^4.0.3",
     "mdx-prism": "^0.3.4",
     "millify": "^4.0.0",
-    "next": "12.0.7",
+    "next": "^12.1.0",
     "next-mdx-remote": "^3.0.8",
     "next-sitemap": "^1.8.4",
     "react": "17.0.2",
