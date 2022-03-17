@@ -1,6 +1,6 @@
-import Podcast from "./Podcast.jsx";
-import MdxImage from "./MdxImage.jsx";
-import YouTube from "./YouTube.jsx";
+import Podcast from "./Podcast";
+import MdxImage from "./MdxImage";
+import YouTube from "./Youtube";
 
 export const MDXComponents = {
   Podcast,
