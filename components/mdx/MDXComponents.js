@@ -1,12 +1,9 @@
-import Podcast from "./Podcast";
-import { Image, Box } from "@chakra-ui/react";
-import MdxImage from "./MdxImage";
-import YouTube from "./YouTube";
+import Podcast from "./Podcast.jsx";
+import MdxImage from "./MdxImage.jsx";
+import YouTube from "./YouTube.jsx";
 
 export const MDXComponents = {
   Podcast,
   YouTube,
-  Image,
-  Box,
-  MdxImage,
+  MdxImage
 };
