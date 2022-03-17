@@ -22,6 +22,7 @@
     "fs": "^0.0.1-security",
     "github-markdown-css": "^5.1.0",
     "gray-matter": "^4.0.3",
+    "mdx-prism": "^0.3.4",
     "millify": "^4.0.0",
     "next": "^12.1.0",
     "next-mdx-remote": "^4.0.0",
