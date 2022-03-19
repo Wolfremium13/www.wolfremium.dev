@@ -1,4 +1,4 @@
-import "github-markdown-css";
+import "../styles/github-markdown.css";
 import "../styles/blog.css";
 import "../styles/scroll.css";
 import "../styles/prism-material-oceanic.css";
