@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import PostsPagination from "../components/blog/PostsPagination";
+import PostList from "../components/blog/PostList";
 import { getAllFilesMetadata } from "../lib/mdx";
 import { orderByDate } from "../lib/order-by-date";
 import {
@@ -58,7 +58,9 @@ export default function Blog({ posts }) {
         </InputGroup>
       </Container>
       {results.length > 0 && (
-        <PostsPagination posts={results}></PostsPagination>
+        <Container maxW={"7xl"} p="12">
+          {results && <PostList posts={results}></PostList>}
+        </Container>
       )}
     </>
   );
