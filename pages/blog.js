@@ -19,6 +19,7 @@ export default function Blog({ posts }) {
     const query = event.target.value;
     setQuery(query);
     if (query.length) {
+      query = query.toLowerCase();
       const res = query
         ? posts.filter(
             (post) =>
