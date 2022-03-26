@@ -32,7 +32,7 @@ export default function Home({ posts }) {
               repositorio <ExternalLinkIcon w={3} h={3} color="teal.200" />
             </Link>
           }{" "}
-          por si lo quiere clonar, no tiene nada del otro mundo (de momento 😎).
+          por si lo quieres clonar, no tiene nada del otro mundo (de momento 😎).
         </Text>
       </VStack>
     </Container>
