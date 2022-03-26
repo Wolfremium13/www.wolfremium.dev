@@ -88,7 +88,7 @@ Vamos a probar pytest y pasarle algunos parámetros más:
     (0.1, 0.0),
     (1, -1),
     (0.000000001, 7.0),
-    (np.nan, "nan"),
+    (np.nan, 0.0),
 ])
 def test_pytest_transformation_return_sum_of_columns(val1: float, val2: float):
     transformation = Transformation()
@@ -140,3 +140,5 @@ ejemplo no nos dejaría usar el @fixtures de pytest lo cual no me gusta, pero
 bueno siempre podemos usar una o la otra dependiendo del caso.
 
 ¿Tienes feedback? Mi correo está en el footer de la página, gracias y un saludo.
+
+[📁Reopositorio con el ejemplo](https://github.com/Wolfremium13/property-based-testing-in-pandas)
