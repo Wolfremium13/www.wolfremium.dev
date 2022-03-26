@@ -139,6 +139,59 @@ El problema de los casos límite estaría solucionado con hypothesis pero por
 ejemplo no nos dejaría usar el @fixtures de pytest lo cual no me gusta, pero
 bueno siempre podemos usar una o la otra dependiendo del caso.
 
+¿Tienes curiosidad y quieres ver qué se ha probado en hypothesis?
+
+Hay una forma de verlo añadiendo verbosity al test:
+
+```python
+@settings(verbosity=Verbosity.verbose)
+@given(val1=st.floats(),
+       val2=st.floats())
+def test_hypothesis_transformation_return_sum_of_columns(val1: float, val2: float):
+    transformation = Transformation()
+    df_given = pd.DataFrame(
+        {
+            'column_1': [val1],
+            'column_2': [val2],
+        }
+    )
+    expected_result = pd.Series([val1 + val2])
+
+    df_calculated = transformation.sum_two_columns_and_generate_result(df_given, 'column_1', 'column_2')
+
+    pd.testing.assert_series_equal(df_calculated.result, expected_result, check_names=False)
+```
+
+Una vez añadido puede ejecutar...
+
+```bash
+ pytest [file_name].py -v -s
+```
+
+Y ver los parámetros que ha probado en la consola:
+
+```bash
+.
+.
+test_transformation.py::test_hypothesis_transformation_return_sum_of_columns Trying example: test_hypothesis_transformation_return_sum_of_columns(
+    val1=0.0, val2=0.0,
+)
+Trying example: test_hypothesis_transformation_return_sum_of_columns(
+    val1=0.0, val2=0.0,
+)
+Trying example: test_hypothesis_transformation_return_sum_of_columns(
+    val1=0.0, val2=0.0,
+)
+Trying example: test_hypothesis_transformation_return_sum_of_columns(
+    val1=-1.2947680462195516e+16, val2=-nan,
+)
+Trying example: test_hypothesis_transformation_return_sum_of_columns(
+    val1=0.0, val2=0.0,
+)
+.
+.
+```
+
 ¿Tienes feedback? Mi correo está en el footer de la página, gracias y un saludo.
 
 [📁Reopositorio con el ejemplo](https://github.com/Wolfremium13/property-based-testing-in-pandas)
