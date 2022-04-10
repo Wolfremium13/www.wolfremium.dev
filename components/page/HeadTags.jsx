@@ -5,7 +5,7 @@ const HeadTags = ({ metadata = {} }) => {
     title: metadata.title || "Kevin Hierro - Wolfremium",
     description: metadata.description || "Blog personal",
     slug: metadata.slug || "",
-    image: "/assets/default-image.jpg",
+    image: "/assets/default-image.png",
     date: metadata.date || new Date().toISOString(),
     domain: "https://wolfremium.dev",
     site_name: "Kevin Hierro Carrasco",

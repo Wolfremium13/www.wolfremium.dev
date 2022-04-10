@@ -4,7 +4,7 @@ import PostDate from "./PostDate";
 import PostReadingTime from "./PostReadingTime";
 import { formatDate } from "../../lib/format-date";
 
-const defaultImage = "/assets/default-image.jpg";
+const defaultImage = "/assets/default-image.png";
 
 const hasPreviewImage = (post) => post.preview ?? defaultImage;
 
