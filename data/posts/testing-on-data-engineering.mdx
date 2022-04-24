@@ -18,9 +18,9 @@ contexto. Voy a aplicarlos de manera abstracta para qué puedas hacerte una idea
 
 Consiste en comprobar si la estructura de los datos es realmente la correcta
 antes de almacenar un dato, por ejemplo validar qué un campo “email” es del tipo
-deseado `str`, que no pueda ser null, o que cumpla con la regex. Es un nivel
-básico pero da un soporte de seguridad antes de almacenar cualquier cosa
-incorrecta, siempre puedes equivocarte en una transformación.
+deseado `str` en el caso de Python, que no pueda ser null, o que cumpla con la
+regex. Es un nivel básico pero da un soporte de seguridad antes de almacenar
+cualquier cosa incorrecta, siempre puedes equivocarte en una transformación.
 
 <MdxImage
   src="/assets/blog/testing-on-data-engineering/testing-data-2.png"
@@ -72,8 +72,8 @@ Esto es para aquellos casos dónde generamos fichero con claves foráneas a otro
 ficheros, por ejemplo tenemos una transformación que nos genera los datos ya
 listos y con un cierto tipo de estructura, para qué luego pueda ser migrado a la
 base de datos. Este test lo qué hará es que si tenemos un key en un fichero
-debería de existir otra columna que hace referencia a la key en el otro. Esto
-me parece super útil a la hora de hacer transformaciones de datos, ya qué nos
+debería de existir otra columna que hace referencia a la key en el otro. Esto me
+parece super útil a la hora de hacer transformaciones de datos, ya qué nos
 aporta un nivel más de seguridad.
 
 <MdxImage
@@ -86,4 +86,4 @@ testing y aportar mayor valor a tu trabajo, automatizando procesos y evitando
 incertidumbre ya que escribir estos test hará que puedas saber si algo está bien
 o no ya qué ahora el test te lo dice.
 
-Un saludo y os animo a buscar valor de los test en tu empresa.
+Un saludo y os animo a buscar valor de los test en los datos tu empresa.
