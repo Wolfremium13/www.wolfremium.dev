@@ -20,7 +20,7 @@ necesitamos realmente todas las columnas para calcular nuestros datos,
 simplemente podemos evitarlas.
 
 ```python
-pd.read_parquet(data_source, columns=[‘metric’, ’provider’])
+pd.read_parquet(data_source, columns=['metric', 'provider'])
 ```
 
 Esto mejora con creces la eficiencia a la hora de leer un fichero, pero hay
@@ -33,7 +33,7 @@ junto a lo anterior:
 ```python
 pd.read_parquet(
     data_source,
-    columns=[‘metric’, ’provider’],
+    columns=['metric', 'provider'],
     filters = [
         ('metric', 'in', ['your_metric']),
         ('provider', 'in', ['your_provider'])
@@ -47,7 +47,7 @@ Dejo un ejemplo más avanzado:
 ```python
 pd.read_parquet(
     data_source,
-    columns=[‘metric’, ’provider’],
+    columns=['metric', 'provider'],
     filters = [
         [
             ('metric', 'in', ['your_metric_1']),
