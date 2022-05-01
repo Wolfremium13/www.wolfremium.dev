@@ -20,6 +20,8 @@ necesitamos realmente todas las columnas para calcular nuestros datos,
 simplemente podemos evitarlas.
 
 ```python
+import pandas as pd
+
 pd.read_parquet(data_source, columns=['metric', 'provider'])
 ```
 
