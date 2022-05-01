@@ -34,10 +34,10 @@ junto a lo anterior:
 pd.read_parquet(
     data_source,
     columns=[‘metric’, ’provider’],
-filters = [
-    ('metric', 'in', ['your_metric']),
-    ('provider', 'in', ['your_provider'])
-])
+    filters = [
+        ('metric', 'in', ['your_metric']),
+        ('provider', 'in', ['your_provider'])
+    ])
 ```
 
 Esto nos abre la posibilidad incluso de hacer querys más complejas, he
@@ -48,15 +48,15 @@ Dejo un ejemplo más avanzado:
 pd.read_parquet(
     data_source,
     columns=[‘metric’, ’provider’],
-filters = [
-    [
-        ('metric', 'in', ['your_metric_1']),
-        ('provider', 'in', ['your_provider_1'])
-    ],
-    [
-        ('metric', 'in', ['your_metric_2']),
-        ('provider_code', 'in', ['your_provider_1', 'your_provider_2', 'your_provider_3'])
-    ]])
+    filters = [
+        [
+            ('metric', 'in', ['your_metric_1']),
+            ('provider', 'in', ['your_provider_1'])
+        ],
+        [
+            ('metric', 'in', ['your_metric_2']),
+            ('provider_code', 'in', ['your_provider_1', 'your_provider_2', 'your_provider_3'])
+        ]])
 ```
 
 Espero que os haya servido para mejorar vuestros procesos, cualquier feedback es
