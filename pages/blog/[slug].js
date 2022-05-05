@@ -1,8 +1,8 @@
-import { getFilesBySlug, getFiles } from "../lib/mdx";
+import { getFilesBySlug, getFiles } from "../../lib/mdx";
 import { MDXRemote } from "next-mdx-remote";
-import { MDXComponents } from "../components/mdx/MDXComponents";
+import { MDXComponents } from "../../components/mdx/MDXComponents";
 import { Heading } from "@chakra-ui/react";
-import { formatDate } from "../lib/format-date";
+import { formatDate } from "../../lib/format-date";
 
 export default function Post({ source, frontmatter }) {
   return (

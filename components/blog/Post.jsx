@@ -9,6 +9,7 @@ const defaultImage = "/assets/default-image.png";
 const hasPreviewImage = (post) => post.preview ?? defaultImage;
 
 const Post = ({ post }) => {
+  const postUrlLink = `blog/${post.slug}`
   return (
     <Box w="100%">
       <Box
@@ -20,7 +21,7 @@ const Post = ({ post }) => {
         <Link
           textDecoration="none"
           _hover={{ textDecoration: "none" }}
-          href={post.slug}
+          href={postUrlLink}
         >
           <Image
             transform="scale(1.0)"
