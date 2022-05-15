@@ -68,7 +68,7 @@ export default function Blog({ posts }) {
 
 export async function getStaticProps() {
   const posts = await getAllFilesMetadata().sort(orderByDate);
-  console.log(posts)
+  //console.log(posts)
   return {
     props: {
       posts,
