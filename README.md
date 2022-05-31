@@ -1,5 +1,7 @@
 ## Development
 
+Node version: v18.2.0
+
 Development server:
 
 ```bash
