@@ -11,7 +11,7 @@ import PostTags from "../blog/PostTags";
 const Welcome = () => {
   return (
     <>
-      <Heading as="h1">👋 Previsión del tiempo para esta noche: estará oscuro</Heading>
+      <Heading as="h1">Previsión del tiempo para esta noche: estará oscuro 🌚</Heading>
       <Box
         marginTop={{ base: "1", sm: "5" }}
         display="flex"
