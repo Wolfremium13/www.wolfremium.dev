@@ -1,19 +1,23 @@
-import { getFilesBySlug, getFiles } from "../../lib/mdx";
+import { getFileBySlug } from "../../lib/mdx";
 import { MDXRemote } from "next-mdx-remote";
 import { MDXComponents } from "../../components/mdx/MDXComponents";
 import { Heading } from "@chakra-ui/react";
 import { formatDate } from "../../lib/format-date";
+import { getMdxPaths } from "next-mdx/server";
 
-export default function Post({ source, frontmatter }) {
+export default function Post({ post }) {
+  const metadata = post.frontMatter
   return (
     <>
-      <Heading mt="4" align="center">📅 {formatDate(frontmatter.date)}</Heading>
+      <Heading mt="4" align="center">
+        📅 {formatDate(metadata.date)}
+      </Heading>
       <section className="post-body">
         <article className="markdown-body">
           <MDXRemote
-            {...source}
+            {...post.serialize}
             components={MDXComponents}
-            metadata={frontmatter}
+            metadata={metadata}
           />
         </article>
       </section>
@@ -22,28 +26,20 @@ export default function Post({ source, frontmatter }) {
 }
 
 export async function getStaticProps({ params }) {
-  const { source, frontmatter } = await getFilesBySlug(params.slug);
+  const post = await getFileBySlug(params.slug);
   return {
     props: {
-      source,
-      frontmatter: {
-        slug: params.slug,
-        ...frontmatter,
-      },
+      post,
     },
   };
 }
 
 export async function getStaticPaths() {
-  const posts = getFiles();
-  const paths = posts.map((post) => ({
-    params: {
-      slug: post.replace(/\.mdx/, ""),
-    },
-  }));
-
+  const paths = (await getMdxPaths("post"))
+    .map((p) => `/blog/${p.params.slug}`)
+    .flat();
   return {
-    paths,
+    paths: paths,
     fallback: false,
   };
 }

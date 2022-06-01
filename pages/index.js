@@ -1,5 +1,4 @@
-import { getAllFilesMetadata } from "../lib/mdx";
-import { orderByDate } from "../lib/order-by-date";
+import { getAllFiles } from "../lib/mdx";
 import { Container, VStack, Heading, Text, Link } from "@chakra-ui/react";
 import PostList from "../components/blog/PostList";
 import Welcome from "../components/home/Welcome";
@@ -40,9 +39,9 @@ export default function Home({ posts }) {
 }
 
 export async function getStaticProps() {
-  const allPosts = getAllFilesMetadata();
+  const allPosts = await getAllFiles();
   const maxPosts = 3;
-  const posts = allPosts.sort(orderByDate).slice(0, maxPosts);
+  const posts = allPosts.slice(0, maxPosts);
   return {
     props: {
       posts,
