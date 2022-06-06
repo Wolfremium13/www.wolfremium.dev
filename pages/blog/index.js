@@ -100,7 +100,7 @@ export default function Blog({ posts }) {
       {currentPosts.length > 0 && (
         <Container maxW={"7xl"} p="12">
           {currentPosts && <PostList posts={currentPosts}></PostList>}
-          {currentPage !== maxPage && currentPosts.length >= maxPostsInPage && (
+          {currentPage !== maxPage && currentPage < maxPage && (
             <Text fontSize="xl" fontWeight="bold" p={6} ref={setElement}>
               🐢 Cargando...
             </Text>
