@@ -22,8 +22,11 @@ export default function Blog({ posts }) {
       const res = query
         ? posts.filter(
             (post) =>
-              post.title.toLowerCase().includes(query) ||
-              post.tags.some((tag) => tag.toLowerCase().includes(query))
+              {
+                const metadata = post.frontMatter
+                return metadata.title.toLowerCase().includes(query) ||
+                metadata.tags.some((tag) => tag.toLowerCase().includes(query))
+              }
           )
         : [];
       setResults(res);
