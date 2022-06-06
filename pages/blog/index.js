@@ -1,7 +1,10 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState, useEffect } from "react";
 import PostList from "../../components/blog/PostList";
 import { getAllFiles } from "../../lib/mdx";
+import { usePagination } from "../../lib/use-pagination";
+
 import {
+  Text,
   Container,
   Input,
   InputGroup,
@@ -14,20 +17,20 @@ export default function Blog({ posts }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState(posts);
 
+  // Filter
   const onChange = useCallback((event) => {
     const query = event.target.value;
     setQuery(query);
     if (query.length) {
       query = query.toLowerCase();
       const res = query
-        ? posts.filter(
-            (post) =>
-              {
-                const metadata = post.frontMatter
-                return metadata.title.toLowerCase().includes(query) ||
-                metadata.tags.some((tag) => tag.toLowerCase().includes(query))
-              }
-          )
+        ? posts.filter((post) => {
+            const metadata = post.frontMatter;
+            return (
+              metadata.title.toLowerCase().includes(query) ||
+              metadata.tags.some((tag) => tag.toLowerCase().includes(query))
+            );
+          })
         : [];
       setResults(res);
     } else {
@@ -35,12 +38,47 @@ export default function Blog({ posts }) {
     }
   }, []);
 
-  const onClick = useCallback((event) => {
-    if (searchRef.current && !searchRef.current.contains(event.target)) {
-      setActive(false);
-      window.removeEventListener("click", onClick);
-    }
+  //Infinite scroll 
+  const maxPostsInPage = 6;
+  const { next, currentPage, currentData, maxPage } = usePagination(
+    results,
+    maxPostsInPage
+  );
+  const [element, setElement] = useState(null);
+  const observer = useRef();
+  const prevY = useRef(0);
+
+  const currentPosts = currentData();
+
+  useEffect(() => {
+    observer.current = new IntersectionObserver(
+      (entries) => {
+        const firstEntry = entries[0];
+        const y = firstEntry.boundingClientRect.y;
+
+        if (prevY.current > y) {
+          next();
+        }
+        prevY.current = y;
+      },
+      { threshold: 0.5 }
+    );
   }, []);
+
+  useEffect(() => {
+    const currentElement = element;
+    const currentObserver = observer.current;
+
+    if (currentElement) {
+      currentObserver.observe(currentElement);
+    }
+
+    return () => {
+      if (currentElement) {
+        currentObserver.unobserve(currentElement);
+      }
+    };
+  }, [element]);
 
   return (
     <>
@@ -59,9 +97,15 @@ export default function Blog({ posts }) {
           />
         </InputGroup>
       </Container>
-      {results.length > 0 && (
+      {currentPosts.length > 0 && (
         <Container maxW={"7xl"} p="12">
-          {results && <PostList posts={results}></PostList>}
+          {currentPosts && <PostList posts={currentPosts}></PostList>}
+
+          {currentPage !== maxPage && (
+            <Text fontSize="xl" fontWeight="bold" p={6} ref={setElement}>
+              🐢 Cargando...
+            </Text>
+          )}
         </Container>
       )}
     </>
