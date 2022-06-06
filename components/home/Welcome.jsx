@@ -33,7 +33,7 @@ const Welcome = () => {
           >
             <Image
               borderRadius="lg"
-              src={"/assets/personal-image.jpg"}
+              src={"/assets/personal-image.webp"}
               alt="Home image"
               objectFit="contain"
             />
