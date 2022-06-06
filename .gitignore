@@ -5,6 +5,7 @@
 /.idea
 
 # Bad format images
+/public/assets/blog/**/*.{jpg,png,tiff}
 /public/assets/temp
 
 # dependencies
