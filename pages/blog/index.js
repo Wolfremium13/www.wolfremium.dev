@@ -52,7 +52,6 @@ export default function Blog({ posts }) {
 
     observer.current = new IntersectionObserver(
       (entries) => {
-        console.log(entries)
         const firstEntry = entries[0];
         const y = firstEntry.boundingClientRect.y;
 
