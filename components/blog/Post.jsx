@@ -3,7 +3,6 @@ import PostTags from "./PostTags";
 import PostDate from "./PostDate";
 import PostReadingTime from "./PostReadingTime";
 import { formatDate } from "../../lib/format-date";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 const defaultImage = "/assets/default-image.png";
 

@@ -49,7 +49,6 @@ export default function Blog({ posts }) {
   const currentPosts = currentData();
 
   useEffect(() => {
-
     observer.current = new IntersectionObserver(
       (entries) => {
         const firstEntry = entries[0];
@@ -96,7 +95,7 @@ export default function Blog({ posts }) {
           />
         </InputGroup>
       </Container>
-      
+
       {currentPosts.length > 0 && (
         <Container maxW={"7xl"} p="12">
           {currentPosts && <PostList posts={currentPosts}></PostList>}
