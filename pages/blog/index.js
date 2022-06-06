@@ -24,7 +24,7 @@ export default function Blog({ posts }) {
     if (query.length) {
       query = query.toLowerCase();
       const res = query
-        ? posts.filter((post) => {
+        ? results.filter((post) => {
             const metadata = post.frontMatter;
             return (
               metadata.title.toLowerCase().includes(query) ||
@@ -33,12 +33,10 @@ export default function Blog({ posts }) {
           })
         : [];
       setResults(res);
-    } else {
-      setResults(posts);
     }
   }, []);
 
-  //Infinite scroll 
+  //Infinite scroll
   const maxPostsInPage = 6;
   const { next, currentPage, currentData, maxPage } = usePagination(
     results,
