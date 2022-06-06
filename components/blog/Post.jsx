@@ -3,13 +3,13 @@ import PostTags from "./PostTags";
 import PostDate from "./PostDate";
 import PostReadingTime from "./PostReadingTime";
 import { formatDate } from "../../lib/format-date";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const defaultImage = "/assets/default-image.png";
 
 const hasPreviewImage = (metadata) => metadata.preview ?? defaultImage;
 
 const Post = ({ post }) => {
-  const postUrlLink = `blog/${post.slug}`
   const metadata = post.frontMatter
   return (
     <Box w="100%">
@@ -22,7 +22,7 @@ const Post = ({ post }) => {
         <Link
           textDecoration="none"
           _hover={{ textDecoration: "none" }}
-          href={postUrlLink}
+          href={post.url}
         >
           <Image
             transform="scale(1.0)"
