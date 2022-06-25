@@ -1,0 +1,110 @@
+---
+title: "🐍 Setup Python con multiples versiones"
+date: "2022-06-25"
+preview: "/assets/blog/python-multiple-versions/manage-multiple-pyenv.webp"
+tags:
+  - "👨‍💻 Aprendizaje"
+  - "🐍 Python"
+---
+
+# ⚰️ Python trabajar con multiples versiones sin morir en el intento
+
+He visto últimamente lo complicado que se hace trabajar adecuadamente con
+multiples repositorios o diferentes versiones de Python usando `pipenv`.
+
+Por eso he creado esta guía de Python usandu
+[pyenv](https://github.com/pyenv/pyenv) y
+[pipenv](https://pipenv.pypa.io/en/latest/), los cuales sirven para tener un
+mayor control tanto de la versión cómo de las dependencias evitando errores, en
+este caso Ubuntu 22.04 con zsh.
+
+> En la documentación de los repositorios hay más información para otras
+> versiones.
+
+## Pyenv
+
+Lo primero a instalar es `pyenv`, idea unsado el siguiente comando
+
+```bash
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+```
+
+Una vez clonado lo siguiente es añadir el comando a zsh
+
+```bash
+echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+```
+
+Actualizamos el fichero `~/.zshrc`
+
+```bash
+source ~/.zshrc
+```
+
+Ahora claro ya lo tenemos, si el proyecto nos requiere python 3.7, por ejemplo,
+vamos a instalarlo, pero antes tenemos que instalar las dependencias de Python.
+
+```bash
+sudo apt-get update; sudo apt-get install make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+```
+
+```bash
+pyenv install 3.7.15
+```
+
+Ahora ya podemos mirar si ha cambiado la versión, si anteriormente no tenías
+python pone esta versión como global, pero si ya había uno no la cambia.
+
+```bash
+python3 --version
+```
+
+```bash
+Python 3.7.15
+```
+
+Perfecto ya tenemos la versión que necesitamos, en caso de querer cambiarla
+según el ámbito que no sea global, dejo el
+[link](https://github.com/pyenv/pyenv#switch-between-python-versions) a la
+documentación.
+
+> 🚨 Cuidado con cambiar la version global otros programas del sistema pueden
+> estar utilizándola.
+
+## Pipenv
+
+Usando la versión dentro del ámbito que queremos, asegurándonos siempre primero
+de mirar la versión, vamos a instalar
+[pip](https://pip.pypa.io/en/stable/installing/#upgrading-pip) el gestor de
+dependencias para el entorno global de la versión de Python y
+[pipenv](https://pipenv.pypa.io/en/latest/) que sería un gestor de entornos con
+dependencias, sirve para instalar las cosas en el entorno en vez del entorno
+global y que las dependencias no se choquen.
+
+Si acabas de instanciar la versión hay que instalar `pip` y `pipenv` para poder
+usarlo.
+
+```bash
+python -m pip install -U pip
+```
+
+```bash
+pip install pipenv
+```
+
+Finalmente dentro de la proyecto desde la terminal a la misma altura que el
+`Pipfile` instalamos sus dependencias y se creará un entorno con el nombre del
+proyecto al ejecutar...
+
+```bash
+pipenv install --dev
+```
+
+> Nota si ya tenias un entorno de pipenv creado anteriormente, recomiendo
+> borrarlo y volver a instalar.
+
+Gracias por llegar hasta aquí, espero que todo vaya bien y a darle Python
