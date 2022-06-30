@@ -1,0 +1,114 @@
+---
+title: "🎨 Personaliza Zsh"
+date: "2022-06-30"
+preview: "/assets/blog/customize-your-zsh/p10k-example.webp"
+tags:
+  - "🐧 Linux"
+---
+
+# Guía customización Zsh de 0 (Versión Ubuntu)
+
+Algunas personas me han preguntado ¿Cómo tener la terminal personalizada? tener
+una terminal bonita sin instalar 40 cosas, en este caso será en Ubuntu, pero que
+cualquier sitio que use Zsh debería ser compatible.
+
+## Zsh
+
+Voy a hacerlo desde el principio como si tuviesemos el ubuntu nuevo sin nada,
+primero instalaremos Zsh
+
+```bash
+sudo apt install zsh
+```
+
+## Ohmyzsh
+
+Este de por sí solo es está bien pero queremos colores plugins etc. por lo que
+hay que añadirle [ohmyzsh](https://ohmyz.sh/). Ubuntu no viene con curl, pero en
+mi caso me gusta ponerlo y descargar de ahí.
+
+```bash
+sudo apt install curl
+```
+
+```bash
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+> Una vez instalado nos pregutará si queremos zsh como terminal prederminada le
+> damos a sí, pero recuerda que para que el cambio surta efecto deberemos hacer
+> un logout e iniciar otra vez. Aqunque siempre podemos usar `exec zsh` dentro
+> de bash.
+
+## Theme p10k
+
+Bueno iniciamos una termial zsh con la cual añadiremos una herramienta que nos
+gestione los temas que se llama
+[powerlevel10k](https://github.com/romkatv/powerlevel10k).
+
+```bash
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
+Una vez descargado no lo vamos aún a configurar, aún nos queda descargar las
+siguientes
+[fuentes](https://github.com/romkatv/powerlevel10k#manual-font-installation) con
+los iconos chulos e instalarlas a nivel global en Ubuntu.
+
+Ahora si llega el momento de completar la configuración a tu gusto
+
+```bash
+p10k configure
+```
+
+## Font VSCode
+
+Nos queda añadir esta configuración a la terminal VSCode ya que los iconos en
+este momento se verán raros, por lo tanto iremos a
+
+Preferences > Settings > Terminal > Integrated > Font Familiy
+
+Sustituimos la fuente que tiene por `'MesloLGS NF'` y listo.
+
+## Colores
+
+Hay una página llamada [Gogh](https://gogh-co.github.io/Gogh/) con paletas de
+colores para terminales, vale tanto para bash como zsh. Una nota importante es
+desbloquear los perfiles de colores en las prefencias de tu terminal.
+
+```bash
+bash -c  "$(wget -qO- https://git.io/vQgMr)"
+```
+
+El lanzador te preguntará si quieres un tema, varios o todos. Yo siempre le doy
+a todos pero recuerda que el proceso es muy lento y tardará un buen rato, pero
+la verdad es que simplifica mucho la tarea de ir probando.
+
+## Autocompletado
+
+Me he dado cuenta de lo útil que es este plugin de
+[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) cuando
+he tenido que repetir comando especifícos.
+
+```bash
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+```
+
+Una vez instalado hay que añadirlo al fichero de zsh
+
+```bash
+<your editor> ~/.zshrc
+```
+
+En la parte de plugins recomiendo abrir el paréntesis y ponerlos de la siguiente
+forma
+
+```
+plugins=(
+    # other plugins...
+    zsh-autosuggestions
+)
+```
+
+Y hasta aquí lo dejo, por lo general a partir de aquí yo no le pondría muchas
+más cosas puede tender a fallos.

@@ -6,7 +6,8 @@
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gulp":"gulp"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.1",
