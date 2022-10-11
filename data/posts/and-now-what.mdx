@@ -1,0 +1,108 @@
+---
+title: "¿Y ahora qué?"
+date: "2022-10-11"
+preview: "/assets/blog/and-now-what/cat-should.webp"
+tags:
+  - "👨‍💻 Aprendizaje"
+  - "🧠 Reflexión"
+---
+
+# ¿Y ahora qué?
+
+En estos últimos meses he aprendido un montón de cosas, como por ejemplo testear
+hasta lo más obvio de nuestro código, he metido un bug raro de ver y encontrar.
+También he crecido como profesional, ya que voy intentando aprender y realizar
+pet-projects al mismo tiempo que ayuden a otras personas. El blog sufrirá
+cambios de aquí en adelante, lo usaré para mí mismo, para recordarme al leerlo
+el avance que hice en el futuro, un ejemplo son publicaciones de mis prácticas
+en Lean Mind. Pero esto no quita que añada publicaciones interesantes de “Data
+Engineer” o Python. En breve tendré otra publicación.
+
+Actualmente, trabajo como “Ingeniero de datos”, lo pongo entre comillas porque
+no tengo un título que lo corrobore, aunque cada persona lo ve desde un punto de
+vista diferente, por ejemplo mi jefe de equipo ve la ingeniería cómo algo
+desafiante “¿cómo puedo hacer “x” con “y” restricciones?”. Yo, por ejemplo, lo
+veo más bien cómo una artesanía, antes de ser programador ayudaba a mi padre a
+enmarcar cuadros, literalmente era un arte y bastante cercano a un oficio del
+medievo. Se empezaba con lo más básico, qué era observar, limpiar cristales,
+poner cinta o realizar portarretratos con los materiales que sobraban de los
+cuadros, más adelante empezaría a cortar listones de madera, ensamblar y cortar
+cristales. En programación pasa algo parecido, pero no trabajamos con materiales
+del mundo físico, de momento lo hacemos con las manos, por lo que es algo
+artesanal.
+
+Desde mi punto de vista, la artesanía a veces choca con el concepto que mi jefe
+de equipo pueda tener de la ingeniería, por lo que he tomado alguna decisión no
+muy profesional como no testear correctamente algo y luego hacerle un cambio
+porque el tiempo para hacerlo es reducido o porque esa pieza de código se hace
+muy compleja de testear. ¿Recordáis el bug del principio? Os lo explico:
+
+Algo de código ilustrativo para probar en casa.
+
+```python
+from assertpy import assert_that
+
+def test_should_append_the_value():
+    numbers = [1, 2]
+    numbers += 3
+
+    assert_that(numbers).is_equal_to([1, 2, 3])
+```
+
+Output:
+
+```bash
+    def test_should_append_the_value():
+        numbers = [1, 2]
+>       numbers += 3
+E       TypeError: 'int' object is not iterable
+```
+
+En Python `+=` funciona algo diferente, en realidad ese operador representa un
+`extend` y no un `append`. Por lo que la solución es sumar dos arrays en vez de
+sumar el valor directamente si queremos mantener el operador.
+
+```python
+from assertpy import assert_that
+
+def test_should_append_the_value():
+    numbers = [1, 2]
+    numbers += [3]
+
+    assert_that(numbers).is_equal_to([1, 2, 3])
+```
+
+Ahora el test si es verde. Un test me habría sacado de este fallo tan tonto.
+
+Últimamente, he reflexionado mucho sobre el trabajo debido a qué pensaba que
+tenía burn-out, pero la realidad es que era un tipo de depresión, considero que
+la sociedad y el mundo de la ingeniería está intentando cambiar, pero sigue
+siendo individualista, toma tu 1 tarea y tu compañero otra tarea. Un ejemplo es
+el sentimiento de soledad en el trabajo, la ausencia de pair-programming,
+justifique este hecho, pero tal vez busque divertirme un poco más en el trabajo,
+ser un poco más yo mismo, hacer un poco más lo que me sale del corazón. La
+verdad es qué no es por quejarme, estoy en un proyecto maravilloso, tengo buenos
+compañeros/mentores, pero me siento solo igualmente lo cual trabajaré.
+
+He estado pensando en qué hacer con la carrera profesional, ni idea de que
+hacer, pero tengo claro lo que no quiero, no quiero ser famoso, no quiero ser el
+mejor, no quiero malos rollos, no quiero saber que lo que hago no ayuda, no
+quiero ser “senior”, no quiero escribir blogs si no tengo ganas, no quiero
+código mal hecho, etc.
+
+Tengo en mente ya 1 libro interesante que junte data con artesanía del software,
+he visto mucho “No es que en data se hace el código así” pero la verdad es que
+he sufrido un poco el mantener un software de scripts de transformación sin una
+lógica sin representar lo que queremos hacer, creo que lo más básico es hacer
+las cosas con calma, nunca he visto enmarcar a nadie un cuadro de 2 m x 1 m en
+menos de 1 minuto, o si se consigue probablemente está mal o lo hacen robots, de
+momento tengo la impresión de ir más rápido de lo que se debe provocando data
+sets incorrectos o que no cumplen todas las reglas de negocio o tal vez se
+mezclan de tal manera que se pierde el control de lo que sale al final.
+
+Otra cosilla qué me escribiré a mí yo del futuro acerca del dinero, ya que la
+situación a finales del 2022 es incierta y mi objetivo principal es una casa
+(está la cosa chunga). Elijas lo que elijas, lo respetaré, valores/dinero suelen
+chocar, por lo que al menos si te conviertes en mercenario espero que no jodas
+el mundo un poco más de lo que está ya y no hagas que la persona que más te
+valora se vaya tampoco.
