@@ -1,0 +1,146 @@
+---
+title: "🧪 Ciclos de feedback y Testing en DE"
+date: "2022-12-07"
+preview: "/assets/blog/testing-and-feedback-on-de/sci-cat.webp"
+tags:
+  - "👨‍💻 Aprendizaje"
+  - "🧠 Reflexión"
+  - "🗞 Data Engineering"
+---
+
+## ¿Por qué me interesa reducir el ciclo de feedback?
+
+Después de algunos meses trabajando con datos me he dado cuenta la importancia
+de estos ciclos, desde el punto de vista de negocio es fundamental poder
+generar/corregir/actualizar datos en el menor tiempo posible para poder tomar
+acciones. Para mí el ciclo no solo depende de cuanto tarde el código en
+transformar datos y dejarlos en la aplicación, la mantenibilidad del código y
+sus tests afectan directamente a estos ciclos, reduciendo el número de bugs con
+los test o validaciones apropiadas.
+
+En pocas palabras te digo que el valor aportado a negocio crece un montón cuando
+sabemos implementar la pirámide de los test invertida. El tiempo es algo
+superimportante tanto en la vida como en el trabajo, ¿no sería maravilloso poder
+salir antes debido a un buen trabajo realizado?
+
+## Tamaño de los ciclos de feedback y estrategias
+
+Pues verás, me he topado con este dilema muchas veces, en mi caso probar algo de
+principio a fin en “producción” significa esperar 2 horas a que los cálculos
+terminen. Al principio intenté reducirlo con test unitarios que comprobasen cada
+aspecto del proceso de cálculos, veamos un ejemplo:
+
+```python
+import pandas as pd
+
+def test_some_behavior_of_your_transformation(self):
+    input = read_from_a_json_file()
+    expected = read_from_a_json_file()
+
+    result = self.calculator.do_some_stuff(input)
+
+    pd.testing.assert_frame_equal(result, expected)
+```
+
+Una mala idea, en este caso el código de test sabe lo mismo o incluso más que el
+código que se ocupa de transformar, lo cual lo vuelve muy frágil al cambio, por
+no decir que construir los datos se hace infernal a veces. Si muchas filas en tu
+DataFrame se vuelve poco legible, si falla algo usando las aserciones de pandas.
+Entonces la solución fue simplificar al máximo lo qué realmente queríamos
+testear usando aserciones creadas por mí o directamente `assert_that` de
+`AssertPy`.
+
+```python
+import pandas as pd
+
+def test_some_behavior_of_your_transformation(self):
+    input = generate_data_using_a_builder(value=True)
+
+    result = self.calculator.do_some_stuff(input)
+
+    assert_that(result).not_contains(True)
+```
+
+Así, reduciendo la fragilidad y mejorando la mantenibilidad de los tests, se
+reduce en gran medida el tiempo feedback, estar seguro de tu código es una
+herramienta no solo importante para no perder el contexto de lo que estabas
+intentando implementar, sino para no perder el tiempo andando por la senda más
+larga. No es una sorpresa que te diga que por mucho esfuerzo que pongas en tests
+unitarios no siempre es suficiente, un ejemplo:
+
+Nuevos datos → Nuestro proceso de transformación → Validaciones funcionales →
+Ingesta → Validaciones manuales sobre la aplicación
+
+En este ejemplo vemos un poco el flujo qué los datos recorren normalmente, cómo
+puedes ver el ciclo de feedback de principio a fin es enorme, por lo que
+introducir un error en los `Nuevos datos` a veces se puede capturar a mitad del
+proceso en la propia transformación, ya que tu código no acepta valores que no
+deberían estar ahí por lo que en cierta manera hemos ahorrado tiempo/esfuerzo a
+los siguientes pasos. No siempre esto es así y hay veces que por cosas de la
+vida es imposible de atrapar casos de uso nuevo u errores sin tenerlos en
+cuenta.
+
+Técnicas como Property Based Testing o Exploratory Testing nos pueden ayudar a
+intentar reducir el ciclo de feedback a cambio de aumentar tiempos en el ciclo
+de feedback más pequeño, buscar el punto correcto de retorno de inversión corre
+a nuestra cuenta.
+
+## Duplicidad y solapamiento de los tests
+
+Es muy importante reducir lo máximo posible la duplicidad del contenido a
+testear, por ejemplo, si al guardar un data frame de pandas le pasamos un
+esquema de pyarrow para forzar los tipos a cada columna y chequear si esta no es
+nula, no tenemos porque nosotros tener un test que lo compruebe. En vez de eso
+podemos generar un wrapper de la llamada a la función que fuerce pasar un
+esquema y validando su llamada con un test a más alto nivel.
+
+Al principio cuesta verlo, pero tener tests que realmente tengan ámbitos
+diferentes y que solo fallen por una cosa marca la diferencia, es muy raro que
+tu test de más alto nivel sepa exactamente que devuelve cada elemento de
+transformación. Suele darse este caso en código que he visto muy frecuentemente:
+
+```python
+class Transformer:
+    # All the transformation methods are in this file.
+
+    df2 = add_some_columns(df1, config)
+    df1 = tranform_some_columns(df1)
+    df2 = merge_some_data(df1, df2)
+    # Random redudant comment
+    clean_df = drop_duplicates(df2)
+
+    # Imagine more tranformation code and save
+```
+
+Por ello he optado en agrupar y dejar la menor lógica posible en la capa más
+alta del código, simplemente su orden, que es lo que realmente nos importa en
+este nivel. Por tanto, si nos es imposible testear esa clase debido a multitud
+de dependencias o configuraciones, no habrá tanto problema, ya que estamos
+probando cada objeto de transformación por separado, evitando así complejidad,
+intentándolos llamar y mirar al detalle desde la capa más alta de nuestra
+transformación.
+
+```python
+class Transformer:
+    # All the transformation methods are in separated files.
+    # And we test each function isolated.
+
+    df2 = prepare_data(config)
+
+    result = (
+        df1
+        .pipe(prepare_data)
+        .pipe(add_some_columns, config)
+        .pipe(tranform_some_columns)
+        .pipe(merge_some_data, df2)
+        .pipe(clean_results)
+        # etc.
+    ).to_csv(dst, index=False)
+```
+
+## Conclusión
+
+Los conceptos de testing son transferibles a cualquier rama de la programación,
+el hecho de poner `TDD on <tu-especialidad>` no marca la una diferencia notable
+en las prácticas empleadas o las soluciones propuestas, nada de lo dicho aquí es
+nuevo, pero para mí si lo es darme cuenta.
