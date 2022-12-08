@@ -34,10 +34,10 @@ aspecto del proceso de cálculos, veamos un ejemplo:
 import pandas as pd
 
 def test_some_behavior_of_your_transformation(self):
-    input = read_from_a_json_file()
+    stub = read_from_a_json_file()
     expected = read_from_a_json_file()
 
-    result = self.calculator.do_some_stuff(input)
+    result = self.calculator.do_some_stuff(stub)
 
     pd.testing.assert_frame_equal(result, expected)
 ```
@@ -54,9 +54,9 @@ testear usando aserciones creadas por mí o directamente `assert_that` de
 from assertpy import assert_that
 
 def test_some_behavior_of_your_transformation(self):
-    input = generate_data_using_a_builder(value=True)
+    stub = generate_data_using_a_builder(value=True)
 
-    result = self.calculator.do_some_stuff(input)
+    result = self.calculator.do_some_stuff(stub)
 
     assert_that(result).not_contains(True)
 ```
