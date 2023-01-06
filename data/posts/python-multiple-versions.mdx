@@ -7,23 +7,33 @@ tags:
   - "🐍 Python"
 ---
 
-#  Trabajar con multiples versiones sin morir en el intento ⚰️
+# Trabajar con multiples versiones sin morir en el intento ⚰️
 
 He visto últimamente lo complicado que se hace trabajar adecuadamente con
 multiples repositorios o diferentes versiones de Python usando `pipenv`.
 
-Por eso he creado esta guía de Python usandu
+Por eso he creado esta guía de Python usando
 [pyenv](https://github.com/pyenv/pyenv) y
 [pipenv](https://pipenv.pypa.io/en/latest/), los cuales sirven para tener un
 mayor control tanto de la versión cómo de las dependencias evitando errores, en
 este caso Ubuntu 22.04 con zsh.
+
+## ¿Cómo funciona?
+
+Toda la gestión de versiones de Python es gestionada usando `pyenv`, mientras
+que [pip](https://pip.pypa.io/en/stable/installing/#upgrading-pip) el gestor de
+dependencias para el entorno global de la versión de Python. Asegurándonos
+siempre primero de mirar la versión `python -V`, vamos a instalar y
+[pipenv](https://pipenv.pypa.io/en/latest/) que sería un gestor de entornos con
+dependencias, sirve para instalar las cosas en el entorno en vez del entorno
+global y que las dependencias no se choquen.
 
 > En la documentación de los repositorios hay más información para otras
 > versiones.
 
 ## Pyenv
 
-Lo primero a instalar es `pyenv`, idea unsado el siguiente comando
+Lo primero a instalar es `pyenv`, idea usando el siguiente comando
 
 ```bash
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
@@ -76,14 +86,6 @@ documentación.
 > estar utilizándola.
 
 ## Pipenv
-
-Usando la versión dentro del ámbito que queremos, asegurándonos siempre primero
-de mirar la versión, vamos a instalar
-[pip](https://pip.pypa.io/en/stable/installing/#upgrading-pip) el gestor de
-dependencias para el entorno global de la versión de Python y
-[pipenv](https://pipenv.pypa.io/en/latest/) que sería un gestor de entornos con
-dependencias, sirve para instalar las cosas en el entorno en vez del entorno
-global y que las dependencias no se choquen.
 
 Si acabas de instanciar la versión hay que instalar `pip` y `pipenv` para poder
 usarlo.
