@@ -11,7 +11,9 @@ import PostTags from "../blog/PostTags";
 const Welcome = () => {
   return (
     <>
-      <Heading as="h1">Previsión del tiempo para esta noche: estará oscuro 🌚</Heading>
+      <Heading as="h1">
+        Previsión del tiempo para esta noche: estará oscuro 🌚
+      </Heading>
       <Box
         marginTop={{ base: "1", sm: "5" }}
         display="flex"
@@ -57,27 +59,31 @@ const Welcome = () => {
           justifyContent="center"
           marginTop={{ base: "5", sm: "2" }}
         >
-          <PostTags tags={["❤ Software Crafter"]} />
-          <Heading marginTop="1">
-            <Link textDecoration="none" _hover={{ textDecoration: "none" }}>
-              ¿Quién soy?
-            </Link>
-          </Heading>
+          <Heading marginTop="1">¿Quién soy?</Heading>
           <Text
             as="p"
             marginTop="2"
             color={useColorModeValue("gray.700", "gray.200")}
             fontSize="lg"
           >
-            Soy un desarrollador nuevo en el sector, aunque ya algunas cosas he
-            visto, back end y data enginnering con sus respectivos stacks
-            tecnológicos. Me gusta mucho el trabajo en este sector, el
-            teletrabajo y la comunicación en ingles con otras personas del mundo
-            es muy interesante. Me gustaría decir qué suelo girar alrededor del
-            marco Agile, aprendiendo cómo se aplica. Empecé el camino sel
-            software crafter sin tener mucha idea pero aspirando a hacer las
-            cosas lo mejor qué se puede y mejorando.
+            Soy un adicto al trabajo con muchas ganas de aprender
+            independientemente del rol ejercido. Me gusta leer y compartir
+            libros del sector TIC, me apasiona la artesanía del software pero
+            sin perder de vista que hay que dar valor. Mi metodología Agile
+            favorita es Design Thinking. Es posible que haya cambiado con
+            respecto a la foto 😹, siéntanse como en casa, cualquier cosilla en
+            el footer está mi correo.
           </Text>
+          <PostTags
+            tags={[
+              "💗 Software Crafter",
+              "🫖 Nestea",
+              "😺 Cats",
+              "🏘 Data Engineering",
+              "🐧 Linux",
+              "🕸 Web Development",
+            ]}
+          />
         </Box>
       </Box>
     </>
