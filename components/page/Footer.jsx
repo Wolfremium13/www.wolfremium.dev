@@ -12,7 +12,6 @@ import {
   linkedInUrl,
   githubUrl,
   youtubeUrl,
-  twitterUrl,
   gmailUrl,
 } from "../../data/social-links";
 import CopyButton from "./CopyButton";
@@ -38,9 +37,6 @@ const Footer = () => {
           <CopyButton label={"Mail"} href={gmailUrl}>
             <MdEmail></MdEmail>
           </CopyButton>
-          <SocialButton label={"Twitter"} href={twitterUrl}>
-            <FaTwitter />
-          </SocialButton>
           <SocialButton label={"YouTube"} href={youtubeUrl}>
             <FaYoutube />
           </SocialButton>
