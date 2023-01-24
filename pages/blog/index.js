@@ -37,7 +37,7 @@ export default function Blog({ posts }) {
   }, []);
 
   //Infinite scroll
-  const maxPostsInPage = 6;
+  const maxPostsInPage = 9;
   const { next, currentPage, currentData, maxPage } = usePagination(
     results,
     maxPostsInPage
