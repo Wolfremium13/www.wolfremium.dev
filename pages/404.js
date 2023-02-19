@@ -1,7 +1,13 @@
 import NotFoundPage from "../components/page/404";
+import HeadTags from "../components/page/HeadTags";
 
 const NotFound = () => {
-  return <NotFoundPage></NotFoundPage>;
+  return (
+    <>
+      <HeadTags />
+      <NotFoundPage></NotFoundPage>
+    </>
+  );
 };
 
 export default NotFound;

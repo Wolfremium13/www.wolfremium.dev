@@ -4,11 +4,14 @@ import { MDXComponents } from "../../components/mdx/MDXComponents";
 import { Box, Heading, Text } from "@chakra-ui/react";
 import { formatDate } from "../../lib/format-date";
 import { getMdxPaths } from "next-mdx/server";
+import HeadTags from "../../components/page/HeadTags";
 
 export default function Post({ post }) {
+  console.log(post);
   const metadata = post.frontMatter;
   return (
     <>
+      <HeadTags metadata={metadata} />
       <Heading align="center" mt={"4"}>
         <Text color="gray.300">📅 {formatDate(metadata.date)}</Text>
       </Heading>

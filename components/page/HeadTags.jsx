@@ -5,8 +5,8 @@ const HeadTags = ({ metadata = {} }) => {
     title: metadata.title || "Kevin Hierro - Wolfremium",
     description: metadata.description || "Blog personal",
     slug: metadata.slug || "",
-    image: "/assets/default-image.webp",
-    date: metadata.date || new Date().toISOString(),
+    preview: metadata.preview || "/assets/default-image.webp",
+    date: new Date(metadata.date).toISOString() || new Date().toISOString(),
     domain: "https://wolfremium.dev",
     site_name: "Kevin Hierro Carrasco",
   };
@@ -16,13 +16,13 @@ const HeadTags = ({ metadata = {} }) => {
       <title>{SEO.title}</title>
       <meta name="robots" content="follow, index" />
       <meta content={SEO.description} name="description" />
-      <meta property="og:url" content={`${SEO.domain}/${SEO.slug}`} />
-      <link rel="canonical" href={`${SEO.domain}/${SEO.slug}`} />
+      <meta property="og:url" content={`${SEO.domain}${SEO.slug}`} />
+      <link rel="canonical" href={`${SEO.domain}${SEO.slug}`} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={SEO.site_name} />
       <meta property="og:description" content={SEO.description} />
       <meta property="og:title" content={SEO.title} />
-      <meta property="og:image" content={SEO.image} />
+      <meta property="og:image" content={SEO.preview} />
       <meta property="article:published_time" content={SEO.date} />
       <meta
         name="viewport"

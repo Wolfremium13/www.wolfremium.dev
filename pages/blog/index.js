@@ -11,6 +11,7 @@ import {
   InputLeftElement,
 } from "@chakra-ui/react";
 import { MdSearch } from "react-icons/md";
+import HeadTags from "../../components/page/HeadTags";
 
 export default function Blog({ posts }) {
   const searchRef = useRef(null);
@@ -80,6 +81,7 @@ export default function Blog({ posts }) {
 
   return (
     <>
+      <HeadTags />
       <Container ref={searchRef} mt="10" maxW={"2xl"}>
         <InputGroup>
           <InputLeftElement pointerEvents="none">
