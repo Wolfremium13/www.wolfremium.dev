@@ -7,7 +7,6 @@ import { getMdxPaths } from "next-mdx/server";
 import HeadTags from "../../components/page/HeadTags";
 
 export default function Post({ post }) {
-  console.log(post);
   const metadata = post.frontMatter;
   return (
     <>

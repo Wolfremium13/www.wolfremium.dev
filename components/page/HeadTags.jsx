@@ -6,7 +6,7 @@ const HeadTags = ({ metadata = {} }) => {
     description: metadata.description || "Blog personal",
     slug: metadata.slug || "",
     preview: metadata.preview || "/assets/default-image.webp",
-    date: new Date(metadata.date).toISOString() || new Date().toISOString(),
+    date: metadata.date || new Date().toISOString(),
     domain: "https://wolfremium.dev",
     site_name: "Kevin Hierro Carrasco",
   };
