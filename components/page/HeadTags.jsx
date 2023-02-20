@@ -16,7 +16,10 @@ const HeadTags = ({ metadata = {} }) => {
     <Head>
       <title>{SEO.title}</title>
       <meta name="robots" content="follow, index" />
-      <meta content={SEO.description} name="description" />
+      <meta
+        content="Blog personal de Kevin Hierro Carrasco."
+        name="description"
+      />
       <meta property="og:url" content={`${SEO.domain}${SEO.slug}`} />
       <link rel="canonical" href={`${SEO.domain}${SEO.slug}`} />
       <meta property="og:type" content="website" />
