@@ -1,0 +1,100 @@
+---
+title: "😼 Haseando y optimizando en pandas"
+date: "2023-02-20"
+preview: "/assets/blog/hasing-and-optimizing-on-pandas/running-cat.gif"
+tags:
+  - "🐍 Python"
+  - "🗞 Data Engineering"
+---
+
+En primer lugar he de darle las gracias a Mario Pinto por alentarme a escribir
+este post, recientemente nos hemos encontrado un código "mejorable" el cuál ya
+tenía una base de tests. El caso era que debíamos de remover de nuestros datos
+una serie de filas usando pandas en base a un conjunto de columnas, un filtro
+compuesto por así decirlo. El caso era que el código que teníamos no estaba muy
+[vectorizado](https://pythonspeed.com/articles/pandas-vectorization/) para
+trabajar con datos. Veamos la tabla por la que hay que filtrar:
+
+**Tabla de filtrado**
+
+```markdown
+| ID  | year | category |
+| --- | ---- | -------- |
+| A1  | 1    | A        |
+| B2  | 2    | B        |
+| ... | ...  | ...      |
+```
+
+La idea aquí era simplificar el código lo máximo posible tanto el proceso como
+la complejidad del código por lo que se nos ocurrió generar una nueva columna
+con el valor [hash](https://es.wikipedia.org/wiki/Funci%C3%B3n_hash) siendo la
+suma de todos los elementos a filtrar. Nos dimos cuenta rápidamente de que
+pandas necesita usar su propia función de hashing, ya que usar la implementación
+de hash de python requería un `apply` o un `applymap`.
+
+**Ejemplo con apply**
+
+```python
+df['hash'] = df.apply(lambda x: hash(x['ID'] + x['year'] + x['category']), axis = 1)
+```
+
+**Ejemplo con sin apply**
+
+```python
+df['hash'] = pd.util.hash_array(
+  df['ID'].to_numpy() + df['year'].to_numpy() + df['category'].to_numpy()
+)
+```
+
+Usamos el `.to_numpy()` para convertir el valor de la `pd.Series` en un array
+que contiene los 3 valores `[ID, year, category]` para luego generar un número
+único en base a esos valores.
+
+> Si usas
+> [pandas.util.hash_pandas_object](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.util.hash_pandas_object.html#pandas-util-hash-pandas-object)
+> recuerda que hace un hash sobre el índice del objeto en cuestión por lo que no
+> nos sirve para comparar con un objeto con diferente índice en otro dataframe.
+
+Ahora si ya tenemos enn la tabla de filtrado la nueva columna.
+
+**Tabla de filtrado**
+
+```markdown
+| ID  | year | category | hash |
+| --- | ---- | -------- | ---- |
+| A1  | 1    | A        | 101  |
+| B2  | 2    | B        | 110  |
+| ... | ...  | ...      | ...  |
+```
+
+La función quedaría añadirla a los datos:
+
+**Tabla de datos**
+
+```markdown
+| ID  | year | category | hash | more_columns... |
+| --- | ---- | -------- | ---- | --------------- |
+| A1  | 1    | A        | 101  | ...             |
+| B2  | 2    | B        | 110  | ...             |
+| ... | ...  | ...      | ...  | ...             |
+```
+
+Y ahora solo quedaría filtrar para quedarnos con aquellos hashes que no
+aparezcan en la tabla de filtrado:
+
+**Filtrado de los datos**
+
+```python
+are_not_on_filter_table = (~data['hash'].isin(filter_table['hash']))
+filtered = data[are_not_on_filter_table].drop(columns=['hash'])
+```
+
+## Conclusión
+
+Este es un caso que se puede resolver de muchas maneras, en este caso hemos
+intentado resolverlo de una manera con pocas líneas de código y que no se usase
+`apply` en cuestión de rendimiento va bastante bien y es simple de añadir o
+quitar columnas para filtrar. Si por ejemplo hubiesen muchos valores en la tabla
+de filtrado el `.isin()` tendría que comprobar para todos los buscar por las
+**N** filas de la tabla de filtrado, probablemente haya soluciones mejores como
+`merge`.
