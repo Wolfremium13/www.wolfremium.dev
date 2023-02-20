@@ -53,7 +53,7 @@ const Navbar = () => {
 
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
-            <Stack as={"nav"} spacing={4} border={"2px"}>
+            <Stack as={"nav"} spacing={4}>
               {pageLinks.map(({ name, path }) => (
                 <NavItem key={name} name={name} path={path}>
                   {name}
