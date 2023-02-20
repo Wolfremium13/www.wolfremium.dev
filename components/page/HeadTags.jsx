@@ -9,6 +9,7 @@ const HeadTags = ({ metadata = {} }) => {
     date: metadata.date || new Date().toISOString(),
     domain: "https://wolfremium.dev",
     site_name: "Kevin Hierro Carrasco",
+    keywords: metadata.keywords || "Python,Agile,TDD",
   };
 
   return (
@@ -24,6 +25,7 @@ const HeadTags = ({ metadata = {} }) => {
       <meta property="og:title" content={SEO.title} />
       <meta property="og:image" content={SEO.preview} />
       <meta property="article:published_time" content={SEO.date} />
+      <meta name="keywords" content={SEO.keywords}></meta>
       <meta
         name="viewport"
         content="width=device-width, initial-scale=1"
