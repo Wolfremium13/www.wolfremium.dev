@@ -1,8 +1,16 @@
 import { getAllFiles } from "../lib/mdx";
-import { Container, VStack, Heading, Text, Link } from "@chakra-ui/react";
+import {
+  Container,
+  VStack,
+  Heading,
+  Text,
+  Button,
+  Flex,
+} from "@chakra-ui/react";
 import PostList from "../components/blog/PostList";
 import Welcome from "../components/home/Welcome";
 import HeadTags from "../components/page/HeadTags";
+import Link from "next/link";
 
 export default function Home({ posts }) {
   return (
@@ -11,6 +19,13 @@ export default function Home({ posts }) {
       <Container maxW={"7xl"} p="12">
         <Welcome></Welcome>
         <PostList posts={posts}></PostList>
+        <Flex justifyContent={"center"} margin={"8"}>
+          <Link href={"/blog"}>
+            <Button colorScheme="teal" size="lg">
+              ¿Quieres ver mas? 🕵
+            </Button>
+          </Link>
+        </Flex>
         <VStack paddingTop="50px" spacing="6" alignItems="flex-start">
           <Heading as="h2">¿De qué suelo escribir?</Heading>
           <Text as="p" fontSize="lg">
