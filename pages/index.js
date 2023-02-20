@@ -2,7 +2,6 @@ import { getAllFiles } from "../lib/mdx";
 import { Container, VStack, Heading, Text, Link } from "@chakra-ui/react";
 import PostList from "../components/blog/PostList";
 import Welcome from "../components/home/Welcome";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
 import HeadTags from "../components/page/HeadTags";
 
 export default function Home({ posts }) {
@@ -21,22 +20,6 @@ export default function Home({ posts }) {
             esperen un post de algo qué salió ayer. Tampoco soy en genio de la
             redacción, lo iré escribiendo con la finalidad de qué los artículos
             sean apuntes.
-          </Text>
-
-          <Heading as="h2">¿Te gusta la página?</Heading>
-          <Text as="p" fontSize="lg">
-            Aquí te dejo un enlace al{" "}
-            {
-              <Link
-                href={"https://github.com/Wolfremium13/blog-react"}
-                color="teal.200"
-                isExternal
-              >
-                repositorio <ExternalLinkIcon w={3} h={3} color="teal.200" />
-              </Link>
-            }{" "}
-            por si lo quieres clonar, no tiene nada del otro mundo (de momento
-            😎).
           </Text>
         </VStack>
       </Container>
