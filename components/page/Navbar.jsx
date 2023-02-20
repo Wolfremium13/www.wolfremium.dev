@@ -4,12 +4,12 @@ import {
   HStack,
   IconButton,
   useDisclosure,
-  useColorModeValue,
   Stack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import NavItem from "./NavItem";
 import pageLinks from "../../data/page-links";
+import GitHubCorner from "./GitHubCorner";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -17,10 +17,14 @@ const Navbar = () => {
   return (
     <>
       <Flex
-        bg={useColorModeValue("gray.100", "gray.900")}
-        px={4}
-        justifyContent={{ base: "none",md: "center" }}
+        backgroundColor="rgba(23, 25, 35, 0.8)"
+        justifyContent={{ base: "none", md: "center" }}
         display={{ base: "column", md: "flex" }}
+        as="header"
+        position="fixed"
+        w="100%"
+        pl={"4"}
+        backdropFilter="saturate(180%) blur(5px)"
       >
         <Flex
           height={"20"}
@@ -62,6 +66,7 @@ const Navbar = () => {
             </Stack>
           </Box>
         ) : null}
+        <GitHubCorner></GitHubCorner>
       </Flex>
     </>
   );

@@ -8,7 +8,9 @@ const Layout = ({ children }) => (
       <header>
         <Navbar></Navbar>
       </header>
-      <main>{children}</main>
+      <main>
+        <Box paddingTop={"20"} zIndex={"-1"}>{children}</Box>
+      </main>
       <footer>
         <Footer></Footer>
       </footer>
