@@ -25,6 +25,7 @@ const Navbar = () => {
         w="100%"
         pl={"4"}
         backdropFilter="saturate(180%) blur(5px)"
+        zIndex={"banner"}
       >
         <Flex
           height={"20"}
