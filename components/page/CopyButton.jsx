@@ -1,12 +1,7 @@
 import {
-  Box,
-  Container,
-  Stack,
-  Text,
   useColorModeValue,
   useClipboard,
   Tooltip,
-  IconButton,
   chakra,
   VisuallyHidden,
 } from "@chakra-ui/react";
