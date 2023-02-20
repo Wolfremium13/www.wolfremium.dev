@@ -55,7 +55,7 @@ que contiene los 3 valores `[ID, year, category]` para luego generar un número
 > recuerda que hace un hash sobre el índice del objeto en cuestión por lo que no
 > nos sirve para comparar con un objeto con diferente índice en otro dataframe.
 
-Ahora si ya tenemos enn la tabla de filtrado la nueva columna.
+Ahora si ya tenemos en la tabla de filtrado la nueva columna.
 
 **Tabla de filtrado**
 
@@ -92,9 +92,9 @@ filtered = data[are_not_on_filter_table].drop(columns=['hash'])
 ## Conclusión
 
 Este es un caso que se puede resolver de muchas maneras, en este caso hemos
-intentado resolverlo de una manera con pocas líneas de código y que no se usase
+intentado resolverlo de una manera con pocas líneas de código, que no se usase
 `apply` en cuestión de rendimiento va bastante bien y es simple de añadir o
 quitar columnas para filtrar. Si por ejemplo hubiesen muchos valores en la tabla
-de filtrado el `.isin()` tendría que comprobar para todos los buscar por las
-**N** filas de la tabla de filtrado, probablemente haya soluciones mejores como
-`merge`.
+de filtrado el `.isin()` tendría que comprobar para todas las filas de data
+buscar por las **N** filas de la tabla de filtrado, probablemente haya
+soluciones mejores como `merge`.
