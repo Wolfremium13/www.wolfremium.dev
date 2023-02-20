@@ -6,7 +6,6 @@ import {
   useDisclosure,
   useColorModeValue,
   Stack,
-  Text,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import NavItem from "./NavItem";
@@ -17,12 +16,18 @@ const Navbar = () => {
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+      <Flex
+        bg={useColorModeValue("gray.100", "gray.900")}
+        px={4}
+        justifyContent={{ base: "none",md: "center" }}
+        display={{ base: "column", md: "flex" }}
+      >
         <Flex
-          h={"20"}
-          alignItems={"center"}
-          justifyContent={{ base: "space-between", md: "center" }}
+          height={"20"}
+          justifyContent={{ base: "space-between", md: "left" }}
           fontSize={"xl"}
+          minW={{ md: "100%", xl: "7xl" }}
+          alignItems={"center"}
         >
           <IconButton
             size={"md"}
@@ -48,7 +53,7 @@ const Navbar = () => {
 
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
-            <Stack as={"nav"} spacing={4}>
+            <Stack as={"nav"} spacing={4} border={"2px"}>
               {pageLinks.map(({ name, path }) => (
                 <NavItem key={name} name={name} path={path}>
                   {name}
@@ -57,7 +62,7 @@ const Navbar = () => {
             </Stack>
           </Box>
         ) : null}
-      </Box>
+      </Flex>
     </>
   );
 };
