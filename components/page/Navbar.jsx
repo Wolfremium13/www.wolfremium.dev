@@ -5,6 +5,7 @@ import {
   IconButton,
   useDisclosure,
   Stack,
+  Avatar,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import NavItem from "./NavItem";
@@ -34,6 +35,15 @@ const Navbar = () => {
           minW={{ md: "100%", xl: "7xl" }}
           alignItems={"center"}
         >
+          <Avatar
+            size={"lg"}
+            src={"/assets/layout/navbar-logo.webp"}
+            display={{ base: "none", md: "flex" }}
+            marginRight={"4"}
+            bg="transparent"
+            border={"4px"}
+            borderColor={"gray.100º"}
+          />
           <IconButton
             size={"md"}
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
