@@ -42,7 +42,6 @@ const Navbar = () => {
             marginRight={"4"}
             bg="transparent"
             border={"4px"}
-            transition={"200ms linear"}
           />
           <IconButton
             size={"md"}
