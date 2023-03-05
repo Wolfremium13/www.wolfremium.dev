@@ -1,0 +1,80 @@
+---
+title: "🧨 La magia de la prueba y error"
+date: "2023-03-05"
+preview: "/assets/blog/the-magic-of-testing-and-error/cat-magic.webp"
+tags:
+  - "👨‍💻 Aprendizaje"
+---
+
+En una formación de [Lean Mind](https://leanmind.es/es/) se empezó a hablar del
+problema de encontrar errores en soluciones tecnológicas grandes, como
+desarrolladores de software debemos intentar evitar al máximo prácticas del tipo
+“prueba y error” sin un criterio o rigor científico donde se anotan las pruebas
+y resultados. Este es un tema interesante ya que por mucho test que tengamos se
+nos cuelan errores que se escapan a nuestro contexto del desarrollo como pueden
+ser las características no funcionales de un programa, como por ejemplo la
+conectividad, ¿qué pasa si se cae la red repetidas veces en nuestro proceso de
+subida? ¿Será capaz nuestro software de ser resiliente al problema? Los tests
+[no funcionales](https://testerhouse.com/teoria-testing/pruebas-funcionales/#nbspPruebas_no_Funcionalesnbsp)
+también son igual de importantes aunque no siempre se le den la importancia que
+se merecen aún si son difíciles de testear. Veamos como sería ignorarlo
+completamente:
+
+<MdxImage
+  src="/assets/blog/the-magic-of-testing-and-error/cat-explode-tnt-preparation.gif"
+  alt="cat-explosion"
+></MdxImage>
+
+Investigar y plasmar un problema en una imagen que pueda ser actualizada en base
+a los nuevos descubrimientos es fundamental, herramientas como
+[Excalidraw](https://excalidraw.com/) por ejemplo me permiten plasmar el flujo
+de un problema de tal manera que sea comprensible por mí y mis compañeros, a
+parte tienes un histórico de prueba y error. Una ventaja adicional de usar este
+método es plasmar el diagrama en el ticket que estés trabajando haciendo fácil
+de asimilar por tu responsable la magnitud o complejidad del problema, es
+importante para todos pero a lo mejor no es tan urgente ya que lleva varios
+meses allí y nadie dijo nada. Valorar la importancia de un problema es también
+importante para no perder el tiempo.
+
+Un aspecto importante es concretar como equipo la resolución de problemas, por
+ejemplo si en el mob programming se crea mucho ruido con comentarios que no
+tienen que ver etc. y es improbable que puedas aprender o tener el suficiente
+foco como para intentar encajar las piezas del problema en tu cabeza. Tener
+buena memoria puede ayudarte pero no suele ser suficiente. Tomarse tu tiempo
+solo es importante para ir iterando en una solución con el equipo, juntos pero
+buscando por separado aportando diferentes perspectivas si así el equipo lo
+decide, lo ideal es llegar con un plan trazado poco a poco o una hipótesis y
+plantear o implementarla con el equipo.
+
+> El método Feynman es un modelo mental que se utiliza como técnica de
+> comprensión para ayudarnos a aprender algo, por muy complicado de entender que
+> sea.
+
+El software tiende a ser determinista, lo cual es contradictorio de la idea de
+“esta librería hace magia” o “esto de vez en cuando devuelve otra cosa”, lo
+ideal en estos casos es reducir la incertidumbre en nuestro trabajo hasta donde
+se pueda. Problemas como la concurrencia, son complejos a nivel de algoritmos,
+trazar un plan de ingeniería de cómo vas a irte acercando de una manera ordenada
+a esa solución final es clave para un buen diseño o hipótesis. Si en este caso
+pensamos en magia vamos a ir dando palos de ciego hasta que demos con la
+solución final que podría ser 3 entre 100000000, casi que la lotería es más
+rentable.
+
+Finalmente un factor muy importante es la experiencia, todo el tiempo que le
+dediques a estudiar un problema no es tiempo perdido, aunque si tienes una
+entrega el viernes es importante ser pragmático, en mi experiencia si la pieza
+de código no es muy determinista o genera muchas soluciones de multitud de
+combinaciones, como puede ser en data engineering donde no hay control de los
+datos, lo mejor es definir la solución que consideramos correcta y forzar al
+código a solo generar esa o fallar. Esto me ha ayudado a reducir la carga
+cognitiva del código y evitar la gestión de multitud de soluciones de un código.
+Los test unitarios o de integración no captarán el error hasta que el input del
+programa cambie, tener un buen sistema de observabilidad es muy importante para
+buscar y encontrar este tipo de errores.
+
+## Conclusión
+
+Es muy importante entender que el software tiene errores, es muy difícil generar
+una solución sin ellos por lo cual es importante tener un cierto rigor a la hora
+de encontrar estos errores ya que si tus clientes los encuentran antes les
+saldrá muy caro a tu producto y a ti.
