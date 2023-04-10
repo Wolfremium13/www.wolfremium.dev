@@ -33,10 +33,10 @@ sudo apt install curl
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
-> Una vez instalado nos preguntará si queremos zsh como terminal predeterminada le
-> damos a sí, pero recuerda que para que el cambio surta efecto deberemos hacer
-> un logout e iniciar otra vez. Aunque siempre podemos usar `exec zsh` dentro
-> de bash.
+> Una vez instalado nos preguntará si queremos zsh como terminal predeterminada
+> le damos a sí, pero recuerda que para que el cambio surta efecto deberemos
+> hacer un logout e iniciar otra vez. Aunque siempre podemos usar `exec zsh`
+> dentro de bash.
 
 ## Theme p10k
 
@@ -115,4 +115,11 @@ plugins=(
 ```
 
 Y hasta aquí lo dejo, por lo general a partir de aquí yo no le pondría muchas
-más cosas puede tender a fallos.
+más cosas puede tender a fallos. Aunque si vas a trabajar con `direnv` te
+recomiendo que añadas esta línea al final de tu zsh en vez de la de la
+documentación original, debido a que a veces no carga bien las variables de
+entorno.
+
+```bash
+$(direnv hook $SHELL)
+```
