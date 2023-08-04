@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest --testPathPattern=tests/unit",
+    "test:e2e": "playwright test tests/e2e/ --ui",
+    "test:e2e-full": "npm run build && concurrently --kill-others-on-fail \"npm run start\" \"npx wait-on http://localhost:3000 && playwright test tests/e2e/\""
   },
   "dependencies": {
     "@headlessui/react": "^1.7.16",
@@ -23,5 +25,18 @@
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.36.2",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^14.0.0",
+    "@types/jest": "^29.5.3",
+    "concurrently": "^8.2.0",
+    "css-mediaquery": "^0.1.2",
+    "jest": "^29.6.2",
+    "jest-environment-jsdom": "^29.6.2",
+    "playwright": "^1.36.2",
+    "start-server-and-test": "^2.0.0",
+    "ts-jest": "^29.1.1"
   }
 }

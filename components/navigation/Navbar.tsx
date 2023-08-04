@@ -13,7 +13,6 @@ const Navbar: React.FC = () => {
          <div className="flex md:order-2">
            <ToggleButton setIsOpen={setIsOpen} />
          </div>
-         {/* Set order of Search to -1 on mobile and 0 on larger screens */}
          <div className="order-first md:order-none">
            <Search isOpen={isOpen} />
          </div>

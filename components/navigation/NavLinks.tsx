@@ -6,16 +6,17 @@ const NavLinks: React.FC<NavLinksProps> = ({ isOpen }) => {
   const navLinks = [
     { title: "Home", path: "/" },
     { title: "About", path: "/about" },
-    { title: "Services", path: "/services" },
+    { title: "Blog", path: "/blog" },
     { title: "Contact", path: "/contact" },
   ];
+  if (!isOpen) {
+    return <></>;
+  }
 
   return (
     <div
-      className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${
-        isOpen ? "flex" : "hidden"
-      }`}
-      id="navbar-sticky"
+      className={`items-center justify-between w-full md:flex md:w-auto md:order-1 flex`}
+      data-testid="navbar-link-container"
     >
       <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
         {navLinks.map((link, index) => (
