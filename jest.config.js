@@ -1,4 +1,5 @@
 module.exports = {
+  setupFilesAfterEnv: ['./setupTests.js'],
   preset: 'ts-jest',
   testEnvironment: 'jest-environment-jsdom',
   moduleNameMapper: {
