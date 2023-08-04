@@ -1,19 +1,15 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { ToggleButton } from "./ToggleButton";
 import NavLinks from "./NavLinks";
 
 const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const minimumDesktopWidth = 768;
-    const isClient = typeof window !== "undefined";
-    if (isClient) {
-      setIsMobile(window.innerWidth < minimumDesktopWidth);
-    }
     const handleResize = () => {
+      const minimumDesktopWidth = 768;
       const mobile = window.innerWidth < minimumDesktopWidth;
       setIsMobile(mobile);
 
@@ -22,23 +18,34 @@ const Navbar: React.FC = () => {
       }
     };
     window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
-    <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+    <NavbarLogic isMobile={isMobile} isOpen={isOpen} setIsOpen={setIsOpen} />
+  );
+};
+
+type NavbarLogicProps = {
+  isMobile: boolean;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+const NavbarLogic: React.FC<NavbarLogicProps> = ({
+  isMobile,
+  isOpen,
+  setIsOpen,
+}) => {
+  return (
+    <nav className="bg-white fixed w-full z-20 top-0 left-0 border-b border-gray-200">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        {isMobile && (
-          <div className="flex md:order-2">
-            <ToggleButton setIsOpen={setIsOpen} />
-          </div>
-        )}
+        {isMobile && <ToggleButton setIsOpen={setIsOpen} />}
         <NavLinks isOpen={isOpen} isMobile={isMobile} />
       </div>
     </nav>
   );
 };
 
-export { Navbar };
+export { Navbar, NavbarLogic };
