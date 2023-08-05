@@ -39,7 +39,7 @@ const NavbarLogic: React.FC<NavbarLogicProps> = ({
   setIsOpen,
 }) => {
   return (
-    <nav className="bg-gray-900 fixed w-full z-20 top-0 left-0 ">
+    <nav className="bg-gray-900/90 fixed w-full z-20 top-0 left-0 border-b-2 border-lightGreen/40">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         {isMobile && <ToggleButton setIsOpen={setIsOpen} isOpen={isOpen}/>}
         <NavLinks isOpen={isOpen} isMobile={isMobile} />
