@@ -3,6 +3,7 @@ import "./styles/globals.css";
 import "./styles/scroll-bar.css";
 import "./styles/github-corner.css";
 import type { Metadata } from "next";
+import { Footer } from "@/components/navigation/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,11 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body>
+      <body className="bg-darkViolet">
         <Navbar />
         <main className="min-h-screen pt-20 md:p-20 bg-darkViolet text-cyan-50 bg-confetti bg-fixed">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
