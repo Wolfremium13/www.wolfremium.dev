@@ -25,7 +25,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ isOpen, isMobile }) => {
           <li key={index} className="md:min-w-[30%] text-center min-w-full py-1 md:py-0">
             <a
               href={link.path}
-              className="block py-1.5 px-1 lg:px-4 text-lightGreen hover:text-gray-300 bg-darkViolet hover:bg-mediumViolet border border-darkGreen hover:border-lightGreen rounded-lg"
+              className="block py-1.5 px-1 lg:px-4 text-lightGreen hover:text-gray-300 bg-darkViolet hover:bg-gradient-to-tr hover:from-darkGreen hover:to-darkViolet  border border-darkGreen hover:border-lightGreen rounded-lg"
             >
               {link.title}
             </a>
