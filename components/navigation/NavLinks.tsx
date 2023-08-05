@@ -15,7 +15,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ isOpen, isMobile }) => {
     { title: "Home", path: "/", icon: <GiOilySpiral size={30} /> },
     { title: "Acerca", path: "/#", icon: <GiDwarfHelmet size={30} /> },
     { title: "Blog", path: "/#", icon: <GiScrollQuill size={30} /> },
-    { title: "Contacto", path: "/#", icon: <GiLoveLetter size={30} /> },
+    { title: "Contacto", path: "/contact", icon: <GiLoveLetter size={30} /> },
   ];
 
   if (isMobile && !isOpen) {

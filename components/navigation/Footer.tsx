@@ -38,16 +38,16 @@ const Footer = () => {
             <VscGithub size={27} />
           </a>
           <a
-            href="https://github.com/Wolfremium13"
+            href="https://www.linkedin.com/in/kevin-h-3950071bb/"
             className="hover:text-lightViolet"
             title={"Linkedin"}
           >
             <FaLinkedin size={27} />
           </a>
           <a
-            href="https://github.com/Wolfremium13"
+            href="https://www.youtube.com/channel/UCnrHmmCs3XilLaGTJR8Cs8w"
             className="hover:text-lightViolet"
-            title={"Linkedin"}
+            title={"Youtube"}
           >
             <IoLogoYoutube size={27} />
           </a>
