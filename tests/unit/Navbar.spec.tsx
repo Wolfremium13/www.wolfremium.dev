@@ -30,6 +30,15 @@ describe("Navigation bar should ", () => {
 
       expect(setIsOpenMock).toHaveBeenCalledTimes(1);
     });
+
+    test("display github corner", () => {
+      render(
+        <NavbarLogic isMobile={true} isOpen={true} setIsOpen={() => {}} />
+      );
+
+      const githubCorner = screen.queryByLabelText("View source on GitHub");
+      expect(githubCorner).toBeInTheDocument();
+    });
   });
 
   describe("on desktop window size", () => {
@@ -49,6 +58,15 @@ describe("Navigation bar should ", () => {
 
       const navigationLinks = screen.queryAllByRole("listitem");
       expect(navigationLinks.length).toBeGreaterThanOrEqual(1);
+    });
+
+    test("display github corner", () => {
+      render(
+        <NavbarLogic isMobile={true} isOpen={true} setIsOpen={() => {}} />
+      );
+
+      const githubCorner = screen.queryByLabelText("View source on GitHub");
+      expect(githubCorner).toBeInTheDocument();
     });
   });
 });
