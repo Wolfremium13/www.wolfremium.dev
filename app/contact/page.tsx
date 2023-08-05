@@ -69,6 +69,23 @@ export default function Contact() {
                     interesante.
                   </p>
                 </section>
+
+                <section
+                  id="email-section"
+                  className="p-4 bg-darkViolet rounded shadow-md"
+                >
+                  <h2 className="text-xl font-bold text-lightGreen">Email</h2>
+                  <p>
+                    Si quieres contactar conmigo puedes hacerlo a través de mi
+                    correo electrónico.
+                  </p>
+                  <a
+                    href="mailto:wolfremiuminformatica@gmail.com"
+                    className="text-mediumViolet hover:text-lightGreen"
+                  >
+                    wolfremiuminformatica@gmail.com
+                  </a>
+                </section>
               </div>
             </div>
           </Card>
