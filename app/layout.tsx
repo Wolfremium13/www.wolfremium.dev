@@ -1,10 +1,8 @@
 import { Navbar } from "@/components/navigation/Navbar";
 import "./styles/globals.css";
 import "./styles/scroll-bar.css";
+import "./styles/github-corner.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",

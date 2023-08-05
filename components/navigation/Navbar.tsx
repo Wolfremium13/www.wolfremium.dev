@@ -2,6 +2,7 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { ToggleButton } from "./ToggleButton";
 import NavLinks from "./NavLinks";
+import { GitHubCorner } from "./GithubCorner";
 
 const Navbar: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -43,6 +44,7 @@ const NavbarLogic: React.FC<NavbarLogicProps> = ({
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         {isMobile && <ToggleButton setIsOpen={setIsOpen} isOpen={isOpen}/>}
         <NavLinks isOpen={isOpen} isMobile={isMobile} />
+        <GitHubCorner/>
       </div>
     </nav>
   );
