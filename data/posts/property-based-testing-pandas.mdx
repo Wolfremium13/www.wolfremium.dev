@@ -1,0 +1,189 @@
+---
+title: "🐍 Property Based Testing en pandas"
+date: "2022-03-26"
+preview: "/assets/blog/property-based-testing-pandas/testing-python-logo.webp"
+tags:
+  - "👨‍💻 Aprendizaje"
+  - "🐍 Python"
+---
+
+Llevo un tiempo pensando cómo poder sacarle partido a esta funcionalidad, en
+pandas una librería de transformaciones de datos, gracias a Carlos Blé por su
+consejo de intentar property based testing en las transformaciones explorando
+casos límite apoyados de una librería, en este caso hypothesis.
+
+Voy a explicar algo qué a lo mejor las personas qué no trabajan en datos no
+conocen, pero la realidad es que lo ideal sería probar todos los casos límite de
+los datos del día a día, esto no sucede hasta realizar la transformación de
+todos los datos, en nuestro caso un test unitario eso es inviable. Otra opción
+es generar un subset de datos pequeños a partir del grande pero lleva trabajo
+realizarlo correctamente, por lo qué tampoco es una opción rentable porque si
+mañana cambian los datos no solo tendremos que rehacer ese subset sino también
+el test ya qué no estaba contemplando los nuevos casos de uso, eso puede generar
+falsos positivos en algunos casos ya que está siendo probado contra datos
+predefinidos y estáticos.
+
+Voy a ir explicando la evolución de menos más junto con las ventajas e
+inconvenientes de cada caso. En este caso imaginemos que tenemos una función
+legacy a testear:
+
+```python
+class Transformation:
+
+    def sum_two_columns_and_generate_result(self, df: pd.DataFrame, first_column_name: str,
+                                            second_column_name: str):
+        df['result'] = df[first_column_name] + df[second_column_name]
+        return df
+```
+
+Para realizar un test unitario primero deberemos tener en cuenta qué pandas
+tiene su manera de interpretar los datos al leerlos al igual qué al
+transformarlos. Por ejemplo:
+
+```python
+> np.nan + 0.0
+> 0.0
+```
+
+Esto puede resultar confuso porqué por ejemplo si hacemos esto:
+
+```python
+> None + 0.0
+> TypeError: unsupported operand type(s) for +: 'NoneType' and 'float'
+```
+
+Así qué tanto si hacemos TDD cómo si estamos testeando lo que ya está deberemos
+tener mucho cuidado y conocimiento de la librería. La función en este caso es
+muy sencilla pero se puede complicar mucho testear transformaciones.
+
+Cómo primero ejemplo podríamos usar este test:
+
+```python
+def test_series_transformation_return_sum_of_columns():
+    transformation = Transformation()
+    val1 = 1.0
+    val2 = 2.2
+    df_given = pd.DataFrame(
+        {
+            'column_1': [val1],
+            'column_2': [val2],
+        }
+    )
+    expected_result = pd.Series([val1 + val2])
+
+    df_calculated = transformation.sum_two_columns_and_generate_result(df_given, 'column_1', 'column_2')
+
+    pd.testing.assert_series_equal(df_calculated.result, expected_result, check_names=False)
+```
+
+Aquí el problema de este test es qué los datos son estáticos y sólo contemplan
+un caso de uso por lo qué no es algo en lo qué podamos apoyarnos o confiar.
+
+Vamos a probar pytest y pasarle algunos parámetros más:
+
+```python
+@pytest.mark.parametrize('val1, val2', [
+    (0.1, 0.0),
+    (1, -1),
+    (0.000000001, 7.0),
+    (np.nan, 0.0),
+])
+def test_pytest_transformation_return_sum_of_columns(val1: float, val2: float):
+    transformation = Transformation()
+    df_given = pd.DataFrame(
+        {
+            'column_1': [val1],
+            'column_2': [val2],
+        }
+    )
+    expected_result = pd.Series([val1 + val2])
+
+    df_calculated = transformation.sum_two_columns_and_generate_result(df_given, 'column_1', 'column_2')
+
+    pd.testing.assert_series_equal(df_calculated.result, expected_result, check_names=False)
+```
+
+Aquí tenemos un problema, lo más seguro es que algún caso se nos escape, pero
+nos da algo más de confianza, está claro qué reflejamos todos los casos
+contemplados para estos datos. Aquí yo lo veo aceptable en el caso de querer
+probar unos datos específicos. Lo ideal sería probar con esta librería:
+
+```python
+@given(val1=st.floats(),
+       val2=st.floats())
+def test_hypothesis_transformation_return_sum_of_columns(val1: float, val2: float):
+    transformation = Transformation()
+    df_given = pd.DataFrame(
+        {
+            'column_1': [val1],
+            'column_2': [val2],
+        }
+    )
+    expected_result = pd.Series([val1 + val2])
+
+    df_calculated = transformation.sum_two_columns_and_generate_result(df_given, 'column_1', 'column_2')
+
+    pd.testing.assert_series_equal(df_calculated.result, expected_result, check_names=False)
+```
+
+En el given le indicamos explícitamente el tipo de propiedad a leer para poder
+probar, está librería se encargará de probar los casos límite de la propiedad,
+los convertirá a datos de pandas y finalmente los probaremos con las assertions
+de pandas la cuál comprobará absolutamente todo pero sin probar el nombre de la
+columna, eso incluye tipos de datos lo cuál nos ahorra bastante trabajo por si
+en medio de la transformación se volvieron a convertir.
+
+El problema de los casos límite estaría solucionado con hypothesis pero por
+ejemplo no nos dejaría usar el @fixtures de pytest lo cual no me gusta, pero
+bueno siempre podemos usar una o la otra dependiendo del caso.
+
+¿Tienes curiosidad y quieres ver qué se ha probado en hypothesis?
+
+Hay una forma de verlo añadiendo verbosity al test:
+
+```python
+@settings(verbosity=Verbosity.verbose)
+@given(val1=st.floats(),
+       val2=st.floats())
+def test_hypothesis_transformation_return_sum_of_columns(val1: float, val2: float):
+    transformation = Transformation()
+    df_given = pd.DataFrame(
+        {
+            'column_1': [val1],
+            'column_2': [val2],
+        }
+    )
+    expected_result = pd.Series([val1 + val2])
+
+    df_calculated = transformation.sum_two_columns_and_generate_result(df_given, 'column_1', 'column_2')
+
+    pd.testing.assert_series_equal(df_calculated.result, expected_result, check_names=False)
+```
+
+Una vez añadido puede ejecutar...
+
+```bash
+ pytest [file_name].py -v -s
+```
+
+Y ver los parámetros que ha probado en la consola:
+
+```bash
+.
+.
+test_transformation.py::test_hypothesis_transformation_return_sum_of_columns Trying example: test_hypothesis_transformation_return_sum_of_columns(
+    val1=0.0, val2=0.0,
+)
+Trying example: test_hypothesis_transformation_return_sum_of_columns(
+    val1=-1.2947680462195516e+16, val2=-nan,
+)
+Trying example: test_hypothesis_transformation_return_sum_of_columns(
+    val1=-inf, val2=392874684777985.0,
+)
+.
+.
+```
+
+¿Tienes feedback? Mi correo está en el footer de la página, gracias y un saludo.
+
+[📁Reopositorio con el ejemplo](https://github.com/Wolfremium13/property-based-testing-in-pandas)

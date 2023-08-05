@@ -1,0 +1,108 @@
+---
+title: "🧪 Testing en Data Engineering"
+date: "2022-04-24"
+preview: "/assets/blog/testing-on-data-engineering/testing-data-logo.webp"
+tags:
+  - "👨‍💻 Aprendizaje"
+  - "🗞 Data Engineering"
+---
+
+En estos últimos meses he visto la importancia de validaciones o tests a la hora
+de trabajar con datos, pero claro, normalmente estarás acostumbrado a ver test
+unitario, test de integración o test e2e. Al empezar a aplicar test me di cuenta
+de algo, resulta qué realmente el concepto es el mismo sólo que cambia el
+contexto. Voy a aplicarlos de manera abstracta para qué puedas hacerte una idea.
+
+## Schema Testing
+
+Consiste en comprobar si la estructura de los datos es realmente la correcta
+antes de almacenar un dato, por ejemplo validar qué un campo “email” es del tipo
+deseado `str` en el caso de Python, que no pueda ser null, o que cumpla con la
+regex. Es un nivel básico pero da un soporte de seguridad antes de almacenar
+cualquier cosa incorrecta, siempre puedes equivocarte en una transformación.
+
+<MdxImage
+  src="/assets/blog/testing-on-data-engineering/testing-data-2.webp"
+  alt="data-schema-example"
+></MdxImage>
+
+## Quality Testing
+
+Lo primero a recalcar en este tipo de tests es qué es raro realizarlo de una
+manera qué funcione siempre porque las reglas de negocio van cambiando a lo
+largo del tiempo. En mi caso es el test qué más aporta y el más difícil de
+generar, se podría empezar definiendo los casos límite que no se pueden dar en
+los datos y continuando con criterios de aceptación. Si el proceso es muy grande
+o tiene muchas transformaciones, puede ser extremadamente difícil intuir qué
+podría salir al final de dichas transformaciones. Visto desde otro punto de
+vista, puede ser un test de e2e caja negra donde esperamos un resultado
+aceptable, apóyate siempre allí dónde haya el conocimiento de lo qué debería de
+dar y ve refinando nadie tiene una fórmula mágica para saber si realmente está
+todo bien o mal.
+
+<MdxImage
+  src="/assets/blog/testing-on-data-engineering/testing-data-1.webp"
+  alt="data-quality-example"
+></MdxImage>
+
+## Contract Testing
+
+Exportando la idea de cómo se definían los contratos entre dos sistemas
+separados, se puede aplicar a nuestro caso de uso. Un ejemplo muy bueno sería
+por ejemplo si dentro de los datos vienen un conjunto de métricas “A” y “B”, la
+principal diferencia con los anteriores test consiste en mirar si realmente “A”
+y “B” existen en los datos, por lo que antes de realizar alguna transformación o
+cálculo deberemos validar las fuentes.
+
+<MdxImage
+  src="/assets/blog/testing-on-data-engineering/testing-data-3.webp"
+  alt="data-contract-example"
+></MdxImage>
+
+En un mundo ideal se podría hablar con la fuente de los datos y establecer este
+contrato, pero cómo no siempre es el caso te comentaré que existe el “Consumer
+Driven Contract Testing” pero yo en mi caso adapto el concepto a la necesidad,
+el cuál es un test defensivo por si solo te pasasen “A”, darnos el aviso antes
+de qué sea tarde.
+
+## Integrity Testing
+
+Esto es para aquellos casos dónde generamos fichero con claves foráneas a otros
+ficheros, por ejemplo tenemos una transformación que nos genera los datos ya
+listos y con un cierto tipo de estructura, para qué luego pueda ser migrado a la
+base de datos. Este test lo qué hará es que si tenemos un key en un fichero
+debería de existir otra columna que hace referencia a la key en el otro. Esto me
+parece super útil a la hora de hacer transformaciones de datos, ya qué nos
+aporta un nivel más de seguridad.
+
+<MdxImage
+  src="/assets/blog/testing-on-data-engineering/testing-data-4.webp"
+  alt="data-integrity-example"
+></MdxImage>
+
+## Regression Testing
+
+La prueba de regresión es un tipo de prueba que se realiza para verificar que un
+cambio de código en el software no afecte la funcionalidad existente del
+producto. Partimos del hecho de que los datos son algo vivo por lo tanto es muy
+importante asegurarnos de que los datos de viejos cumplen con los criterios
+adecuados.
+
+Cada vez que los datos sufren un cambio y aparece una nueva versión/lanzamiento,
+se debería realizar un sistema que pruebe la retrocompatibilidad de los datos
+con respecto a las nuevas funcionalidades o transformaciones. Un ejemplo puede
+describir mejor el problema:
+
+<MdxImage
+  src="/assets/blog/testing-on-data-engineering/testing-data-5.webp"
+  alt="data-regression-example"
+></MdxImage>
+
+## Conclusión
+
+Tal cómo lo veo Data Engineering tiene un campo muy amplio dónde traer ideas de
+testing y aportar mayor valor a tu trabajo, automatizando procesos y evitando
+incertidumbre ya que escribir estos test hará que puedas saber si algo está bien
+o no ya qué ahora el test te lo dice.
+
+Un saludo y os animo a buscar valor de los test en los datos tu empresa.

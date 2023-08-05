@@ -1,0 +1,99 @@
+---
+title: "🐧 ¿Por qué volví a linux?"
+date: "2022-06-01"
+preview: "/assets/blog/windows-to-linux/win-to-linux.webp"
+tags:
+  - "🧠 Reflexión"
+---
+
+## El cambio
+
+Reflexionando fue dónde descubrí con un par de errores de por medio que ubuntu
+es maravilloso para programación, si te pones a investigar cómo sacarle
+partido(eso si zoom va fatal). Las particiones swap con un buen M.2 puedes
+sacarle rendimiento a muchas cosas qué antes no podías ejecutar con la RAM que
+tenías. Me planteé ponerme Arch linux por los memes, pero la verdad es que ya me
+peleado bastante con varias distribuciones como para complicarme otra vez. La
+versión de ubuntu 22.04 me gustó mucho la verdad, muy sorprendido con la mejora,
+el día que todos los juegos se ejecuten bien en linux habrá mucha gente que se
+mueva. Por otro lado decir que antes de cambiarme windows de últimas solo
+tenerlo encendido con poca cosa consumía 12GB de RAM, mientras con ubuntu 2,5GB,
+prácticamente con lo mismo abierto.
+
+Me he prometido dejar windows y jugar durante un año, a fin de separarme más del
+ordenador, por otro lado decir que configurar repositorios ya no me da errores,
+lo cuál me hace muy feliz, se acabaron los problemas raros de Windows o saltos
+de línea mal configurados o ficheros `.sh` que no podía ejecutar. Ahora todo es
+maravilloso y tengo a Ulauncher que hace que no toque el ratón para abrir algo.
+Ahora si veo esa sensación de libertad para desarrollar y tener una mayor
+productividad.
+
+## Causas
+
+### Trabajando con wsl
+
+En un colaborador se daba el caso de qué estaba trabajando ingeniería de datos
+con Python pero enfocado a un entorno de trabajo unix ya que si no podías
+ejecutar los comandos de MakeFile, estabas jodido, por no hablar que PyCharm no
+detecta entornos de pipenv dentro de wsl. Rápidamente pedí si podía pasar el
+portátil que me han cedido a ubuntu. Por otro lado en lo personal decir que wsl
+no funciona cuando se trata de trabajar con núcleos CUDA usando Pytorch, tiré de
+la CPU para mis pruebas.Por no decir que consumía wsl muchísima RAM sin hacer
+nada.
+
+### Powershell no sirve para todo
+
+Me pregunto en cuantos proyectos de github cuando los clonas tienes un
+`./install.sh` y los ejecutas desde wsl pero se instalan en wsl y en la parte de
+windows nada. Por otro lado decir que cansa estar cambiando de terminal cada vez
+que lo necesitaba y que en una tengo una versión o algo diferente a la de wsl
+provocando conflictos y discordia. Otras veces me pasaba que lo abría de windows
+el proyecto y estaba todo en rojo no encontraba dependencias ni un interprete de
+Python, `this is fine programming`.
+
+## Un poco de mi historia
+
+### Mis comienzos
+
+Me gustaría poner un poco de contexto acerca de el porque pasé a linux nativo en
+mi ordenador personal. Hace años no sé exactamente cuantos pero muchos para mi,
+una persona cercana estaba estudiando maneras de ingresar a la wifi del vecino
+de arriba, existía y existe el foro de
+[seguridad wireless](https://foro.seguridadwireless.net/) el cuál no solo tenía
+información de cómo hacerlo sino una distribución de linux llamada wifislax.
+Aquí fue dónde aprendía linux y la potencia que tenía al poder ejecutarlo desde
+un simple pendrive. Me interesó mucho al respecto, hacer un setup del sistema
+que no fuese live sino que se ejecutase y guardase la información en el pendrive
+del sistema para diccionarios mutantes para atacar por fuerza bruta WPA2 y WEP.
+
+Con el paso del tiempo descubrí lo limitante que era usar linux respecto a
+juegos, programas o la usabilidad en el día a día. Por lo que al cabo de no
+mucho tiempo acabaría pasando a windows cerrando así esta etapa de mi vida pero
+marcando un rumbo qué me llevaría a la programación.
+
+### El grado medio
+
+En el grado medio de sistemas, en primero, el sistema operativo principal era
+ubuntu, iba fatal porque era una imagen de profesorado el dpkg se rompía cada
+poco y para colmo teníamos que emular un windows en un ordenador con poco
+recursos con VirtualBox que según lo que hicieses en windows podías reventar la
+máquina anfitriona. Acabé tan harto que force errores para que me saliese la
+pantalla de GRUB para sobreescribir la contraseña del profesorado como
+superusuario. Un par de comandos para reparar el ubuntu y se acabaron los
+problemas. Mis compañero al ver la jugada repitió el proceso y lo comunicó al
+resto de compañeros. La cose terminó un poco en desastre porque quienes no se
+habían hecho el proceso eran fácilmente hackeados por ssh, a parte de instalar
+juegos con wine y echarse las partidas con el ordenador del fondo de server. Ahí
+fue dónde conocí a un profesor qué más que echarme la bronca me tenía como el
+encargado de buscar vulnerabilidades, una gran persona.
+
+En el segundo año se pusieron ordenadores nuevos con windows porque la verdad es
+que los otros de primero con 4GB de RAM da gracias que arrancaba el sistema con
+el navegador. Aquí aprendí sistema de verdad conectando varias máquinas
+virtuales entre ellas tanto con windows como linux. En el caso de linux daba 0
+problemas si sabías que tenías que hacer / tocar y escribiendo perfecto los
+ficheros de configuración pero en windows había veces qué las cosas no iban
+luego si luego no y eso que habían ventanas que ayudaban. Aquí ya noté una
+evolución en cuanto la usabilidad de ubuntu y sus variantes, ya se notaba más
+fácil de usar y daba menos problemas. El tema es qué en estos años estaba de
+e-sport hasta las cejas así que cambiarme no fue nunca una opción.
