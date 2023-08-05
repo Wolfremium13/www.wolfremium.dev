@@ -6,9 +6,9 @@ type NavLinksProps = {
 const NavLinks: React.FC<NavLinksProps> = ({ isOpen, isMobile }) => {
   const navLinks = [
     { title: "Home", path: "/" },
-    { title: "About", path: "/about" },
-    { title: "Blog", path: "/blog" },
-    { title: "Contact", path: "/contact" },
+    { title: "About", path: "/#" },
+    { title: "Blog", path: "/#" },
+    { title: "Contact", path: "/#" },
   ];
 
   if (isMobile && !isOpen) {
@@ -17,15 +17,15 @@ const NavLinks: React.FC<NavLinksProps> = ({ isOpen, isMobile }) => {
 
   return (
     <div
-      className="items-center justify-between w-full md:w-auto flex"
+      className="items-center justify-between w-full md:w-auto flex py-4 md:py-0"
       data-testid="navbar-link-container"
     >
-      <ul className="flex flex-col p-4 md:p-0 mt-4 md:mt-0 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:border-0 md:bg-white">
+      <ul className="flex flex-col md:flex-row content-center font-medium md:space-x-8 w-full">
         {navLinks.map((link, index) => (
-          <li key={index}>
+          <li key={index} className="md:min-w-[30%] text-center min-w-full py-1 md:py-0">
             <a
               href={link.path}
-              className="block py-2.5 px-1 md:p-2 lg:px-4 hover:text-gray-900"
+              className="block py-1.5 px-1 lg:px-4 text-lightGreen hover:text-gray-300 bg-darkViolet hover:bg-mediumViolet border border-darkGreen hover:border-lightGreen rounded-lg"
             >
               {link.title}
             </a>
