@@ -13,7 +13,7 @@ type NavLinksProps = {
 const NavLinks: React.FC<NavLinksProps> = ({ isOpen, isMobile }) => {
   const navLinks = [
     { title: "Home", path: "/", icon: <GiOilySpiral size={30} /> },
-    { title: "Acerca", path: "/#", icon: <GiDwarfHelmet size={30} /> },
+    //{ title: "Acerca", path: "/#", icon: <GiDwarfHelmet size={30} /> },
     { title: "Blog", path: "/#", icon: <GiScrollQuill size={30} /> },
     { title: "Contacto", path: "/contact", icon: <GiLoveLetter size={30} /> },
   ];
