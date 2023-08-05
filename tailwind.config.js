@@ -14,6 +14,9 @@ module.exports = {
         mediumViolet: "#965fd4",
         lightViolet: "#734f9a",
       },
+      backgroundImage: {
+        'confetti': "url('/layout/bg-confetti.svg')",
+      }
     },
   },
   plugins: [],

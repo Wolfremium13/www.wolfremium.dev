@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/navigation/Navbar";
 import "./styles/globals.css";
+import "./styles/scroll-bar.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -19,7 +20,7 @@ export default function RootLayout({
     <html lang="es">
       <body>
         <Navbar />
-        <main className="min-h-screen pt-20 bg-darkViolet text-cyan-50">
+        <main className="min-h-screen pt-20 bg-darkViolet text-cyan-50 bg-confetti bg-fixed">
           {children}
         </main>
       </body>
