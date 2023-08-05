@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { NavbarLogic } from "../../components/navigation/Navbar";
+import { NavbarLogic } from "../../../components/navigation/Navbar";
 import "@testing-library/jest-dom/extend-expect";
 
 describe("Navigation bar should ", () => {
