@@ -1,9 +1,9 @@
-import { Navbar } from "@/components/navigation/Navbar";
-import "./styles/globals.css";
-import "./styles/scroll-bar.css";
-import "./styles/github-corner.css";
+import "@/public/styles/globals.css";
+import "@/public/styles/scroll-bar.css";
+import "@/public/styles/github-corner.css";
 import type { Metadata } from "next";
 import { Footer } from "@/components/navigation/Footer";
+import { Navbar } from "@/components/navigation/Navbar";
 
 export const metadata: Metadata = {
   title: "Create Next App",

@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { Layout } from "@/components/page/Layout";
 
 type PostData = {
   title: string;
@@ -16,19 +17,20 @@ type PostProps = {
 
 export default function PostPage({ post }: PostProps) {
   return (
-    <div>
-      <h1>{post.title}</h1>
-      <div>{post.content}</div>
-      {/* Puedes agregar más detalles aquí, como la fecha, etiquetas, etc. */}
-    </div>
+    <Layout>
+      <div>
+        <h1>{post.title}</h1>
+        <div>{post.content}</div>
+      </div>
+    </Layout>
   );
 }
 
 type StaticPropsContext = {
-    params: {
-      slug: string;
-    };
+  params: {
+    slug: string;
   };
+};
 
 export const getServerSideProps = async (context: StaticPropsContext) => {
   const slug = context.params.slug;

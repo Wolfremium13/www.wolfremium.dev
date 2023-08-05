@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import Link from "next/link";
+import { Layout } from "@/components/page/Layout";
 
 type Post = {
   title: string;
@@ -19,37 +20,39 @@ type BlogProps = {
 
 export default function Blog({ posts, page, totalPages }: BlogProps) {
   return (
-    <div>
-      {posts.map((post) => (
-        <div key={post.slug}>
-          <h2>{post.title}</h2>
-          <Link href={`/blog/posts/${post.slug}`}>
-            <p>Leer más</p>
-          </Link>
-        </div>
-      ))}
-
+    <Layout>
       <div>
-        {/* Botón "Anterior" */}
-        {page > 1 && (
-          <Link href={`/blog/page/${page - 1}`}>
-            <p>Anterior</p>
-          </Link>
-        )}
+        {posts.map((post) => (
+          <div key={post.slug}>
+            <h2>{post.title}</h2>
+            <Link href={`/blog/posts/${post.slug}`}>
+              <p>Leer más</p>
+            </Link>
+          </div>
+        ))}
 
-        {/* Mostrar el número de página actual */}
-        <span>
-          Página {page} de {totalPages}
-        </span>
+        <div>
+          {/* Botón "Anterior" */}
+          {page > 1 && (
+            <Link href={`/blog/page/${page - 1}`}>
+              <p>Anterior</p>
+            </Link>
+          )}
 
-        {/* Botón "Siguiente" */}
-        {page < totalPages && (
-          <Link href={`/blog/page/${page + 1}`}>
-            <p>Siguiente</p>
-          </Link>
-        )}
+          {/* Mostrar el número de página actual */}
+          <span>
+            Página {page} de {totalPages}
+          </span>
+
+          {/* Botón "Siguiente" */}
+          {page < totalPages && (
+            <Link href={`/blog/page/${page + 1}`}>
+              <p>Siguiente</p>
+            </Link>
+          )}
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 }
 
