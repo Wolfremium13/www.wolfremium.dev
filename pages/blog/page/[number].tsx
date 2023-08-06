@@ -25,7 +25,7 @@ export default function Blog({ posts, page, totalPages }: BlogProps) {
   return (
     <Layout>
       <Head>
-        <title>Blog - Página {page}</title>
+        <title>Blog - Página {page.toString()}</title>
         <meta name="description" content="Lista de artículos publicados en nuestro blog." />
         <meta name="robots" content="follow, index" />
         <link rel="canonical" href={`${process.env.NEXT_PUBLIC_BASE_URL}/blog?page=${page}`} />
