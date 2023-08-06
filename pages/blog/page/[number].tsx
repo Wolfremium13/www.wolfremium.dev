@@ -70,19 +70,9 @@ export const getServerSideProps = async (context: StaticPropsContext) => {
   const postsDirectory = path.join(process.cwd(), "data", "posts");
   const filenames = fs
     .readdirSync(postsDirectory)
-    .filter((fn) => fn.endsWith(".mdx"))
-    .sort();
+    .filter((fn) => fn.endsWith(".mdx"));
 
-  const POSTS_PER_PAGE = 9;
-  const totalPages = Math.ceil(filenames.length / POSTS_PER_PAGE);
-  const currentPage = context.params?.number
-    ? parseInt(context.params.number, 10)
-    : 1;
-  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-  const endIndex = startIndex + POSTS_PER_PAGE;
-  const currentFilenames = filenames.slice(startIndex, endIndex);
-
-  const posts = currentFilenames.map((filename) => {
+  const allPosts = filenames.map((filename) => {
     const filePath = path.join(postsDirectory, filename);
     const fileContents = fs.readFileSync(filePath, "utf8");
     const { data } = matter(fileContents);
@@ -95,11 +85,24 @@ export const getServerSideProps = async (context: StaticPropsContext) => {
       tags: data.tags,
     };
   });
-  const sortedPosts = posts.sort((a, b) => (a.date > b.date ? -1 : 1));
+
+  const sortedPosts = allPosts.sort((a: Post, b: Post) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+
+  const POSTS_PER_PAGE = 9;
+  const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
+  const currentPage = context.params?.number
+    ? parseInt(context.params.number, 10)
+    : 1;
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const endIndex = startIndex + POSTS_PER_PAGE;
+
+  const paginatedPosts = sortedPosts.slice(startIndex, endIndex);
 
   return {
     props: {
-      posts: sortedPosts,
+      posts: paginatedPosts,
       page: currentPage,
       totalPages,
     },
