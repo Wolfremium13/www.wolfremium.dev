@@ -3,6 +3,8 @@ import path from "path";
 import matter from "gray-matter";
 import Link from "next/link";
 import { Layout } from "@/components/page/Layout";
+import { Card } from "@/components/page/Card";
+import { PostPreview } from "@/components/navigation/PostPreview";
 
 type Post = {
   title: string;
@@ -21,15 +23,17 @@ type BlogProps = {
 export default function Blog({ posts, page, totalPages }: BlogProps) {
   return (
     <Layout>
-      <div>
-        {posts.map((post) => (
-          <div key={post.slug}>
-            <h2>{post.title}</h2>
-            <Link href={`/blog/posts/${post.slug}`}>
-              <p>Leer más</p>
-            </Link>
-          </div>
-        ))}
+      <Card>
+        <div className="container mx-auto px-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => (
+            <PostPreview
+              key={post.slug}
+              title={post.title}
+              slug={post.slug}
+              preview={post.preview}
+            />
+          ))}
+        </div>
 
         <div>
           {/* Botón "Anterior" */}
@@ -51,7 +55,7 @@ export default function Blog({ posts, page, totalPages }: BlogProps) {
             </Link>
           )}
         </div>
-      </div>
+      </Card>
     </Layout>
   );
 }
@@ -69,7 +73,7 @@ export const getServerSideProps = async (context: StaticPropsContext) => {
     .filter((fn) => fn.endsWith(".mdx"))
     .sort();
 
-  const POSTS_PER_PAGE = 5;
+  const POSTS_PER_PAGE = 9;
   const totalPages = Math.ceil(filenames.length / POSTS_PER_PAGE);
   const currentPage = context.params?.number
     ? parseInt(context.params.number, 10)
