@@ -37,6 +37,7 @@ const NavLinks: React.FC<NavLinksProps> = ({ isOpen, isMobile }) => {
               href={link.path}
               className="py-1.5 px-1.5 flex justify-center space-x-2 items-center lg:px-4 text-lightGreen hover:text-gray-300 bg-darkViolet hover:bg-gradient-to-tr hover:from-darkGreen hover:to-darkViolet  border border-darkGreen hover:border-lightGreen rounded-lg"
               title={link.title}
+              target="_blank"
             >
               <>
                 {link.icon}
