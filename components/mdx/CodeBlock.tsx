@@ -47,7 +47,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ children, className }) => {
       </pre>
       <div className="absolute top-2 right-2">
         <CopyToClipboard text={children} onCopy={handleCopy}>
-          <button className="text-xs bg-gray-800 hover:bg-gray-600 rounded px-2 py-1">
+          <button className="text-xs bg-gray-800/40 hover:bg-gray-600 rounded px-2 py-1">
             {isCopied ? (
               <FaClipboardCheck size={25} className="text-lightGreen" />
             ) : (
