@@ -19,10 +19,10 @@ const Welcome = () => {
           </h1>
           <p className="text-lg mb-4">
             Soy un artesano del software con experiencia en la creación de
-            aplicaciones web e ingeniería de datos. Mi amor por la tecnología y
-            la programación me ha llevado a adquirir habilidades en una variedad
-            de lenguajes y tecnologías, incluyendo Python, TypeScript, Java,
-            React y Scala.
+            aplicaciones web e ingeniería de datos. Mi amor por el Nestea y la
+            programación me ha llevado a adquirir habilidades en una variedad de
+            lenguajes y tecnologías, incluyendo Python, TypeScript, Java, React
+            y Scala.
           </p>
           <p className="text-lg mb-4">
             A lo largo de mi carrera, he tenido la oportunidad de asistir a
