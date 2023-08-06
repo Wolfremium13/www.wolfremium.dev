@@ -24,14 +24,14 @@ type PostProps = {
 export default function PostPage({ post }: PostProps) {
   return (
     <Layout>
-      <section className="markdown-body flex justify-center content-center pt-8">
-        <Card>
-          <div className="max-w-5xl">
+      <Card>
+        <section className="markdown-body flex justify-center content-center pt-8 w-full">
+          <div className="w-full px-4 md:px-0 md:max-w-5xl">
             <h1>{post.title}</h1>
             <MDXRemote {...post.mdxSource} components={MDXComponents} />
           </div>
-        </Card>
-      </section>
+        </section>
+      </Card>
     </Layout>
   );
 }
