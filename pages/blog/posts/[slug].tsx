@@ -27,13 +27,18 @@ export default function PostPage({ post }: PostProps) {
     <Layout>
       <Head>
         <title>{post.title}</title>
-        <meta name="description" content={generateDescriptionFromContent(post.content)} />
+        <meta
+          name="description"
+          content={generateDescriptionFromContent(post.content)}
+        />
         <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={generateDescriptionFromContent(post.content)} />
+        <meta
+          property="og:description"
+          content={generateDescriptionFromContent(post.content)}
+        />
         <meta property="og:type" content="article" />
         <meta property="og:image" content={post.preview} />
         <meta property="article:published_time" content={post.date} />
-
       </Head>
       <Card>
         <section className="markdown-body flex justify-center content-center pt-8 w-full">
