@@ -5,6 +5,7 @@ import { Layout } from "@/components/page/Layout";
 import { Card } from "@/components/page/Card";
 import { PostPreview } from "@/components/navigation/PostPreview";
 import { PaginationNav } from "@/components/navigation/PaginationNav";
+import Head from "next/head";
 
 type Post = {
   title: string;
@@ -23,6 +24,12 @@ type BlogProps = {
 export default function Blog({ posts, page, totalPages }: BlogProps) {
   return (
     <Layout>
+      <Head>
+        <title>Blog - Página {page}</title>
+        <meta name="description" content="Lista de artículos publicados en nuestro blog." />
+        <meta name="robots" content="follow, index" />
+        <link rel="canonical" href={`${process.env.NEXT_PUBLIC_BASE_URL}/blog?page=${page}`} />
+      </Head>
       <Card>
         <div className="container mx-auto px-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {posts.length > 0 ? (
