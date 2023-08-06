@@ -6,6 +6,7 @@ import { MDXRemote } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import MDXComponents from "@/components/mdx/MDXComponents";
 import { Card } from "@/components/page/Card";
+import "@/public/styles/github-markdown-dark.css";
 
 type PostData = {
   title: string;
@@ -23,12 +24,14 @@ type PostProps = {
 export default function PostPage({ post }: PostProps) {
   return (
     <Layout>
-      <Card>
-        <section className="markdown-body">
-          <h1>{post.title}</h1>
-          <MDXRemote {...post.mdxSource} components={MDXComponents} />
-        </section>
-      </Card>
+      <section className="markdown-body flex justify-center content-center pt-8">
+        <Card>
+          <div className="max-w-5xl">
+            <h1>{post.title}</h1>
+            <MDXRemote {...post.mdxSource} components={MDXComponents} />
+          </div>
+        </Card>
+      </section>
     </Layout>
   );
 }
