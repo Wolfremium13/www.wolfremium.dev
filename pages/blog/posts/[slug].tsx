@@ -2,6 +2,10 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { Layout } from "@/components/page/Layout";
+import { MDXRemote } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
+import MDXComponents from "@/components/mdx/MDXComponents";
+import { Card } from "@/components/page/Card";
 
 type PostData = {
   title: string;
@@ -9,6 +13,7 @@ type PostData = {
   preview: string;
   tags: string[];
   content: string;
+  mdxSource: any;
 };
 
 type PostProps = {
@@ -18,10 +23,12 @@ type PostProps = {
 export default function PostPage({ post }: PostProps) {
   return (
     <Layout>
-      <div>
-        <h1>{post.title}</h1>
-        <div>{post.content}</div>
-      </div>
+      <Card>
+        <section className="markdown-body">
+          <h1>{post.title}</h1>
+          <MDXRemote {...post.mdxSource} components={MDXComponents} />
+        </section>
+      </Card>
     </Layout>
   );
 }
@@ -40,12 +47,15 @@ export const getServerSideProps = async (context: StaticPropsContext) => {
 
   const { data, content } = matter(fileContents);
 
+  const mdxSource = await serialize(content);
+
   const post = {
     title: data.title,
     date: data.date,
     preview: data.preview,
     tags: data.tags,
     content,
+    mdxSource,
   };
 
   return {

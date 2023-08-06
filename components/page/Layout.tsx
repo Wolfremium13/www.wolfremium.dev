@@ -1,6 +1,7 @@
 import "@/public/styles/globals.css";
 import "@/public/styles/scroll-bar.css";
 import "@/public/styles/github-corner.css";
+
 import { Footer } from "../navigation/Footer";
 import { Navbar } from "../navigation/Navbar";
 import { Metadata } from "next";
