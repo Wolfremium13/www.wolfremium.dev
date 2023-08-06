@@ -1,8 +1,8 @@
 import {
+  GiFlowerTwirl,
   GiOilySpiral,
-  GiDwarfHelmet,
-  GiScrollQuill,
   GiLoveLetter,
+  GiScrollQuill,
 } from "react-icons/gi";
 
 type NavLinksProps = {
@@ -12,10 +12,10 @@ type NavLinksProps = {
 
 const NavLinks: React.FC<NavLinksProps> = ({ isOpen, isMobile }) => {
   const navLinks = [
-    { title: "Home", path: "/", icon: <GiOilySpiral size={30} /> },
+    { title: "Home", path: "/", icon: <GiFlowerTwirl size={30} /> },
     //{ title: "Acerca", path: "/#", icon: <GiDwarfHelmet size={30} /> },
     { title: "Blog", path: "/blog", icon: <GiScrollQuill size={30} /> },
-    { title: "Contacto", path: "/contact", icon: <GiLoveLetter size={30} /> },
+    { title: "", path: "/contact", icon: <GiLoveLetter size={30} /> },
   ];
 
   if (isMobile && !isOpen) {
