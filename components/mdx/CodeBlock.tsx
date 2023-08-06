@@ -3,6 +3,7 @@ import Prism from "prismjs";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import "prism-themes/themes/prism-material-oceanic.css";
 import "./PrismLangComponents";
+import { FaStackOverflow, FaClipboardCheck } from "react-icons/fa";
 
 type CodeBlockProps = {
   children: string;
@@ -47,7 +48,11 @@ const CodeBlock: React.FC<CodeBlockProps> = ({ children, className }) => {
       <div className="absolute top-2 right-2">
         <CopyToClipboard text={children} onCopy={handleCopy}>
           <button className="text-xs bg-gray-800 hover:bg-gray-600 rounded px-2 py-1">
-            {isCopied ? "Copiado" : "Copiar"}
+            {isCopied ? (
+              <FaClipboardCheck size={25} className="text-lightGreen" />
+            ) : (
+              <FaStackOverflow size={25} />
+            )}
           </button>
         </CopyToClipboard>
       </div>
