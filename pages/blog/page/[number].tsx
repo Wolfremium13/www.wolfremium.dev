@@ -25,17 +25,24 @@ export default function Blog({ posts, page, totalPages }: BlogProps) {
     <Layout>
       <Card>
         <div className="container mx-auto px-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <PostPreview
-              key={post.slug}
-              title={post.title}
-              slug={post.slug}
-              preview={post.preview}
-            />
-          ))}
+          {posts.length > 0 ? (
+            posts.map((post) => (
+              <PostPreview
+                key={post.slug}
+                title={post.title}
+                slug={post.slug}
+                preview={post.preview}
+              />
+            ))
+          ) : (
+            <div className="col-span-full text-center text-2xl font-bold h-52 pt-12">
+              😱 No hay publicaciones disponibles para esta página. Intenta con
+              otra.
+            </div>
+          )}
         </div>
 
-        <PaginationNav page={page} totalPages={totalPages} />
+        {<PaginationNav page={page} totalPages={totalPages} />}
       </Card>
     </Layout>
   );
