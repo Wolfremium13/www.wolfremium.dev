@@ -12,6 +12,8 @@ type PaginationNavProps = {
 };
 
 const PaginationNav: React.FC<PaginationNavProps> = ({ page, totalPages }) => {
+  const paginationNumbers = getPaginationNumbers(page, totalPages);
+
   return (
     <div className="flex justify-center items-center space-x-4 mt-12">
       {/* Ir a la primera página */}
@@ -33,7 +35,7 @@ const PaginationNav: React.FC<PaginationNavProps> = ({ page, totalPages }) => {
       )}
 
       <div className="hidden sm:flex space-x-2">
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+        {paginationNumbers.map((num) => (
           <Link key={num} href={`/blog/page/${num}`}>
             <p
               className={`px-4 py-2 text-lg rounded-full cursor-pointer ${
@@ -69,3 +71,23 @@ const PaginationNav: React.FC<PaginationNavProps> = ({ page, totalPages }) => {
   );
 };
 export { PaginationNav };
+
+const getPaginationNumbers = (currentPage: number, total: number) => {
+  const MAX_PAGINATION_NUMBERS = 5;
+  if (total <= MAX_PAGINATION_NUMBERS) {
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+  if (currentPage <= 3) {
+    return [1, 2, 3, 4, 5];
+  }
+  if (currentPage >= total - 2) {
+    return [total - 4, total - 3, total - 2, total - 1, total];
+  }
+  return [
+    currentPage - 2,
+    currentPage - 1,
+    currentPage,
+    currentPage + 1,
+    currentPage + 2,
+  ];
+};
