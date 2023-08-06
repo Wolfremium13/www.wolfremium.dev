@@ -1,10 +1,10 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import Link from "next/link";
 import { Layout } from "@/components/page/Layout";
 import { Card } from "@/components/page/Card";
 import { PostPreview } from "@/components/navigation/PostPreview";
+import { PaginationNav } from "@/components/navigation/PaginationNav";
 
 type Post = {
   title: string;
@@ -35,26 +35,7 @@ export default function Blog({ posts, page, totalPages }: BlogProps) {
           ))}
         </div>
 
-        <div>
-          {/* Botón "Anterior" */}
-          {page > 1 && (
-            <Link href={`/blog/page/${page - 1}`}>
-              <p>Anterior</p>
-            </Link>
-          )}
-
-          {/* Mostrar el número de página actual */}
-          <span>
-            Página {page} de {totalPages}
-          </span>
-
-          {/* Botón "Siguiente" */}
-          {page < totalPages && (
-            <Link href={`/blog/page/${page + 1}`}>
-              <p>Siguiente</p>
-            </Link>
-          )}
-        </div>
+        <PaginationNav page={page} totalPages={totalPages} />
       </Card>
     </Layout>
   );
