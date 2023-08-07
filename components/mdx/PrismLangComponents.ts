@@ -10,3 +10,4 @@ import 'prismjs/components/prism-scss';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-kotlin';
 import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-clojure';

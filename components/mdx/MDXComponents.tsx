@@ -5,7 +5,7 @@ import { YouTube } from "./Youtube";
 const MDXComponents = {
   code: CodeBlock,
   MdxImage: Image,
-  Youtube: YouTube,
+  YouTube: YouTube,
 };
 
 export default MDXComponents;
