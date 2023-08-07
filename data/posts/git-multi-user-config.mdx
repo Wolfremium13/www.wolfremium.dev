@@ -43,7 +43,7 @@ a mano el usuario que queremos si es diferente al global.
 
 Para añadir esta característica debemos añadir en nuestro `~/.gitconfig`:
 
-```
+```markdown
 [includeIf "gitdir:~/Documents/kevin-hierro/"]
   path = .gitconfig-kevin-hierro
 [includeIf "gitdir:~/Documents/lean-mind/"]
@@ -56,7 +56,7 @@ Para añadir esta característica debemos añadir en nuestro `~/.gitconfig`:
 Ahora por ejemplo vamos a ver que debería contener el fichero
 `.gitconfig-kevin-hierro` que debería estar ubicado en `$HOME`.
 
-```
+```markdown
 [user]
     name = Wolfremium13
     email = wolfremiuminformatica@gmail.com
