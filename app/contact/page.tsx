@@ -2,6 +2,8 @@ import { VscGithub } from "react-icons/vsc";
 import { FaLinkedin } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
 import { Card } from "@/components/page/Card";
+import { SocialMediaButton } from "@/components/navigation/SocialMediaButton";
+import { socialLinks } from "@/data/constants/socialLinks";
 
 export default function Contact() {
   return (
@@ -11,27 +13,24 @@ export default function Contact() {
           <Card>
             <div className="p-8 space-y-6">
               <div className="flex justify-center space-x-4 mb-8">
-                <a
-                  href="https://github.com/Wolfremium13"
-                  className="bookmark hover:text-lightViolet"
-                  title={"Github"}
-                >
-                  <VscGithub size={27} />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/kevin-h-3950071bb/"
-                  className="bookmark hover:text-lightViolet"
-                  title={"Linkedin"}
-                >
-                  <FaLinkedin size={27} />
-                </a>
-                <a
-                  href="https://www.youtube.com/channel/UCnrHmmCs3XilLaGTJR8Cs8w"
-                  className="bookmark hover:text-lightViolet"
-                  title={"Youtube"}
-                >
-                  <IoLogoYoutube size={27} />
-                </a>
+                <SocialMediaButton
+                  href={socialLinks.youtube}
+                  icon={<IoLogoYoutube size={27} />}
+                  label="Youtube"
+                  classes="hover:text-lightViolet"
+                />
+                <SocialMediaButton
+                  href={socialLinks.github}
+                  icon={<VscGithub size={27} />}
+                  label="Github"
+                  classes="hover:text-lightViolet"
+                />
+                <SocialMediaButton
+                  href={socialLinks.linkedIn}
+                  icon={<FaLinkedin size={27} />}
+                  label="Linkedin"
+                  classes="hover:text-lightViolet"
+                />
               </div>
 
               <div className="flex flex-col justify-center content-center space-y-4">
@@ -80,10 +79,10 @@ export default function Contact() {
                     correo electrónico.
                   </p>
                   <a
-                    href="mailto:wolfremiuminformatica@gmail.com"
+                    href={`mailto:${socialLinks.gmail}`}
                     className="text-mediumViolet hover:text-lightGreen"
                   >
-                    wolfremiuminformatica@gmail.com
+                    {socialLinks.gmail}
                   </a>
                 </section>
               </div>
