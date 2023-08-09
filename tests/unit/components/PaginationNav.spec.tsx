@@ -151,6 +151,20 @@ describe("Pagination navigator should", () => {
         });
       });
 
+      it("on the middle of displayable numbers", () => {
+        const pageNumber = Math.round(displayablePages / 2);
+        const totalPages = displayablePages;
+        render(<PaginationNav page={pageNumber} totalPages={totalPages} />);
+
+        const paginationNumbers = [1, 2, 3, 4, 5].map((num) =>
+          screen.getByText(num.toString())
+        );
+
+        paginationNumbers.forEach((numElement) => {
+          expect(numElement).toBeInTheDocument();
+        });
+      });
+
       it("more displayable numbers than total pages and current page is the last one", () => {
         const pageNumber = displayablePages;
         const totalPages = displayablePages - 1;
