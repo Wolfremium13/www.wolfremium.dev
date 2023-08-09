@@ -87,9 +87,14 @@ export const getServerSideProps = async (context: StaticPropsContext) => {
 
   const POSTS_PER_PAGE = 9;
   const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
-  const currentPage = context.params?.number
-    ? parseInt(context.params.number, 10)
-    : 1;
+  const rawPageNumber = context.params?.number;
+  const currentPage = parseInt(rawPageNumber, 10);
+  
+  if (isNaN(currentPage) || currentPage < 1 || currentPage > totalPages) {
+    return {
+      notFound: true,
+    };
+  }
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
 
