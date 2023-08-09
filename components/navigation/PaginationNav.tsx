@@ -16,20 +16,18 @@ const PaginationNav: React.FC<PaginationNavProps> = ({ page, totalPages }) => {
 
   return (
     <div className="flex justify-center items-center space-x-4 mt-12">
-      {/* Ir a la primera página */}
       {page > 1 && (
         <Link href={`/blog/page/1`}>
           <p className="text-darkGreen hover:text-lightGreen cursor-pointer">
-            <FaAngleDoubleLeft size={35} />
+            <FaAngleDoubleLeft size={35} aria-label="First Page" />
           </p>
         </Link>
       )}
 
-      {/* Ir a la página anterior */}
       {page > 1 && (
         <Link href={`/blog/page/${page - 1}`}>
           <p className="text-darkGreen hover:text-lightGreen cursor-pointer">
-            <FaAngleLeft size={35} />
+            <FaAngleLeft size={35} aria-label="Previous Page" />
           </p>
         </Link>
       )}
@@ -50,20 +48,18 @@ const PaginationNav: React.FC<PaginationNavProps> = ({ page, totalPages }) => {
         ))}
       </div>
 
-      {/* Ir a la página siguiente */}
       {page < totalPages && (
         <Link href={`/blog/page/${page + 1}`}>
           <p className="text-darkGreen hover:text-lightGreen cursor-pointer">
-            <FaAngleRight size={35} />
+            <FaAngleRight size={35} aria-label="Next Page" />
           </p>
         </Link>
       )}
 
-      {/* Ir a la última página */}
       {page < totalPages && (
         <Link href={`/blog/page/${totalPages}`}>
           <p className="text-darkGreen hover:text-lightGreen cursor-pointer">
-            <FaAngleDoubleRight size={35} />
+            <FaAngleDoubleRight size={35} aria-label="Last Page" />
           </p>
         </Link>
       )}
