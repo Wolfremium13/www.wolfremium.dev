@@ -34,7 +34,7 @@ const PaginationNav: React.FC<PaginationNavProps> = ({ page, totalPages }) => {
 
       <div className="hidden sm:flex space-x-2">
         {paginationNumbers.map((num) => (
-          <Link key={num} href={`/blog/page/${num}`}>
+          <Link key={num} href={`/blog/page/${num}`} aria-label={`Go to page ${num}`}>
             <p
               className={`px-4 py-2 text-lg rounded-full cursor-pointer ${
                 page === num
