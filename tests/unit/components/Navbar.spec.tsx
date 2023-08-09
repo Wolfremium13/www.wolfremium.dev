@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { NavbarLogic } from "../../../components/navigation/Navbar";
-import "@testing-library/jest-dom/extend-expect";
+import { vi, expect, describe, test } from "vitest";
+import '@testing-library/jest-dom/extend-expect';
 
 describe("Navigation bar should ", () => {
   describe("on mobile window size", () => {
@@ -22,7 +23,7 @@ describe("Navigation bar should ", () => {
 
     test("display navigation links when button is pressed", () => {
       // I cannot mutate the state of the parent component from here
-      const setIsOpenMock = jest.fn(() => {});
+      const setIsOpenMock = vi.fn(() => {});
       render(
         <NavbarLogic isMobile={true} isOpen={false} setIsOpen={setIsOpenMock} />
       );

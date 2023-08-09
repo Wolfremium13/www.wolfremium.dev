@@ -7,22 +7,18 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --testPathPattern=tests/unit",
-    "test:e2e": "playwright test tests/e2e/ --ui",
-    "test:e2e-full": "npm run build && concurrently --kill-others-on-fail \"npm run start\" \"npx wait-on http://localhost:3000 && playwright test tests/e2e/\""
+    "test": "vitest run",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test tests/e2e/ --ui"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.16",
     "@mdx-js/loader": "^2.3.0",
     "@mdx-js/react": "^2.3.0",
     "@next/mdx": "^13.4.12",
-    "@types/mdx": "^2.0.5",
-    "@types/node": "20.4.7",
-    "@types/react": "18.2.18",
-    "@types/react-dom": "18.2.7",
+    "@testing-library/jest-dom": "^5.17.0",
     "autoprefixer": "10.4.14",
-    "eslint": "8.46.0",
-    "eslint-config-next": "13.4.12",
     "frontmatter": "^0.0.3",
     "gray-matter": "^4.0.3",
     "next": "13.4.12",
@@ -41,16 +37,26 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.36.2",
-    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
-    "@types/jest": "^29.5.3",
+    "@types/mdx": "^2.0.5",
+    "@types/node": "20.4.7",
+    "@types/react": "18.2.18",
     "@types/react-copy-to-clipboard": "^5.0.4",
+    "@types/react-dom": "18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "@vitest/coverage-v8": "^0.34.1",
     "concurrently": "^8.2.0",
     "css-mediaquery": "^0.1.2",
-    "jest": "^29.6.2",
-    "jest-environment-jsdom": "^29.6.2",
+    "eslint": "8.46.0",
+    "eslint-config-next": "13.4.12",
+    "jsdom": "^22.1.0",
     "playwright": "^1.36.2",
     "start-server-and-test": "^2.0.0",
-    "ts-jest": "^29.1.1"
-  }
+    "vitest": "^0.33.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.5.1"
+  },
+  "packageManager": "npm@9.5.1"
 }

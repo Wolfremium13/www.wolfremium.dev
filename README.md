@@ -26,7 +26,7 @@ also use HTML tags inside MDX.
 
 ## 🧪 Testing
 
-To run the unit tests with Jest, run the following command:
+To run the unit tests with Vitest, run the following command:
 
 ```bash
 npm run test
@@ -66,3 +66,5 @@ To learn more about Next.js, take a look at the following resources:
   TypeScript features and API.
 - [React Icons](https://react-icons.github.io/react-icons/) - learn about React
   Icons features and API.
+- [Vitest Documentation](https://vitest.netlify.app/) - learn about Vitest
+  features and API.

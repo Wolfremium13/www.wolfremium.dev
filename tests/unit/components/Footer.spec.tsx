@@ -1,16 +1,17 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { vi, expect, describe, test } from "vitest";
 import "@testing-library/jest-dom/extend-expect";
 import { Footer } from "@/components/navigation/Footer";
 
 beforeAll(() => {
   const mockClipboard = {
-    writeText: jest.fn(),
-    readText: jest.fn(() => Promise.resolve("irrelevant@gmail.com")),
-    read: jest.fn(),
-    write: jest.fn(),
-    addEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-    removeEventListener: jest.fn(),
+    writeText: vi.fn(),
+    readText: vi.fn(() => Promise.resolve("irrelevant@gmail.com")),
+    read: vi.fn(),
+    write: vi.fn(),
+    addEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+    removeEventListener: vi.fn(),
   };
 
   Object.defineProperty(global.navigator, "clipboard", {
@@ -40,12 +41,11 @@ describe("Footer should ", () => {
     });
 
     test("display the author", () => {
-        render(<Footer />);
-    
-        const author = screen.getByRole("author");
-    
-        expect(author).toBeInTheDocument();
-        }
-    );
+      render(<Footer />);
+
+      const author = screen.getByRole("author");
+
+      expect(author).toBeInTheDocument();
+    });
   });
 });
