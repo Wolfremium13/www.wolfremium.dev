@@ -5,12 +5,13 @@ import { VscGithub } from "react-icons/vsc";
 import { FaLinkedin } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
 import { SocialMediaButton } from "./SocialMediaButton";
+import { socialLinks } from "@/data/constants/socialLinks";
 
 const Footer = () => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
   const handleEmailClick = () => {
-    navigator.clipboard.writeText("wolfremiuminformatica@gmail.com");
+    navigator.clipboard.writeText(socialLinks.gmail);
     setTooltipVisible(true);
     setTimeout(() => setTooltipVisible(false), 1000);
   };
@@ -37,17 +38,17 @@ const Footer = () => {
             )}
           </button>
           <SocialMediaButton
-            href="https://www.youtube.com/channel/UCnrHmmCs3XilLaGTJR8Cs8w"
+            href={socialLinks.youtube}
             icon={<IoLogoYoutube size={27} />}
             label="Youtube"
           />
           <SocialMediaButton
-            href="https://github.com/Wolfremium13"
+            href={socialLinks.github}
             icon={<VscGithub size={27} />}
             label="Github"
           />
           <SocialMediaButton
-            href="https://www.linkedin.com/in/kevin-h-3950071bb/"
+            href={socialLinks.linkedIn}
             icon={<FaLinkedin size={27} />}
             label="Linkedin"
           />
