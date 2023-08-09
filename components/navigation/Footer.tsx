@@ -4,6 +4,7 @@ import { GiLetterBomb } from "react-icons/gi";
 import { VscGithub } from "react-icons/vsc";
 import { FaLinkedin } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
+import { SocialMediaButton } from "./SocialMediaButton";
 
 const Footer = () => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
@@ -35,31 +36,21 @@ const Footer = () => {
               </span>
             )}
           </button>
-
-          <a
-            href="https://github.com/Wolfremium13"
-            className="hover:text-lightViolet"
-            target="_blank"
-            title={"Github"}
-          >
-            <VscGithub size={27} />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/kevin-h-3950071bb/"
-            className="hover:text-lightViolet"
-            target="_blank"
-            title={"Linkedin"}
-          >
-            <FaLinkedin size={27} />
-          </a>
-          <a
+          <SocialMediaButton
             href="https://www.youtube.com/channel/UCnrHmmCs3XilLaGTJR8Cs8w"
-            className="hover:text-lightViolet"
-            target="_blank"
-            title={"Youtube"}
-          >
-            <IoLogoYoutube size={27} />
-          </a>
+            icon={<IoLogoYoutube size={27} />}
+            label="Youtube"
+          />
+          <SocialMediaButton
+            href="https://github.com/Wolfremium13"
+            icon={<VscGithub size={27} />}
+            label="Github"
+          />
+          <SocialMediaButton
+            href="https://www.linkedin.com/in/kevin-h-3950071bb/"
+            icon={<FaLinkedin size={27} />}
+            label="Linkedin"
+          />
         </div>
       </div>
     </footer>
