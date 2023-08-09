@@ -12,21 +12,21 @@ export default function Contact() {
             <div className="p-8 space-y-6">
               <div className="flex justify-center space-x-4 mb-8">
                 <a
-                  href="#github-section"
+                  href="https://github.com/Wolfremium13"
                   className="bookmark hover:text-lightViolet"
                   title={"Github"}
                 >
                   <VscGithub size={27} />
                 </a>
                 <a
-                  href="#linkedin-section"
+                  href="https://www.linkedin.com/in/kevin-h-3950071bb/"
                   className="bookmark hover:text-lightViolet"
                   title={"Linkedin"}
                 >
                   <FaLinkedin size={27} />
                 </a>
                 <a
-                  href="#youtube-section"
+                  href="https://www.youtube.com/channel/UCnrHmmCs3XilLaGTJR8Cs8w"
                   className="bookmark hover:text-lightViolet"
                   title={"Youtube"}
                 >
