@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { vi, expect, describe, test } from "vitest";
+import { vi, expect, describe, it } from "vitest";
 import "@testing-library/jest-dom/extend-expect";
 import { Footer } from "@/components/navigation/Footer";
 
@@ -22,7 +22,7 @@ beforeAll(() => {
 
 describe("Footer should ", () => {
   describe("on both window sizes", () => {
-    test("copy the email to clipboard", () => {
+    it("copy the email to clipboard", () => {
       render(<Footer />);
       const button = screen.getByRole("button");
 
@@ -33,14 +33,14 @@ describe("Footer should ", () => {
       );
     });
 
-    test("display social links", () => {
+    it("display social links", () => {
       render(<Footer />);
 
       const socialLinks = screen.queryAllByRole("link");
       expect(socialLinks.length).toBeGreaterThanOrEqual(1);
     });
 
-    test("display the author", () => {
+    it("display the author", () => {
       render(<Footer />);
 
       const author = screen.getByRole("author");

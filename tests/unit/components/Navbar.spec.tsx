@@ -1,11 +1,11 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { NavbarLogic } from "../../../components/navigation/Navbar";
-import { vi, expect, describe, test } from "vitest";
+import { vi, expect, describe, it } from "vitest";
 import '@testing-library/jest-dom/extend-expect';
 
 describe("Navigation bar should ", () => {
   describe("on mobile window size", () => {
-    test("have a toggle button", () => {
+    it("have a toggle button", () => {
       render(
         <NavbarLogic isMobile={true} isOpen={false} setIsOpen={() => {}} />
       );
@@ -13,7 +13,7 @@ describe("Navigation bar should ", () => {
       expect(button).toBeInTheDocument();
     });
 
-    test("not display navigation links by default", () => {
+    it("not display navigation links by default", () => {
       render(
         <NavbarLogic isMobile={true} isOpen={false} setIsOpen={() => {}} />
       );
@@ -21,7 +21,7 @@ describe("Navigation bar should ", () => {
       expect(navigationLinks).toHaveLength(0);
     });
 
-    test("display navigation links when button is pressed", () => {
+    it("display navigation links when button is pressed", () => {
       // I cannot mutate the state of the parent component from here
       const setIsOpenMock = vi.fn(() => {});
       render(
@@ -32,7 +32,7 @@ describe("Navigation bar should ", () => {
       expect(setIsOpenMock).toHaveBeenCalledTimes(1);
     });
 
-    test("display github corner", () => {
+    it("display github corner", () => {
       render(
         <NavbarLogic isMobile={true} isOpen={true} setIsOpen={() => {}} />
       );
@@ -43,7 +43,7 @@ describe("Navigation bar should ", () => {
   });
 
   describe("on desktop window size", () => {
-    test("not have a toggle button", () => {
+    it("not have a toggle button", () => {
       render(
         <NavbarLogic isMobile={false} isOpen={true} setIsOpen={() => {}} />
       );
@@ -52,7 +52,7 @@ describe("Navigation bar should ", () => {
       expect(button).not.toBeInTheDocument();
     });
 
-    test("display navigation links", () => {
+    it("display navigation links", () => {
       render(
         <NavbarLogic isMobile={false} isOpen={true} setIsOpen={() => {}} />
       );
@@ -61,7 +61,7 @@ describe("Navigation bar should ", () => {
       expect(navigationLinks.length).toBeGreaterThanOrEqual(1);
     });
 
-    test("display github corner", () => {
+    it("display github corner", () => {
       render(
         <NavbarLogic isMobile={true} isOpen={true} setIsOpen={() => {}} />
       );
