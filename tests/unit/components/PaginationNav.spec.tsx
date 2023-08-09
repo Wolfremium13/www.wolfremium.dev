@@ -4,9 +4,11 @@ import { expect, describe, it } from "vitest";
 import "@testing-library/jest-dom/extend-expect";
 
 describe("Pagination navigator should", () => {
+  const displayablePages = 5;
   describe("on arrow navigation", () => {
     it("display first page and previous page links if current page is greater than 1", () => {
-      render(<PaginationNav page={3} totalPages={5} />);
+      const pageNumber = 3;
+      render(<PaginationNav page={pageNumber} totalPages={displayablePages} />);
 
       const firstPageLink = screen.getByRole("link", { name: /First Page/i });
       const previousPageLink = screen.getByRole("link", {
@@ -18,7 +20,8 @@ describe("Pagination navigator should", () => {
     });
 
     it("not display first page and previous page links if current page is 1", () => {
-      render(<PaginationNav page={1} totalPages={5} />);
+      const pageNumber = 1;
+      render(<PaginationNav page={pageNumber} totalPages={displayablePages} />);
 
       const firstPageLink = screen.queryByRole("link", { name: /First Page/i });
       const previousPageLink = screen.queryByRole("link", {
@@ -30,7 +33,8 @@ describe("Pagination navigator should", () => {
     });
 
     it("display next page and last page links if current page is less than total pages", () => {
-      render(<PaginationNav page={3} totalPages={5} />);
+      const pageNumber = 3;
+      render(<PaginationNav page={pageNumber} totalPages={displayablePages} />);
 
       const nextPageLink = screen.getByRole("link", { name: /Next Page/i });
       const lastPageLink = screen.getByRole("link", { name: /Last Page/i });
@@ -40,7 +44,9 @@ describe("Pagination navigator should", () => {
     });
 
     it("not display next page and last page links if current page is the last one", () => {
-      render(<PaginationNav page={5} totalPages={5} />);
+      render(
+        <PaginationNav page={displayablePages} totalPages={displayablePages} />
+      );
 
       const nextPageLink = screen.queryByRole("link", { name: /Next Page/i });
       const lastPageLink = screen.queryByRole("link", { name: /Last Page/i });
@@ -48,11 +54,26 @@ describe("Pagination navigator should", () => {
       expect(nextPageLink).not.toBeInTheDocument();
       expect(lastPageLink).not.toBeInTheDocument();
     });
+
+    it("display all links if current page is greater than 1 and less than total pages", () => {
+      const pageNumber = 3;
+      render(<PaginationNav page={pageNumber} totalPages={displayablePages} />);
+
+      const firstPageLink = screen.getByRole("link", { name: /First Page/i });
+      const previousPageLink = screen.getByRole("link", {
+        name: /Previous Page/i,
+      });
+      const nextPageLink = screen.getByRole("link", { name: /Next Page/i });
+      const lastPageLink = screen.getByRole("link", { name: /Last Page/i });
+
+      expect(firstPageLink).toBeInTheDocument();
+      expect(previousPageLink).toBeInTheDocument();
+      expect(nextPageLink).toBeInTheDocument();
+      expect(lastPageLink).toBeInTheDocument();
+    });
   });
 
   describe("on pagination numbers", () => {
-    const displayablePages = 5;
-
     describe("on circles displays the all displayable circles when", () => {
       it("have the same number as total pages", () => {
         const pageNumber = 1;
