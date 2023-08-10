@@ -62,6 +62,12 @@ export const getServerSideProps = async (context: StaticPropsContext) => {
   const slug = context.params.slug;
   const postsDirectory = path.join(process.cwd(), "data", "posts");
   const filePath = path.join(postsDirectory, `${slug}.mdx`);
+  if (!fs.existsSync(filePath)) {
+    return {
+      notFound: true,
+    };
+  }
+
   const fileContents = fs.readFileSync(filePath, "utf8");
 
   const { data, content } = matter(fileContents);
