@@ -24,6 +24,22 @@ For example, to create a post with the slug `hello-world`, create a file called
 Inside the `.mdx` file, you can write your post using Markdown syntax. You can
 also use HTML tags inside MDX.
 
+It's recommended to avoid putting an empty language code block in your post:
+
+````text
+```
+<code></code>
+```
+````
+
+instead you can use:
+
+````markdown
+```markdown
+<code></code>
+```
+````
+
 ## 🧪 Testing
 
 To run the unit tests with Vitest, run the following command:
