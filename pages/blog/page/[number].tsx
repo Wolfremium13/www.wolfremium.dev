@@ -72,7 +72,6 @@ export const getStaticProps = async (context: StaticPropsContext) => {
   const totalPages = await postsRepository.getTotalPages();
   const rawPageNumber = context.params?.number;
   const currentPage = parseInt(rawPageNumber, 10);
-  console.log(currentPage);
   if (isNaN(currentPage) || currentPage < 1 || currentPage > totalPages) {
     return {
       notFound: true,
