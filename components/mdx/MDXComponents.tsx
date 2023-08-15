@@ -1,10 +1,10 @@
 import { CodeBlock } from "./CodeBlock";
-import { Image } from "./Image";
+import { MdxImage } from "./Image";
 import { YouTube } from "./Youtube";
 
 const MDXComponents = {
   code: CodeBlock,
-  MdxImage: Image,
+  MdxImage: MdxImage,
   YouTube: YouTube,
 };
 

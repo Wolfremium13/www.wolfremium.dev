@@ -1,14 +1,22 @@
-interface ImageProps {
+import Image from "next/image";
+
+interface MdxImageProps {
   src: string;
   alt: string;
 }
 
-const Image: React.FC<ImageProps> = ({ src, alt }) => {
+const MdxImage: React.FC<MdxImageProps> = ({ src, alt }) => {
   return (
     <div className="flex justify-center m-4">
-      <img src={src} alt={alt} className="rounded-lg" />
+      <Image
+        width={500}
+        height={500}
+        src={src}
+        alt={alt}
+        className="rounded-lg"
+      />
     </div>
   );
 };
 
-export { Image };
+export { MdxImage };
