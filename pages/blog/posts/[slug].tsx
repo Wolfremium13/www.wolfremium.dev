@@ -1,13 +1,10 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
 import { Layout } from "@/components/page/Layout";
 import { MDXRemote } from "next-mdx-remote";
-import { serialize } from "next-mdx-remote/serialize";
 import MDXComponents from "@/components/mdx/MDXComponents";
 import { Card } from "@/components/page/Card";
 import "@/public/styles/github-markdown-dark.css";
 import Head from "next/head";
+import { PostsFactoryRepository } from "@/lib/posts/infrastructure/posts.factory.repository";
 
 type PostData = {
   title: string;
@@ -58,38 +55,6 @@ type StaticPropsContext = {
   };
 };
 
-export const getServerSideProps = async (context: StaticPropsContext) => {
-  const slug = context.params.slug;
-  const postsDirectory = path.join(process.cwd(), "data", "posts");
-  const filePath = path.join(postsDirectory, `${slug}.mdx`);
-  if (!fs.existsSync(filePath)) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const fileContents = fs.readFileSync(filePath, "utf8");
-
-  const { data, content } = matter(fileContents);
-
-  const mdxSource = await serialize(content);
-
-  const post = {
-    title: data.title,
-    date: data.date,
-    preview: data.preview,
-    tags: data.tags,
-    content,
-    mdxSource,
-  };
-
-  return {
-    props: {
-      post,
-    },
-  };
-};
-
 const generateDescriptionFromContent = (content: string) => {
   const removeLinksRegex = /(?:__|[*#])|\[(.*?)\]\(.*?\)/gm;
   const removeLineBreaks = /\n/g;
@@ -105,3 +70,37 @@ const generateDescriptionFromContent = (content: string) => {
       .join("") + "..."
   );
 };
+
+export const getStaticProps = async (context: StaticPropsContext) => {
+  const postsRepository = PostsFactoryRepository.getInstance(
+    process.env.STORAGE ?? "local"
+  );
+  const slug = context.params.slug;
+  const post = await postsRepository.getPost(slug);
+  if (!post) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      post,
+    },
+  };
+};
+
+export const getStaticPaths = async () => {
+  const postsRepository = PostsFactoryRepository.getInstance(
+    process.env.STORAGE ?? "local"
+  );
+  const posts = await postsRepository.getPosts();
+  const paths = posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+}

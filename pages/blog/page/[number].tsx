@@ -1,11 +1,9 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
 import { Layout } from "@/components/page/Layout";
 import { Card } from "@/components/page/Card";
 import { PostPreview } from "@/components/navigation/PostPreview";
 import { PaginationNav } from "@/components/navigation/PaginationNav";
 import Head from "next/head";
+import { PostsFactoryRepository } from "@/lib/posts/infrastructure/posts.factory.repository";
 
 type Post = {
   title: string;
@@ -25,10 +23,16 @@ export default function Blog({ posts, page, totalPages }: BlogProps) {
   return (
     <Layout>
       <Head>
-        <title>{`Blog - ${page ? page.toString() : 'Desconocida'}`}</title>
-        <meta name="description" content="Lista de artículos publicados en nuestro blog." />
+        <title>{`Blog - ${page ? page.toString() : "Desconocida"}`}</title>
+        <meta
+          name="description"
+          content="Lista de artículos publicados en nuestro blog."
+        />
         <meta name="robots" content="follow, index" />
-        <link rel="canonical" href={`${process.env.NEXT_PUBLIC_BASE_URL}/blog?page=${page}`} />
+        <link
+          rel="canonical"
+          href={`${process.env.NEXT_PUBLIC_BASE_URL}/blog?page=${page}`}
+        />
       </Head>
       <Card>
         <div className="container mx-auto px-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -61,50 +65,39 @@ type StaticPropsContext = {
   };
 };
 
-export const getServerSideProps = async (context: StaticPropsContext) => {
-  const postsDirectory = path.join(process.cwd(), "data", "posts");
-  const filenames = fs
-    .readdirSync(postsDirectory)
-    .filter((fn) => fn.endsWith(".mdx"));
-
-  const allPosts = filenames.map((filename) => {
-    const filePath = path.join(postsDirectory, filename);
-    const fileContents = fs.readFileSync(filePath, "utf8");
-    const { data } = matter(fileContents);
-
-    return {
-      title: data.title,
-      slug: filename.replace(".mdx", ""),
-      date: data.date,
-      preview: data.preview,
-      tags: data.tags,
-    };
-  });
-
-  const sortedPosts = allPosts.sort((a: Post, b: Post) => {
-    return new Date(b.date).getTime() - new Date(a.date).getTime();
-  });
-
-  const POSTS_PER_PAGE = 9;
-  const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
+export const getStaticProps = async (context: StaticPropsContext) => {
+  const postsRepository = PostsFactoryRepository.getInstance(
+    process.env.STORAGE ?? "local"
+  );
+  const totalPages = await postsRepository.getTotalPages();
   const rawPageNumber = context.params?.number;
   const currentPage = parseInt(rawPageNumber, 10);
-  
+  console.log(currentPage);
   if (isNaN(currentPage) || currentPage < 1 || currentPage > totalPages) {
     return {
       notFound: true,
     };
   }
-  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-  const endIndex = startIndex + POSTS_PER_PAGE;
-
-  const paginatedPosts = sortedPosts.slice(startIndex, endIndex);
-
+  const paginatedPosts = await postsRepository.getPaginatedPosts(currentPage);
   return {
     props: {
       posts: paginatedPosts,
       page: currentPage,
       totalPages,
     },
+  };
+};
+
+export const getStaticPaths = async () => {
+  const postsRepository = PostsFactoryRepository.getInstance(
+    process.env.STORAGE ?? "local"
+  );
+  const totalPages = await postsRepository.getTotalPages();
+  const paths = Array.from({ length: totalPages }, (_, i) => ({
+    params: { number: (i + 1).toString() },
+  }));
+  return {
+    paths,
+    fallback: false,
   };
 };
