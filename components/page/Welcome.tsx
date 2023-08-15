@@ -11,6 +11,7 @@ const Welcome = () => {
             src={profilePic}
             alt="Kevin Hierro"
             className="rounded-full p-1 bg-gradient-to-tr from-lightGreen  to-mediumViolet"
+            placeholder="blur"
           />
         </div>
         <div className="w-full xl:w-1/2 text-center xl:text-left">
