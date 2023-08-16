@@ -197,13 +197,11 @@ describe("Posts local repository should", () => {
     });
 
     it("gives empty if there is no files", async () => {
-        (fs.readdirSync as jest.Mock).mockReturnValue([]);
-    
-        const paths = await repo.getAllFilePaths();
-    
-        expect(paths.length).toBe(0);
-        }
-    );
-    
+      (fs.readdirSync as jest.Mock).mockReturnValue([]);
+
+      const paths = await repo.getAllFilePaths();
+
+      expect(paths.length).toBe(0);
+    });
   });
 });
