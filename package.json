@@ -10,7 +10,8 @@
     "test": "vitest run --reporter=verbose",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "playwright test tests/e2e/ --ui"
+    "test:e2e": "playwright test tests/e2e/ --ui",
+    "gulp":"gulp"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.16",
@@ -43,6 +44,8 @@
     "@playwright/test": "^1.36.2",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
+    "@types/bcrypt": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.2",
     "@types/mdx": "^2.0.5",
     "@types/node": "20.4.7",
     "@types/react": "18.2.18",
@@ -50,12 +53,12 @@
     "@types/react-dom": "18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
     "@vitest/coverage-v8": "^0.34.1",
-    "@types/bcrypt": "^5.0.0",
-    "@types/jsonwebtoken": "^9.0.2",
     "concurrently": "^8.2.0",
     "css-mediaquery": "^0.1.2",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
+    "gulp": "^4.0.2",
+    "gulp-webp": "^4.0.1",
     "jsdom": "^22.1.0",
     "playwright": "^1.36.2",
     "start-server-and-test": "^2.0.0",
