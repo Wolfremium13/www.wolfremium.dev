@@ -14,3 +14,4 @@ import 'prismjs/components/prism-clojure';
 import 'prismjs/components/prism-cmake';
 import 'prismjs/components/prism-http';
 import 'prismjs/components/prism-docker';
+import 'prismjs/components/prism-toml';

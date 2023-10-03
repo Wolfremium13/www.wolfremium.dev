@@ -1,0 +1,249 @@
+---
+title: "🚀 Personaliza tu terminal con starship"
+date: "2023-10-03"
+preview: "/assets/blog/starship-customization/cat-painter.webp"
+tags:
+  - "🐧 Linux"
+---
+
+Continuando el post anterior de
+[🎨 Personaliza Zsh](/blog/posts/customize-your-zsh), hoy abordamos un
+complemento que eleva la experiencia de la terminal a un nivel superior:
+**Starship**.
+
+Starship no es simplemente otra shell. Es una declaración de intenciones en el
+vasto universo de las interfaces de línea de comandos. Gracias al lenguaje de
+programación Rust, reconocido por su seguridad y rendimiento, Starship
+proporciona una capa adicional sobre tu terminal actual, brindando posibilidades
+de personalización hasta ahora inexploradas. Ya sea que utilices bash, zsh, fish
+o cualquier otro intérprete, Starship se integra de manera armoniosa, liberando
+el potencial oculto de tu terminal.
+
+¿Qué hace a Starship tan especial? Desde indicadores de estado para tus
+repositorios git, pasando por integraciones específicas con herramientas y
+lenguajes de programación, hasta incluso la capacidad de mostrar el contexto de
+tu cuenta AWS, Starship redefine lo que significa trabajar con la CLI.
+
+Para aquellos que usan distribuciones basadas en Debian, la instalación es
+directa:
+
+En nuestro caso, vamos a instalarlo en una distribución basada en Debian:
+
+```bash
+curl -sS https://starship.rs/install.sh | sh
+```
+
+Durante mi experiencia personal con Starship, noté que para aprovechar al máximo
+sus capacidades, fue necesario instalar la fuente
+[Caskaydia Cove Nerd Font](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/CascadiaCode)
+
+Una vez instalada la fuente, es esencial hacer algunos ajustes en el archivo
+`~/.zshrc`:
+
+```bash
+# ZSH_THEME="<tema>"
+```
+
+Acto seguido agrega la siguiente línea al final:
+
+```bash
+eval "$(starship init zsh)"
+```
+
+> No debería ser necesario, pero si no funciona, reinicia la terminal.
+
+Mi configuración personal de Starship se basa en el `Pastel Powerline Preset`.
+Sin embargo, he realizado algunas modificaciones en el archivo
+`~/.config/starship.toml` para adaptarlo a mis necesidades. Aquí te presento una
+muestra de cómo quedó:
+
+```toml
+format = """
+[](#1d1a2f)\
+$os\
+$username\
+[](bg:#8bd450 fg:#1d1a2f)\
+$directory\
+[](fg:#8bd450 bg:#734f9a)\
+$git_branch\
+$git_status\
+[](fg:#734f9a bg:#FFB346)\
+$aws\
+[](fg:#FFB346 bg:#3f6d4e)\
+$c\
+$elixir\
+$elm\
+$golang\
+$gradle\
+$haskell\
+$java\
+$julia\
+$nodejs\
+$nim\
+$rust\
+$scala\
+$python\
+$sudo\
+[](fg:#3f6d4e bg:#965fd4)\
+$docker_context\
+[](fg:#965fd4 bg:#16a687)\
+$time\
+$status\
+[ ](fg:#16a687)\
+"""
+
+# Disable the blank line at the start of the prompt
+add_newline = false
+
+[os]
+style = "bg:#1d1a2f"
+disabled = false # Disabled by default
+
+[directory]
+style = "bg:#8bd450"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+"Public" = " "
+"Templates" = " "
+"Videos" = " "
+"Desktop" = " "
+"Home" = " "
+"Root" = " "
+
+[aws]
+symbol = '🅰 '
+style = "bg:#FFB346"
+format = '[ $symbol ($profile) ]($style)'
+
+[c]
+symbol = " "
+style = "bg:#3f6d4e"
+format = '[ $symbol ($version) ]($style)'
+
+[docker_context]
+symbol = " "
+style = "bg:#965fd4"
+format = '[ $symbol $context ]($style) $path'
+
+[elixir]
+symbol = " "
+style = "bg:#3f6d4e"
+format = '[ $symbol ($version) ]($style)'
+
+[python]
+symbol = " "
+style = "bg:#3f6d4e"
+format = '[ $symbol ($version) ]($style)'
+
+[git_branch]
+symbol = " "
+style = "bg:#734f9a"
+truncation_length = 8
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+conflicted = '🏳'
+ahead = '⏩${count}'
+behind = '🐌${count}'
+diverged = '😵 ⇡${ahead_count}⇣${behind_count}'
+up_to_date = '✅'
+untracked = '🤷'
+stashed = '📦'
+modified = '📝'
+style = "bg:#734f9a"
+renamed = '👅'
+deleted = '🗑'
+format = '[$all_status$ahead_behind ]($style)'
+
+[golang]
+symbol = " "
+style = "bg:#3f6d4e"
+format = '[ $symbol ($version) ]($style)'
+
+[gradle]
+style = "bg:#3f6d4e"
+format = '[ $symbol ($version) ]($style)'
+
+[haskell]
+symbol = " "
+style = "bg:#3f6d4e"
+format = '[ $symbol ($version) ]($style)'
+
+[java]
+symbol = " "
+style = "bg:#3f6d4e"
+format = '[ $symbol ($version) ]($style)'
+
+[julia]
+symbol = " "
+style = "bg:#3f6d4e"
+format = '[ $symbol ($version) ]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:#3f6d4e"
+format = '[ $symbol ($version) ]($style)'
+
+[nim]
+symbol = "󰆥 "
+style = "bg:#3f6d4e"
+format = '[ $symbol ($version) ]($style)'
+
+[rust]
+symbol = ""
+style = "bg:#3f6d4e"
+format = '[ $symbol ($version) ]($style)'
+
+[scala]
+symbol = " "
+style = "bg:#3f6d4e"
+format = '[ $symbol ($version) ]($style)'
+
+
+[time]
+disabled = true
+time_format = "%R" # Hour:Minute Format
+style = "bg:#16a687"
+format = '[ 🕐 $time ]($style)'
+
+[status]
+style = 'bg:#16a687'
+symbol = '❌ '
+format = '[$symbol]($style)'
+map_symbol = true
+disabled = false
+```
+
+> Para ver todos los módulos disponibles, puedes consultar la
+> [documentación](https://starship.rs/config/#modules).
+
+Si eres usuario de Vscode, te recomiendo ajustar la configuración de la terminal
+para aprovechar la fuente:
+
+```json
+{
+  "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font"
+}
+```
+
+El resultado final es simplemente estético y funcional, con colores que reflejan
+la paleta de este blog. Además, ya está preconfigurado para varios lenguajes,
+por lo que no necesitas agregar nada más.
+
+<MdxImage
+  src="/assets/blog/starship-customization/terminal-example.webp"
+  alt="terminal-example"
+></MdxImage>
+
+---
+
+Al combinar Starship con zsh, se mantienen todos los beneficios y plugins de
+oh-my-zsh. Espero que esta guía te inspire a personalizar aún más tu espacio de
+trabajo y mejorar tu productividad. ¡Hasta la próxima!
