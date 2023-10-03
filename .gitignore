@@ -5,9 +5,9 @@
 /.idea
 
 # Bad format images
-/public/assets/blog/**/*.jpg
-/public/assets/blog/**/*.png
-/public/assets/blog/**/*.tiff
+/public/**/*.jpg
+/public/**/*.png
+/public/**/*.tiff
 /public/assets/temp
 
 # dependencies
