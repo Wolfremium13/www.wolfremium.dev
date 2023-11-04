@@ -1,0 +1,139 @@
+---
+title: "🦆 Testing Duck Types"
+date: "2023-11-04"
+preview: "/assets/blog/test-duck-typing/cat_rubber_duck.webp"
+tags:
+  - "🧪 Testing"
+---
+
+Al trabajar con la programación orientada a objetos, especialmente en sistemas
+complejos, a menudo surge la necesidad de trabajar con tipos abstractos en lugar
+de clases concretas. Este enfoque, conocido como "duck typing", nos permite
+enfocarnos en el comportamiento que un objeto puede soportar, en lugar de la
+clase del objeto per se. En Python, "duck typing" es un concepto clave debido a
+su naturaleza dinámica y su filosofía de "si camina como un pato y hace quack
+como un pato, entonces debe ser un pato".
+
+## Definiendo la Interfaz de Preparación de Eventos
+
+Imaginemos que estamos diseñando un sistema que organiza eventos. Tenemos
+diferentes tipos de organizadores de eventos, cada uno con su propio conjunto de
+responsabilidades. Para mantener un diseño limpio, definimos una interfaz
+abstracta `EventOrganizer` y aseguramos que todos los organizadores la
+implementen.
+
+```python
+from abc import ABC, abstractmethod
+
+class EventOrganizer(ABC):
+    @abstractmethod
+    def organize(self, event):
+        pass
+```
+
+Cada organizador de eventos (`Caterer`, `Musician`, `Decorator`) implementa el
+método `organize` para preparar su parte del evento.
+
+```python
+class Caterer(EventOrganizer):
+    def organize(self, event):
+        # Implementación específica del Caterer
+        pass
+
+class Musician(EventOrganizer):
+    def organize(self, event):
+        # Implementación específica del Musician
+        pass
+
+class Decorator(EventOrganizer):
+    def organize(self, event):
+        # Implementación específica del Decorator
+        pass
+```
+
+La clase `Event` es responsable de orquestar la preparación, invocando el método
+`organize` de cada organizador.
+
+```python
+class Event:
+    def __init__(self, organizers):
+        self.organizers = organizers
+
+    def prepare(self):
+        for organizer in self.organizers:
+            organizer.organize(self)
+```
+
+## Escribiendo Pruebas Compartibles para Duck Types
+
+El uso de "duck types" nos lleva a la pregunta de cómo probar efectivamente este
+comportamiento. La clave es escribir pruebas que puedan ser compartidas por
+todos los jugadores del rol `EventOrganizer`. Usaremos el framework `unittest`
+de Python para hacer esto.
+
+Creamos un test case base que cualquier organizador de eventos puede utilizar
+para probar si cumple con la interfaz `EventOrganizer`.
+
+```python
+import unittest
+
+class EventOrganizerTestCase(unittest.TestCase):
+    def setUp(self):
+        self.object = self.get_organizer()
+
+    @abstractmethod
+    def get_organizer(self):
+        pass
+
+    def test_implements_event_organizer_interface(self):
+        self.assertTrue(hasattr(self.object, 'organize'))
+```
+
+A continuación, extendemos este test case para cada tipo de organizador de
+eventos.
+
+```python
+class CatererTest(EventOrganizerTestCase):
+    def get_organizer(self):
+        return Caterer()
+
+class MusicianTest(EventOrganizerTestCase):
+    def get_organizer(self):
+        return Musician()
+
+class DecoratorTest(EventOrganizerTestCase):
+    def get_organizer(self):
+        return Decorator()
+```
+
+Con estos test cases, podemos asegurarnos de que cada organizador implemente el
+método `organize` requerido por la interfaz `EventOrganizer`.
+
+## Pruebas de Colaboración
+
+Además de probar que los organizadores cumplen con la interfaz, necesitamos
+asegurarnos de que la clase `Event` interactúa correctamente con los
+`EventOrganizer`. Esto se logra simulando (mocking) los objetos y asegurándonos
+de que se llama al método `organize`.
+
+```python
+class EventTest(unittest.TestCase):
+    def test_prepares_with_organizers(self):
+        organizer_mock = unittest.mock.Mock(spec=EventOrganizer)
+        event = Event([organizer_mock])
+
+        event.prepare()
+
+        organizer_mock.organize.assert_called_once_with(event)
+```
+
+Ejecutar estas pruebas asegura que nuestro sistema está bien integrado y que las
+interacciones entre los diferentes componentes son como se esperan.
+
+## Conclusión
+
+En conclusión, "duck typing" y las pruebas compartibles proporcionan un marco
+poderoso para construir y asegurar sistemas flexibles y mantenibles. Aunque
+Python no tiene interfaces en el mismo sentido que otros lenguajes de
+programación, la filosofía de "duck typing" y las pruebas sólidas nos permiten
+diseñar e implementar sistemas robustos y flexibles.
