@@ -20,6 +20,16 @@ type PostProps = {
 };
 
 export default function PostPage({ post }: PostProps) {
+  const tagColors = [
+    "bg-lightViolet",
+    "bg-darkGreen",
+    "bg-teal-800",
+    "bg-indigo-800",
+    "bg-blue-800",
+    "bg-purple-800",
+    "bg-pink-800",
+  ]
+  const tagColor = tagColors[Math.floor(Math.random() * tagColors.length)];
   return (
     <Layout>
       <Head>
@@ -39,8 +49,22 @@ export default function PostPage({ post }: PostProps) {
       </Head>
       <Card>
         <section className="markdown-body flex justify-center content-center pt-8 w-full">
-          <div className="w-full px-4 md:px-0 md:max-w-5xl">
+          <div className="w-full px-4 md:px-0 md:max-w-5xl ">
             <h1>{post.title}</h1>
+            <div className="flex justify-between">
+              <div className="flex">
+                {post.tags.map((tag) => (
+                  <div
+                    key={tag}
+                    className={`text-gray-50 ${tagColor} rounded-full px-2 py-1 text-xs font-bold mr-3`}
+                  >
+                    {tag}
+                  </div>
+                ))}
+              </div>
+              <div className="text-gray-500 text">📅 {post.date}</div>
+            </div>
+            <div className="my-4"></div>
             <MDXRemote {...post.mdxSource} components={MDXComponents} />
           </div>
         </section>
@@ -103,4 +127,4 @@ export const getStaticPaths = async () => {
     paths,
     fallback: false,
   };
-}
+};
