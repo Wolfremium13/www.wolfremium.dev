@@ -18,6 +18,7 @@ async function searchPostsByTitle(title: string): Promise<Post[]> {
   );
   const posts = (await postsRepository.getPosts()) ?? [];
   return posts.filter((post) =>
-    post.title.toLowerCase().includes(title.toLowerCase())
+    post.title.toLowerCase().includes(title.toLowerCase()) ||
+    post.tags.some((tag) => tag.toLowerCase().includes(title.toLowerCase()))
   );
 }
