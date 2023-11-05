@@ -4,14 +4,8 @@ import { PostPreview } from "@/components/navigation/PostPreview";
 import { PaginationNav } from "@/components/navigation/PaginationNav";
 import Head from "next/head";
 import { PostsFactoryRepository } from "@/lib/posts/infrastructure/posts.factory.repository";
+import { Post } from "@/lib/posts/domain/post";
 
-type Post = {
-  title: string;
-  slug: string;
-  date: string;
-  preview: string;
-  tags: string[];
-};
 
 type BlogProps = {
   posts: Post[];
@@ -37,15 +31,7 @@ export default function Blog({ posts, page, totalPages }: BlogProps) {
       <Card>
         <div className="container mx-auto px-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {posts.length > 0 ? (
-            posts.map((post) => (
-              <PostPreview
-                key={post.slug}
-                title={post.title}
-                slug={post.slug}
-                preview={post.preview}
-                postDate={post.date}
-              />
-            ))
+            posts.map((post) => <PostPreview key={post.slug} post={post} />)
           ) : (
             <div className="col-span-full text-center text-2xl font-bold h-52 pt-12">
               😱 No hay publicaciones disponibles para esta página. Intenta con
