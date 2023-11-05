@@ -3,6 +3,7 @@ import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { ToggleButton } from "./ToggleButton";
 import NavLinks from "./NavLinks";
 import { GitHubCorner } from "./GithubCorner";
+import { SearchBar } from "./SearchBar";
 
 const Navbar: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -39,12 +40,14 @@ const NavbarLogic: React.FC<NavbarLogicProps> = ({
   isOpen,
   setIsOpen,
 }) => {
+
   return (
     <nav className="bg-gray-900/90 backdrop-blur-sm  hover:bg-gray-900/95 fixed w-full z-20 top-0 left-0 border-b-2 border-lightGreen/40 hover:border-lightGreen/80">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         {isMobile && <ToggleButton setIsOpen={setIsOpen} isOpen={isOpen}/>}
         <NavLinks isOpen={isOpen} isMobile={isMobile} />
-        <GitHubCorner/>
+        {!isOpen && <SearchBar />}
+        {!isMobile && <GitHubCorner />}
       </div>
     </nav>
   );

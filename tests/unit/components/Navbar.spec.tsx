@@ -32,13 +32,13 @@ describe("Navigation bar should ", () => {
       expect(setIsOpenMock).toHaveBeenCalledTimes(1);
     });
 
-    it("display github corner", () => {
+    it("not display github corner", () => {
       render(
         <NavbarLogic isMobile={true} isOpen={true} setIsOpen={() => {}} />
       );
 
       const githubCorner = screen.queryByLabelText("View source on GitHub");
-      expect(githubCorner).toBeInTheDocument();
+      expect(githubCorner).not.toBeInTheDocument();
     });
   });
 
@@ -63,7 +63,7 @@ describe("Navigation bar should ", () => {
 
     it("display github corner", () => {
       render(
-        <NavbarLogic isMobile={true} isOpen={true} setIsOpen={() => {}} />
+        <NavbarLogic isMobile={false} isOpen={true} setIsOpen={() => {}} />
       );
 
       const githubCorner = screen.queryByLabelText("View source on GitHub");

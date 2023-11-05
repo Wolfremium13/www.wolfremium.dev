@@ -1,6 +1,5 @@
 import {
   GiFlowerTwirl,
-  GiOilySpiral,
   GiLoveLetter,
   GiScrollQuill,
 } from "react-icons/gi";
