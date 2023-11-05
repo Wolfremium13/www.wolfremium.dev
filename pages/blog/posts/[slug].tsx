@@ -28,8 +28,8 @@ export default function PostPage({ post }: PostProps) {
     "bg-blue-800",
     "bg-purple-800",
     "bg-pink-800",
-  ]
-  const tagColor = tagColors[Math.floor(Math.random() * tagColors.length)];
+  ];
+
   return (
     <Layout>
       <Head>
@@ -53,14 +53,18 @@ export default function PostPage({ post }: PostProps) {
             <h1>{post.title}</h1>
             <div className="flex justify-between">
               <div className="flex">
-                {post.tags.map((tag) => (
-                  <div
-                    key={tag}
-                    className={`text-gray-50 ${tagColor} rounded-full px-2 py-1 text-xs font-bold mr-3`}
-                  >
-                    {tag}
-                  </div>
-                ))}
+                {post.tags.map((tag) => {
+                  const tagColor =
+                    tagColors[Math.floor(Math.random() * tagColors.length)];
+                  return (
+                    <div
+                      key={tag}
+                      className={`text-gray-50 ${tagColor} rounded-full px-2 py-1 text-xs font-bold mr-3`}
+                    >
+                      {tag}
+                    </div>
+                  );
+                })}
               </div>
               <div className="text-gray-500 text">📅 {post.date}</div>
             </div>
