@@ -43,6 +43,7 @@ export default function Blog({ posts, page, totalPages }: BlogProps) {
                 title={post.title}
                 slug={post.slug}
                 preview={post.preview}
+                postDate={post.date}
               />
             ))
           ) : (
