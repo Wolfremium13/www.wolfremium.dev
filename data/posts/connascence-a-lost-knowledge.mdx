@@ -1,0 +1,298 @@
+---
+title: "👽️ Connascencia un conocimiento perdido"
+date: "2023-11-06"
+preview: "/assets/blog/connascence-a-lost-knowledge/cat-together.webp"
+tags:
+  - "✨ Edición Especial"
+---
+
+La connascencia es una métrica de calidad de software que nos permite razonar
+sobre la complejidad causada por las relaciones de dependencia en el diseño
+orientado a objetos. Fue inventada por Meilir Page-Jones como una forma de
+evaluar y comparar las dependencias en el software, similar a cómo se considera
+el acoplamiento en el diseño estructurado.
+
+## ¿Qué es la Connascencia?
+
+En ingeniería de software, dos componentes son connascentes si un cambio en uno
+requiere una modificación en el otro para mantener el funcionamiento general del
+sistema. La connascencia nos permite categorizar y comparar diferentes tipos de
+dependencias, lo cual puede ser una pista para mejorar la calidad del software.
+
+<MdxImage
+  src="/assets/blog/connascence-a-lost-knowledge/three-dimensions-diagram.webp"
+  alt="Pilares de la connascencia"
+></MdxImage>
+
+La dirección del refactor debe ser hacia el centro del diagrama, donde la
+connascencia es más débil. La connascencia más fuerte se encuentra en los
+extremos del diagrama, donde los componentes están más estrechamente acoplados.
+
+### Fuerza de la Connascencia
+
+Una forma de connascencia se considera más fuerte si es más probable que
+requiera cambios compensatorios en los elementos connascentes. Cuanto más fuerte
+es la forma de connascencia, más difícil y costoso es cambiar los elementos en
+la relación.
+
+### Grado de Connascencia
+
+La aceptabilidad de la connascencia está relacionada con el grado de su
+ocurrencia. Un grado limitado de connascencia puede ser aceptable, pero un grado
+grande puede ser inaceptable. Por ejemplo, una función que toma dos argumentos
+es generalmente aceptable, pero una que toma diez no lo es.
+
+### Localidad de la Connascencia
+
+La localidad es importante al analizar la connascencia. Formas más fuertes de
+connascencia son aceptables si los elementos involucrados están estrechamente
+relacionados. Por ejemplo, muchos lenguajes utilizan argumentos posicionales al
+llamar a funciones o métodos, lo cual es aceptable debido a la cercanía del
+llamador y el llamado.
+
+## Tipos de Connascencia
+
+A continuación, se presenta una lista de algunos tipos de connascencia ordenados
+aproximadamente de formas débiles a fuertes y con ejemplos en Python.
+
+> 💡**Nota:** Los ejemplos en Python son solo para ilustrar los conceptos. No
+> representan necesariamente buenas prácticas de programación.
+
+### Connascencias Estáticas
+
+Son aquellas que se pueden encontrar examinando visualmente el código.
+
+#### Connascencia de Nombre (CoN)
+
+Ocurre cuando múltiples componentes deben acordar el nombre de una entidad. Si
+cambia el nombre de un método, los llamadores de ese método deben cambiar para
+usar el nuevo nombre.
+
+```python
+# Antes del cambio
+def calcular_suma(a, b):
+    return a + b
+
+resultado = calcular_suma(5, 3)
+
+# Después del cambio
+def calcular_total(a, b):
+    return a + b
+
+# Los llamadores deben cambiar a usar el nuevo nombre
+resultado = calcular_total(5, 3)
+```
+
+#### Connascencia de Tipo (CoT)
+
+Se da cuando múltiples componentes deben acordar el tipo de una entidad. Si un
+método cambia el tipo de su argumento, los llamadores deben pasar un argumento
+diferente.
+
+```python
+# Antes del cambio
+def procesar_numero(num: int):
+    print(num * 2)
+
+procesar_numero(10)
+
+# Después del cambio
+def procesar_numero(num: str):
+    print(int(num) * 2)
+
+# Los llamadores deben pasar un string en lugar de un entero
+procesar_numero("10")
+```
+
+#### Connascencia de Significado (CoM) o Connascencia de Convención (CoC)
+
+Sucede cuando múltiples componentes deben acordar el significado de valores
+particulares.
+
+```python
+# Antes del cambio
+def estado_usuario(codigo):
+    # 0 para inactivo, 1 para activo
+    return "Activo" if codigo == 1 else "Inactivo"
+
+estado = estado_usuario(1)
+
+# Después del cambio
+def estado_usuario(codigo):
+    # 'A' para activo, 'I' para inactivo
+    return "Activo" if codigo == 'A' else "Inactivo"
+
+# Los llamadores deben usar 'A' o 'I' en lugar de 0 o 1
+estado = estado_usuario('A')
+```
+
+#### Connascencia de Posición (CoP)
+
+Ocurre cuando múltiples componentes deben acordar el orden de los valores.
+
+```python
+# Antes del cambio
+def crear_usuario(nombre, apellido):
+    print(f"Usuario: {nombre} {apellido}")
+
+crear_usuario("Juan", "Pérez")
+
+# Después del cambio
+def crear_usuario(apellido, nombre):
+    print(f"Usuario: {nombre} {apellido}")
+
+# Los llamadores deben cambiar el orden de los argumentos
+crear_usuario("Pérez", "Juan")
+```
+
+#### Connascencia de Algoritmo (CoA)
+
+Se presenta cuando múltiples componentes deben acordar un algoritmo particular.
+
+```python
+# Ambos lados deben usar el mismo algoritmo de hash
+import hashlib
+
+def generar_hash(datos):
+    return hashlib.sha256(datos.encode()).hexdigest()
+
+def verificar_hash(datos, hash_recibido):
+    return generar_hash(datos) == hash_recibido
+
+datos = "mensaje secreto"
+hash_correcto = generar_hash(datos)
+
+# La verificación solo funcionará si se usa el mismo algoritmo
+verificacion = verificar_hash(datos, hash_correcto)
+```
+
+### Connascencias Dinámicas
+
+Son aquellas que solo se pueden descubrir en tiempo de ejecución.
+
+#### Connascencia de Ejecución (CoE)
+
+Importante cuando el orden de ejecución de múltiples componentes es importante.
+
+```python
+# El orden de ejecución es crucial
+def inicializar_sistema():
+    cargar_configuracion()
+    establecer_conexiones()
+    iniciar_servicios()
+
+# Si se cambia el orden, el sistema podría no funcionar correctamente
+```
+
+#### Connascencia de Tiempo (CoT)
+
+Cuando el tiempo de ejecución de múltiples componentes es importante.
+
+```python
+# La sincronización entre hilos o procesos es un ejemplo
+import threading
+
+def tarea_1():
+    # Realiza una tarea que debe ser completada antes de la tarea 2
+    pass
+
+def tarea_2():
+    # Espera a que la tarea 1 se complete
+    pass
+
+hilo_1 = threading.Thread(target=tarea_1)
+hilo_2 = threading.Thread(target=tarea_2)
+
+
+
+hilo_1.start()
+hilo_1.join()  # Espera a que hilo_1 termine
+hilo_2.start()
+```
+
+#### Connascencia de Valores (CoV)
+
+Cuando varios valores deben cambiar juntos.
+
+```python
+# Si cambia el valor de una variable, otras también deben cambiar
+IVA = 0.16
+precio_sin_iva = 100
+precio_con_iva = precio_sin_iva + (precio_sin_iva * IVA)
+
+# Si el IVA cambia, el precio con IVA también debe cambiar
+IVA = 0.21
+precio_con_iva = precio_sin_iva + (precio_sin_iva * IVA)
+```
+
+#### Connascencia de Identidad (CoI)
+
+Cuando múltiples componentes deben referenciar la misma entidad.
+
+```python
+# Dos funciones trabajando con la misma instancia de un objeto
+class Configuracion:
+    pass
+
+configuracion_global = Configuracion()
+
+def modificar_configuracion():
+    configuracion_global.alguna_opcion = True
+
+def usar_configuracion():
+    if configuracion_global.alguna_opcion:
+        # Hacer algo
+        pass
+
+modificar_configuracion()
+usar_configuracion()
+```
+
+## Reduciendo la Connascencia
+
+Reducir la connascencia disminuye el costo de cambio para un sistema de
+software. Una forma de reducir la connascencia es transformando formas fuertes
+en formas más débiles. Por ejemplo, un método que toma varios argumentos podría
+cambiarse para usar parámetros nombrados, cambiando la connascencia de
+Connascencia de Posición (CoP) a Connascencia de Nombre (CoN).
+
+```python
+# Antes del cambio
+def crear_usuario(nombre, apellido):
+    print(f"Usuario: {nombre} {apellido}")
+
+crear_usuario("Juan", "Pérez")
+
+# Después del cambio
+
+# Usando parámetros nombrados
+def crear_usuario(nombre, apellido):
+    print(f"Usuario: {nombre} {apellido}")
+
+crear_usuario(nombre="Juan", apellido="Pérez")
+
+# O usando un diccionario
+def crear_usuario(datos):
+    print(f"Usuario: {datos['nombre']} {datos['apellido']}")
+    # Otra opción es usar datos.get('nombre', 'valor por defecto')
+
+crear_usuario({"nombre": "Juan", "apellido": "Pérez"})
+```
+
+## Conclusión
+
+La connascencia es un concepto poderoso para entender y mejorar la calidad del
+diseño de software. Al reconocer y reducir la connascencia, los desarrolladores
+pueden crear sistemas más mantenibles y flexibles. Hoy en día, la connascencia
+es un conocimiento perdido, porque existen los IDEs y las herramientas de
+refactoring que nos permiten cambiar el nombre de un método o mover un método de
+un lado a otro sin tener que preocuparnos por las dependencias. Sin embargo,
+creo que es importante conocer este concepto para poder razonar sobre el diseño
+de software y tomar decisiones de forma consciente.
+
+## Referencias
+
+- [YOW! 2012 Jim Weirich - Connascence Examined #YOW](https://youtu.be/22vYwcfQnk8?si=7EktBHpkz2CYJhEU)
+- [Connascence](<https://en.wikipedia.org/wiki/Connascence_(computer_programming)>)
+- [What Every Programmer Should Know about Object-Oriented Design](https://amzn.eu/d/62Yj3rK)
+- [About Connascence](https://codesai.com/posts/2017/01/about-connascence)
