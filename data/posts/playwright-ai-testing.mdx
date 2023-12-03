@@ -1,0 +1,226 @@
+---
+title: "🤖PlayWright UI testing con IA"
+date: "2023-12-03"
+preview: "/assets/blog/playwright-ai-testing/cat-triggered.webp"
+tags:
+  - "🧪Testing"
+---
+
+En este post, vengo a presentar algo que ha llamado mucho mi atención y que muy
+posiblemente sea el futuro de los tests e2e con IA. Se acabó, estoy cansado de
+escribir selectores que nos acoplan al DOM y de tests ilegibles. Muchas
+aplicaciones son testeadas tanto manualmente como con
+[Cypress](https://www.cypress.io/), pero estas herramientas suelen ser costosas.
+Además, Cypress solo permite paralelizar tus tests si pagas, lo cual lo vuelve
+muy pesado. Este post pretende enseñar una herramienta que es una prueba de
+concepto, más que nada para ilustrar lo cerca que estamos de obtener tests más
+mantenibles.
+
+Ya hemos visto que para [Playwright](https://playwright.dev/) tenemos una
+extensión de VSCode que simplifica el uso de tener que escribir selectores,
+capturando lo que haces en un navegador. Pero eso nos sigue acoplando a la
+estructura del DOM. Si mañana ponemos selectores más específicos, estos tests
+dejarán de funcionar, ya que solo ponen las etiquetas lo suficientemente
+específicas como para que el selector sea único en el momento de la creación del
+test.
+
+> Nota, decir que se necesita ejecutar `npx playwright install` para que sea
+> efectivo al lanzar los tests con los diferentes navegadores.
+
+Vamos a ver el código de mi blog que no tiene selectores para ser testeado
+fácilmente:
+
+```ts
+test.describe("Page should", async () => {
+  test("be able to search", async ({ page }) => {
+    await page.goto("/");
+
+    const searchInput = "body > div > nav > div > div > div > input";
+    await page.fill(searchInput, "test");
+
+    const postResults = await page.$("body > div > nav > div > div > ul");
+
+    await expect(postResults).not.toBeNull();
+  });
+});
+```
+
+Parece ser que el test sabe demasiado del DOM, ya que no tenemos unos selectores
+adecuados. Pasa que en mobile el DOM cambia y eso es algo que nos puede romper
+los tests. Así que he descubierto auto-playwright, una librería pensada para
+lanzar prompts a chat-gpt, para así ser usados como una manera más óptima de
+ejecutar este test. Veámoslo.
+
+```ts
+test.describe("Page should", async () => {
+  const options = {
+    // The OpenAI model (https://platform.openai.com/docs/models/overview)
+    debug: true,
+    model: "gpt-3.5-turbo",
+  };
+  test("be able to search using AI", async ({ page }) => {
+    test.setTimeout(120000);
+    await page.goto("/");
+    await auto(
+      "Action with no result: Fill the search input with the place holder `Buscar posts...` using the value `test`",
+      { page },
+      options
+    );
+
+    const postResults = await auto(
+      "Query: We need to wait 3 seconds for the results and then the DOM will display the links, give me the number of them",
+      { page },
+      options
+    );
+    await expect(parseInt(postResults.query)).toBeGreaterThan(1);
+  });
+  // ...
+});
+```
+
+Para empezar, hay que registrarse en la página de [OpenAI](https://openai.com/)
+para sacar un API key para el proyecto, ya que esta librería usa chat gpt por
+detrás. Hay que abonarles un poco de dinero para que empiece a funcionar,
+realmente no es muy caro pero sí es necesario para empezar a usar la API key. Os
+muestro cómo quedan todas las interacciones con el test:
+
+````txt
+Running 1 test using 1 worker
+[1/1] [chromium] › page.spec.ts:10:7 › Page should › b
+[chromium] › page.spec.ts:10:7 › Page should › be able to search using AI
+> message {
+  role: 'user',
+  content: 'This is your task: Action with no result: Fill the search input with the place holder `Buscar posts...` using the value `test`\n' +
+    '\n' +
+    '* When creating CSS selectors, ensure they are unique and specific enough to select only one element, even if there are multiple elements of the same type (like multiple h1 elements).\n' +
+    "* Avoid using generic tags like 'h1' alone. Instead, combine them with other attributes or structural relationships to form a unique selector.\n" +
+    '* You must not derive data from the page if you are able to do so by using one of the provided functions, e.g. locator_evaluate.\n' +
+    '\n' +
+    'Webpage snapshot:\n' +
+    '\n' +
+    '```\n' +
+    `Kevin Hierro - Wolfremium<div class="bg-darkViolet"><nav class="bg-gray-900/90 backdrop-blur-sm  hover:bg-gray-900/95 fixed w-full z-20 top-0 left-0 border-b-2 border-lightGreen/40 hover:border-lightGreen/...` +
+    '```\n'
+}
+> message {
+  role: 'assistant',
+  content: null,
+  function_call: {
+    name: 'locateElement',
+    arguments: `{\n  "cssSelector": "input[placeholder='Buscar posts...']"\n}`
+  }
+}
+> message {
+  role: 'function',
+  name: 'locateElement',
+  content: '{"elementId":"f00dbab3-f21c-4ec9-8402-fad1e692deb7"}'
+}
+> message {
+  role: 'assistant',
+  content: null,
+  function_call: {
+    name: 'locator_fill',
+    arguments: '{\n' +
+      '  "value": "test",\n' +
+      '  "elementId": "f00dbab3-f21c-4ec9-8402-fad1e692deb7"\n' +
+      '}'
+  }
+}
+> message { role: 'function', name: 'locator_fill', content: '{"success":true}' }
+> message {
+  role: 'assistant',
+  content: null,
+  function_call: { name: 'resultAction', arguments: '{}' }
+}
+> message { role: 'function', name: 'resultAction', content: 'null' }
+> message {
+  role: 'assistant',
+  content: 'The search input has been successfully filled with the value "test".'
+}
+> finalContent The search input has been successfully filled with the value "test".
+> lastFunctionResult {}
+> message {
+  role: 'user',
+  content: 'This is your task: Query: We need to wait 3 seconds for the results and then the DOM will display the links, give me the number of them\n' +
+    '\n' +
+    '* When creating CSS selectors, ensure they are unique and specific enough to select only one element, even if there are multiple elements of the same type (like multiple h1 elements).\n' +
+    "* Avoid using generic tags like 'h1' alone. Instead, combine them with other attributes or structural relationships to form a unique selector.\n" +
+    '* You must not derive data from the page if you are able to do so by using one of the provided functions, e.g. locator_evaluate.\n' +
+    '\n' +
+    'Webpage snapshot:\n' +
+    '\n' +
+    '```\n' +
+    'Kevin Hierro - Wolfremium<div class="bg-darkViolet"><nav class="bg-gray-900/90 backdrop-blur-sm  hover:bg-gray-900/...' +
+    '```\n'
+}
+> message {
+  role: 'assistant',
+  content: null,
+  function_call: {
+    name: 'locateElement',
+    arguments: '{\n  "cssSelector": "ul.absolute a"\n}'
+  }
+}
+> message {
+  role: 'function',
+  name: 'locateElement',
+  content: '{"elementId":"1a274f6c-cf9b-4778-8798-0232b33520a9"}'
+}
+> message {
+  role: 'assistant',
+  content: null,
+  function_call: {
+    name: 'locator_count',
+    arguments: '{\n  "elementId": "1a274f6c-cf9b-4778-8798-0232b33520a9"\n}'
+  }
+}
+> message {
+  role: 'function',
+  name: 'locator_count',
+  content: '{"elementCount":5}'
+}
+> message {
+  role: 'assistant',
+  content: null,
+  function_call: { name: 'resultQuery', arguments: '{\n  "query": "5"\n}' }
+}
+> message { role: 'function', name: 'resultQuery', content: '{"query":"5"}' }
+> message {
+  role: 'assistant',
+  content: 'There are 5 links displayed on the webpage.'
+}
+> finalContent There are 5 links displayed on the webpage.
+> lastFunctionResult { query: '5' }
+  1 passed (20.8s)
+````
+
+Este comportamiento con prompts tiene dos tipos: las acciones y las queries. El
+DOM enviado esta minificado para reducir el coste de la petición. Este tipo de
+test tiene dos grandes inconvenientes. El primero es que van a haber problemas
+de timeout inesperados debido a cuánto tarda la librería en gestionar las
+respuestas del modelo. Por otro lado, trabajamos con un modelo no determinista
+que no siempre producirá el mismo resultado, por lo que si ejecutas el mismo
+test N veces, habrá una ocasión en la que no encuentre nada a pesar de no haber
+cambiado nada.
+
+La parte que me gusta de este ejemplo son las posibilidades infinitas que puedes
+hacer a una página: cambios, rellenar formularios, subidas de ficheros o
+imágenes, etc., sin tener tú que hacer ni siquiera el código a mano. Obviamente,
+hay algo malo, y es que si puedes hacer lo que quieras a disposición de todos,
+¿cuántas IA hay que quieran explotar vulnerabilidades de las páginas con muy
+poco esfuerzo? Es un tema que debatiremos más adelante en un post.
+
+## 🏷Conclusión
+
+Dicho esto, creo que es un modelo nuevo e intuitivo para reflejar tests con lo
+que el negocio necesita, pero que aún le queda un largo camino por recorrer. Yo,
+en mi opinión personal, no pondría la calidad de mi software en manos de algo
+que puede fallar sin un motivo o cambio en una pipeline de CI. Por otro lado,
+hay alternativas a este ejemplo como [ZeroStep](https://zerostep.com/), pero en
+todos los casos hay que pagar. En este caso, opté por la compañía oficial
+OpenAI, lo cual me sugiere que el futuro estará en un modelo integrado junto con
+los servicios de la empresa que, aunque no sea muy bueno, puede ser entrenado
+para buscar cosas en su propia página de la empresa. Para poder probarlo, he
+hecho un [repositorio](https://github.com/Wolfremium13/playwright-ai-automation)
+con un ejemplo sencillo de cómo usarlo. Espero que os haya gustado y que os haya
+abierto la mente a nuevas posibilidades.
