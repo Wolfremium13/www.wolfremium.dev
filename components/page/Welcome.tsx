@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Card } from "./Card";
-import profilePic from "@/public/layout/personal-image-kent.webp";
+import profilePic from "@/public/layout/personal-image-with-kevlin.webp";
 
 const Welcome = () => {
   return (
