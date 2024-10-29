@@ -6,4 +6,4 @@ export interface Post {
     tags: string[];
     content: string | undefined;
     mdxSource: any | undefined;
-};
+}

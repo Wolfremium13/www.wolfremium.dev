@@ -3,6 +3,7 @@ import "@/public/styles/scroll-bar.css";
 import "@/public/styles/github-corner.css";
 import type { Metadata } from "next";
 import { Layout } from "@/components/page/Layout";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Kevin Hierro - Wolfremium",
