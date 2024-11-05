@@ -2,7 +2,7 @@ import { Layout } from "@/components/page/Layout";
 import { MDXRemote } from "next-mdx-remote";
 import MDXComponents from "@/components/mdx/MDXComponents";
 import { Card } from "@/components/page/Card";
-import "@/public/styles/github-markdown-dark.css";
+import "../../../public/styles/github-markdown-dark.css";
 import Head from "next/head";
 import { PostsFactoryRepository } from "@/lib/posts/infrastructure/posts.factory.repository";
 

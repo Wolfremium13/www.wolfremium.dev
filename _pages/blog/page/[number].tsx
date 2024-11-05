@@ -1,7 +1,7 @@
 import { Layout } from "@/components/page/Layout";
 import { Card } from "@/components/page/Card";
 import { PostPreview } from "@/components/navigation/PostPreview";
-import { PaginationNav } from "@/components/navigation/PaginationNav";
+import { PaginationNav } from "@/components/navigation/PaginationNavbar";
 import Head from "next/head";
 import { PostsFactoryRepository } from "@/lib/posts/infrastructure/posts.factory.repository";
 import { Post } from "@/lib/posts/domain/post";
