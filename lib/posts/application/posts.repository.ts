@@ -1,7 +1,4 @@
 import {Post} from "@/lib/posts/domain/post";
-
-export type PostFileParams = {locale: string, postName: string}
-
 export interface PostsRepository {
     getTotalPages(): Promise<number>;
     getPaginatedPosts(pageNumber: number): Promise<Post[]>;
