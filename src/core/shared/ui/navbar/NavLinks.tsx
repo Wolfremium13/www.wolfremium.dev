@@ -1,6 +1,5 @@
 import {
   GiFlowerTwirl,
-  GiLoveLetter,
   GiScrollQuill,
 } from "react-icons/gi";
 import React from "react";
