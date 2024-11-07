@@ -1,6 +1,6 @@
 import Image from "next/image";
-import profilePic from "../../../../../public/layout/personal-image-with-kevlin.webp";
-import Card from "@/core/shared/ui/components/Card";
+import profilePic from "../../../../../../public/layout/personal-image-with-kevlin.webp";
+import Card from "@/core/shared/infrastructure/ui/components/Card";
 
 const Welcome = () => {
     return (

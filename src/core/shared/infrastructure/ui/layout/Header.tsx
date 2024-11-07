@@ -1,4 +1,4 @@
-import Navbar from "@/core/shared/ui/navbar/Navbar";
+import Navbar from "@/core/shared/infrastructure/ui/layout/navbar/Navbar";
 
 const Header = () => {
     return (
