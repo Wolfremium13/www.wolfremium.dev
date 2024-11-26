@@ -5,7 +5,7 @@ import { VscGithub } from "react-icons/vsc";
 import { FaLinkedin } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
 import {socialLinks} from "@/core/contact/domain/social-links";
-import SocialMediaButton from "@/core/contact/infrastructure/ui/SocialMediaButton";
+import SocialMediaButton from "@/core/contact/ui/SocialMediaButton";
 
 const Footer = () => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
