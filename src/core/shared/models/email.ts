@@ -15,7 +15,7 @@ export class Email {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     }
 
-    Value(): string {
+    value(): string {
         return this.email;
     }
 }

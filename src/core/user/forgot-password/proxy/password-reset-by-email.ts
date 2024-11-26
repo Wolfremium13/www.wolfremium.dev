@@ -10,7 +10,7 @@ export class PasswordResetByEmail implements PasswordResetter {
 
     async reset(email: Email): Promise<void> {
         const auth = this.firebaseAdapter.auth;
-        await sendPasswordResetEmail(auth, email.Value())
+        await sendPasswordResetEmail(auth, email.value())
             .catch((error: unknown) => {
                 if (error instanceof Error) {
                     this.logger.error(`Error while resenting password: ${error.message}`);

@@ -10,7 +10,7 @@ export class ForgotPasswordController {
         try {
             const email = Email.create((await request.json()).email);
             await this.forgotPassword.resetPassword(email);
-            return new Response(JSON.stringify({message: `Email sent to ${email.Value()}`}), {status: 200});
+            return new Response(JSON.stringify({message: `Email sent to ${email.value()}`}), {status: 200});
         } catch (e: unknown) {
             if (e instanceof InvalidParameterException) {
                 return new Response(JSON.stringify({error: e.message}), {status: 400});
