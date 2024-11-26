@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
-import NavLinks from "@/core/shared/infrastructure/ui/layout/navbar/NavLinks";
-import ToggleMenuButton from "@/core/shared/infrastructure/ui/layout/navbar/ToggleMenuButton";
-import GitHubCorner from "@/core/shared/infrastructure/ui/layout/navbar/GithubCorner";
+import NavLinks from "@/core/shared/ui/layout/navbar/NavLinks";
+import ToggleMenuButton from "@/core/shared/ui/layout/navbar/ToggleMenuButton";
+import GitHubCorner from "@/core/shared/ui/layout/navbar/GithubCorner";
 
 const Navbar: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);

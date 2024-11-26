@@ -1,4 +1,4 @@
-import Welcome from "@/core/shared/infrastructure/ui/components/Welcome";
+import Welcome from "@/core/shared/ui/components/Welcome";
 
 export default function Home() {
     return (

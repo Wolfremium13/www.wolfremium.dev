@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import {TbError404} from "react-icons/tb";
-import Card from "@/core/shared/infrastructure/ui/components/Card";
+import Card from "@/core/shared/ui/components/Card";
 
 const Custom404: React.FC = () => {
     return (
