@@ -1,6 +1,6 @@
-import {ForgotPassword} from "@/core/user/forgot-password/application/forgot-password";
 import {Email} from "@/core/shared/models/email";
 import {InvalidParameterException} from "@/core/shared/exceptions";
+import {ForgotPassword} from "@/core/user/forgot-password/use-case/forgot-password";
 
 export class ForgotPasswordController {
     constructor(private readonly forgotPassword: ForgotPassword) {
@@ -10,7 +10,7 @@ export class ForgotPasswordController {
         try {
             const email = Email.create((await request.json()).email);
             await this.forgotPassword.resetPassword(email);
-            return new Response(JSON.stringify({message: `Email sent to ${email}`}), {status: 200});
+            return new Response(JSON.stringify({message: `Email sent to ${email.Value()}`}), {status: 200});
         } catch (e: unknown) {
             if (e instanceof InvalidParameterException) {
                 return new Response(JSON.stringify({error: e.message}), {status: 400});
