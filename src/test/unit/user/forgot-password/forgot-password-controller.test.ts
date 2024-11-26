@@ -1,7 +1,7 @@
 import {beforeEach, describe, expect, it} from "vitest"
 import {mockDeep} from 'vitest-mock-extended';
 import {ForgotPassword} from "@/core/user/forgot-password/use-case/forgot-password";
-import {ForgotPasswordController} from "@/core/user/forgot-password/controllers/forgot-password-controller";
+import {ForgotPasswordController} from "@/core/user/forgot-password/controller/forgot-password-controller";
 
 describe('ForgotPasswordController', () => {
     let controller: ForgotPasswordController;

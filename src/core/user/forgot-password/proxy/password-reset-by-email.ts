@@ -1,8 +1,8 @@
 import {sendPasswordResetEmail} from "@firebase/auth";
-import {PasswordResetter} from "@/core/user/forgot-password/proxies/password-resetter";
 import {FirebaseAdapter} from "@/core/shared/firebase/firebase-adapter";
 import {Logger} from "@/core/shared/logging/logger";
 import {Email} from "@/core/shared/models/email";
+import {PasswordResetter} from "@/core/user/forgot-password/proxy/password-resetter";
 
 export class PasswordResetByEmail implements PasswordResetter {
     constructor(private readonly firebaseAdapter: FirebaseAdapter, private readonly logger: Logger) {
