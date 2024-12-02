@@ -1,5 +1,5 @@
 import {Email} from "@/core/shared/models/email";
 
 export interface ForgotPassword {
-    resetPassword(email: Email): Promise<void>;
+    reset(email: Email): Promise<void>;
 }

@@ -17,6 +17,7 @@
     "firebase": "^11.0.2",
     "frontmatter": "^0.0.3",
     "gray-matter": "^4.0.3",
+    "isomorphic-dompurify": "^2.18.0",
     "jose": "^5.9.6",
     "next": "14.2.10",
     "next-mdx-remote": "^4.4.1",

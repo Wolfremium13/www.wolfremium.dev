@@ -9,7 +9,7 @@ export class ForgotPasswordController {
     async post(request: Request): Promise<Response> {
         try {
             const email = Email.create((await request.json()).email);
-            await this.forgotPassword.resetPassword(email);
+            await this.forgotPassword.reset(email);
             return new Response(JSON.stringify({message: `Email sent to ${email.value()}`}), {status: 200});
         } catch (e: unknown) {
             if (e instanceof InvalidParameterException) {

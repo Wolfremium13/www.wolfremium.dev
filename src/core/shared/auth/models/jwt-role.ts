@@ -7,7 +7,7 @@ export class JwtRole {
   private constructor(public readonly value: string) {
   }
 
-  static create(givenRole: JwtAllowedRoles): JwtRole {
+  static create(givenRole: string): JwtRole {
     if (!givenRole) {
       throw new MissingParameterException('JwtRole is required');
     }

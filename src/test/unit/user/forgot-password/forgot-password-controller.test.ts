@@ -9,7 +9,7 @@ describe('ForgotPasswordController', () => {
 
     beforeEach(() => {
         service = mockDeep<ForgotPassword>({
-            resetPassword: async () => {
+            reset: async () => {
             }
         });
         controller = new ForgotPasswordController(service);
@@ -38,7 +38,7 @@ describe('ForgotPasswordController', () => {
         });
 
         it('handle 500', async () => {
-            service.resetPassword = async () => {
+            service.reset = async () => {
                 throw new Error('Unknown error');
             };
             const request = new Request('http://localhost:8080/user/forgot-password', {

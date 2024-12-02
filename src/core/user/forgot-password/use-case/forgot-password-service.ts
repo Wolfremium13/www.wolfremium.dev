@@ -6,7 +6,7 @@ export class ForgotPasswordService implements ForgotPassword {
     constructor(private readonly passwordResetter: PasswordResetter) {
     }
 
-    async resetPassword(email: Email): Promise<void> {
+    async reset(email: Email): Promise<void> {
         await this.passwordResetter.reset(email);
     }
 }
