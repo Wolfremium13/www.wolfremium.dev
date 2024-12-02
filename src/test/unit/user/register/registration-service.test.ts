@@ -1,4 +1,4 @@
-import {beforeEach, describe, expect, it} from "vitest"
+import {describe, expect, it} from "vitest"
 import {mock} from 'vitest-mock-extended';
 import {Email} from "@/core/shared/models/email";
 import {UserRegistration} from "@/core/user/register/proxy/user-registration";
