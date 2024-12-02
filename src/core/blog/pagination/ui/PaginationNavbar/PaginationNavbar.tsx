@@ -6,7 +6,7 @@ import {
     FaAngleLeft,
     FaAngleRight,
 } from "react-icons/fa";
-import {PaginationNumbers} from "@/core/blog/pagination/domain/pagination-numbers";
+import {PaginationNumbers} from "@/core/blog/pagination/models/pagination-numbers";
 
 type PaginationNavProps = {
     currentPage: number;

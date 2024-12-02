@@ -1,11 +1,11 @@
 import {FileStorage} from "@/core/shared/storage/file-storage";
 import {FirebaseAdapter} from "@/core/shared/firebase/firebase-adapter";
-import {FileDownloadUrl} from "../domain/file-download-url";
-import {FilePath} from "../domain/file-path";
 import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
-import {FileToBeSaved} from "@/core/shared/storage/domain/file-to-be-saved";
 import {Logger} from "@/core/shared/logging/logger";
 import {StorageException} from "@/core/shared/exceptions";
+import {FileDownloadUrl} from "@/core/shared/storage/models/file-download-url";
+import {FileToBeSaved} from "@/core/shared/storage/models/file-to-be-saved";
+import {FilePath} from "@/core/shared/storage/models/file-path";
 
 export class FileStorageFirebase implements FileStorage {
   constructor(private readonly firebaseAdapter: FirebaseAdapter, private readonly logger: Logger) {

@@ -1,4 +1,4 @@
-import {JwtSecretKey} from "@/core/shared/auth/domain/jwt-secret-key";
+import {JwtSecretKey} from "@/core/shared/auth/models/jwt-secret-key";
 
 export interface JwtSecret {
   get(): JwtSecretKey;

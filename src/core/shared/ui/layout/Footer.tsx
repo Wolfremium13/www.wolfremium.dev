@@ -4,8 +4,8 @@ import { GiLetterBomb } from "react-icons/gi";
 import { VscGithub } from "react-icons/vsc";
 import { FaLinkedin } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
-import {socialLinks} from "@/core/contact/domain/social-links";
 import SocialMediaButton from "@/core/contact/ui/SocialMediaButton";
+import {socialLinks} from "@/core/contact/social-links";
 
 const Footer = () => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
