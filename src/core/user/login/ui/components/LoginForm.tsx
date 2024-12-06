@@ -3,6 +3,7 @@ import {Press_Start_2P} from "next/font/google";
 import {GiDoorway, GiCrossMark} from "react-icons/gi";
 import {useState, useEffect} from "react";
 import {UserLoginControllerClient} from "@/core/user/login/controller/user-login-controller-client";
+import Link from "next/link";
 
 const pressFont = Press_Start_2P({weight: "400", subsets: ["latin"]});
 const LoginForm = () => {
@@ -46,12 +47,14 @@ const LoginForm = () => {
                    onChange={(e) => setPassword(e.target.value)}
             />
             <div className={"flex justify-between items-center"}>
-                <span className={`text-center p-2 text-lightGreen ${pressFont.className}`}>¿Cuánto es {Math.floor(captcha / 2)} + {captcha - Math.floor(captcha / 2)}?</span>
+                <span
+                    className={`text-center p-2 text-lightGreen ${pressFont.className}`}>¿Cuánto es {Math.floor(captcha / 2)} + {captcha - Math.floor(captcha / 2)}?</span>
                 <input type="text" required={true} onChange={(e) => setUserCaptcha(e.target.value)}
                        className={"w-20 rounded-md bg-darkViolet p-2 text-white border-2 border-darkGreen focus:outline-lightGreen"}
                 />
             </div>
-            <a href="#" className={"text-lightViolet text-sm"}>¿Invocaste a las sombras y olvidaste la llave?</a>
+            <Link href={"/user/forgot-password"} className={"text-lightViolet text-sm"}> ¿Invocaste a las sombras y olvidaste
+                la llave? </Link>
 
             <button onClick={handleLogin} disabled={loading}
                     className={"bg-darkGreen hover:bg-lightViolet text-white p-2 rounded-md"}> {loading ? "Cargando..." : "Ingresar"}
