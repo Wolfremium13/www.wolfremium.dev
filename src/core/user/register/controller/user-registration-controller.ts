@@ -1,11 +1,11 @@
-import {UserRegistration} from "@/core/user/register/proxy/user-registration";
 import {Email} from "@/core/shared/models/email";
 import {Password} from "@/core/shared/models/password";
 import {ClientSideException, ServerSideException} from "@/core/shared/exceptions";
+import {Registration} from "@/core/user/register/use-case/registration";
 
 export class UserRegistrationController {
     constructor(
-        private readonly userRegistration: UserRegistration,
+        private readonly registration: Registration,
         private readonly sanitizer: Sanitizer
     ) {
     }
@@ -15,7 +15,7 @@ export class UserRegistrationController {
             const {email, password} = await request.json();
             const sanitizedEmail = Email.create(this.sanitizer.sanitize(email));
             const sanitizedPassword = Password.create(this.sanitizer.sanitize(password));
-            await this.userRegistration.register(sanitizedEmail, sanitizedPassword);
+            await this.registration.registerWith(sanitizedEmail, sanitizedPassword);
             return new Response(JSON.stringify({message: "User created successfully"}), {status: 201});
         } catch (error: unknown) {
             if (error instanceof ClientSideException) {

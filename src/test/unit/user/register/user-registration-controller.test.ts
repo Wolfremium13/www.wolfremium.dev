@@ -1,17 +1,17 @@
 import {beforeEach, describe, expect, it} from "vitest"
 import {mock} from 'vitest-mock-extended';
 import {UserRegistrationController} from "@/core/user/register/controller/user-registration-controller";
-import {UserRegistration} from "@/core/user/register/proxy/user-registration";
 import {SanitizerFactory} from "@/core/shared/security/sanitizer-factory";
+import {Registration} from "@/core/user/register/use-case/registration";
 
 describe("UserRegistrationController", () => {
     let userRegistrationController: UserRegistrationController;
-    let userRegistration: UserRegistration;
+    let registration: Registration;
 
     beforeEach(() => {
-        userRegistration = mock<UserRegistration>();
+        registration = mock<Registration>();
         const sanitizer = SanitizerFactory.create();
-        userRegistrationController = new UserRegistrationController(userRegistration, sanitizer);
+        userRegistrationController = new UserRegistrationController(registration, sanitizer);
     });
 
     describe("post should", () => {
@@ -45,7 +45,7 @@ describe("UserRegistrationController", () => {
                 body: JSON.stringify({email: "myemail@email.com", password: "Password123@"})
             });
 
-            userRegistration.register = async () => {
+            registration.registerWith = async () => {
                 throw new Error("Unknown error");
             };
 
