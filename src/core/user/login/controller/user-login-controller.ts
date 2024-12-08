@@ -33,7 +33,7 @@ export class UserLoginController {
                 {
                     status: 200,
                     headers: {
-                        "Set-Cookie": `auth=${token}; Path=/; HttpOnly; Secure; SameSite=Strict`
+                        "Set-Cookie": `auth=${token.value}; Path=/; HttpOnly; Secure; SameSite=Strict`
                     }
                 }
             );

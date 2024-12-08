@@ -48,6 +48,7 @@ describe('UserLoginController', () => {
 
             expect(response.status).toBe(200);
             expect(await response.json()).toEqual({uid: 'uuid', email: givenEmail});
+            expect(response.headers.get('Set-Cookie')).toBe('auth=eyToken; Path=/; HttpOnly; Secure; SameSite=Strict');
         });
 
         it('handle 400', async () => {
