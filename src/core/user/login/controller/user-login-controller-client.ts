@@ -3,7 +3,8 @@ export const UserLoginControllerClient =
         email: string,
         password: string,
         setLoading: (loading: boolean) => void,
-        setError: (error: string | null) => void
+        setError: (error: (string | null)) => void,
+        redirectToAdmin: () => Promise<void>
     ): Promise<void> => {
         setLoading(true);
         setError(null);
@@ -19,6 +20,7 @@ export const UserLoginControllerClient =
                 setError(data.error);
                 return;
             }
+            await redirectToAdmin();
         } catch (error: unknown) {
             if (error instanceof Error) {
                 setError(error.message);

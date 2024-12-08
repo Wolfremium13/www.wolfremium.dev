@@ -4,9 +4,11 @@ import {GiDoorway, GiCrossMark} from "react-icons/gi";
 import {useState, useEffect} from "react";
 import {UserLoginControllerClient} from "@/core/user/login/controller/user-login-controller-client";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 const pressFont = Press_Start_2P({weight: "400", subsets: ["latin"]});
 const LoginForm = () => {
+    const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -19,12 +21,16 @@ const LoginForm = () => {
         setCaptcha(newCaptcha);
     }, []);
 
+    const redirectToAdmin = async () => {
+        router.push("/admin");
+    }
+
     const handleLogin = async () => {
         if (parseInt(userCaptcha) !== captcha) {
             setError("Respuesta incorrecta del captcha");
             return;
         }
-        await UserLoginControllerClient(email, password, setLoading, setError);
+        await UserLoginControllerClient(email, password, setLoading, setError, redirectToAdmin);
         const newCaptcha = Math.floor(Math.random() * 10) + 1 + Math.floor(Math.random() * 10);
         setCaptcha(newCaptcha);
         setUserCaptcha("");
@@ -38,12 +44,12 @@ const LoginForm = () => {
             </h1>
             <input type="text" placeholder="Astaroth" minLength={6} required={true} aria-label={"Username"}
                    className={"rounded-md bg-darkViolet p-2 text-white border-2 border-darkGreen focus:outline-lightGreen"}
-                   autoComplete={"true"}
+                   autoComplete={"email"}
                    onChange={(e) => setEmail(e.target.value)}
             />
             <input type="password" placeholder="OccultaVeritas" minLength={6} required={true} aria-label={"Password"}
                    className={"rounded-md bg-darkViolet p-2 text-white border-2 border-darkGreen focus:outline-lightGreen"}
-                   autoComplete={"true"}
+                   autoComplete={"password"}
                    onChange={(e) => setPassword(e.target.value)}
             />
             <div className={"flex justify-between items-center"}>

@@ -7,4 +7,7 @@ export class JwtPayload {
   static create(uuid: string, role: string): JwtPayload {
     return new JwtPayload(JwtUuid.create(uuid), JwtRole.create(role as JwtAllowedRoles));
   }
+  isAdministrator(): boolean {
+    return this.role.value === "admin";
+  }
 }
