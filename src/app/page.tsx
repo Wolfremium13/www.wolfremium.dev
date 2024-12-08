@@ -1,9 +1,7 @@
-import Welcome from "@/core/shared/ui/components/Welcome";
+import AboutMe from "@/core/about-me/ui/components/AboutMe";
 
 export default function Home() {
     return (
-        <>
-            <Welcome/>
-        </>
+        <AboutMe/>
     );
 }
