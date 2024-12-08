@@ -7,7 +7,7 @@ const AdminPage = () => {
     ];
 
     return (
-        <div className="container mx-auto px-4 bg-gray-900/70 mt-2 p-2 rounded-2xl">
+        <div className="container mx-auto px-4 bg-gray-900/70 p-2 rounded-2xl mt-24">
             <h1 className="text-2xl font-bold flex items-center mb-4 text-lightGreen">
                 <GiDwarfHelmet className="mr-2"/>
                 Panel de Administración
