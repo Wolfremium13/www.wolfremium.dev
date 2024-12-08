@@ -1,19 +1,23 @@
 "use client";
 import Card from "@/core/shared/ui/components/Card";
+import {Press_Start_2P} from "next/font/google";
+
+const pressFont = Press_Start_2P({weight: "400", subsets: ["latin"]});
 const AboutMeSections = [
     {
         id: 1,
         content: (
             <>
-                <h1 className="text-2xl md:text-4xl font-bold mb-4">
-                    ¡Hola! Soy Kevin Hierro, pero puedes llamarme Wolfremium.
+                <h1 className={`text-2xl md:text-4xl font-bold mb-4 ${pressFont.className} text-lightGreen`}>
+                    ¡Hola!
                 </h1>
                 <p className="text-lg mb-4">
-                    Soy un artesano del software con experiencia en la creación de aplicaciones web e ingeniería de
-                    datos.
-                    Mi amor por el Nestea y la programación me ha llevado a adquirir habilidades en una variedad de
-                    lenguajes y
-                    tecnologías, incluyendo Python, TypeScript, Java, React y Scala.
+                    Me llamo Kevin Hierro, aunque prefiero que me llames Wolfremium porque mi habilidad para desenterrar
+                    bugs es tan misteriosa como un lobo acechando en la oscuridad. Mi devoción por el Nestea solo es
+                    eclipsada por mi pasión por llevar el código al borde del colapso emocional, utilizando Chsarp como
+                    mi herramienta de tortura preferida. Este pasatiempo es considerablemente más entretenido que
+                    intentar encontrar sentido en una reunión de desarrolladores JavaScript discutiendo sobre
+                    semicolons.
                 </p>
             </>
         ),
@@ -22,37 +26,14 @@ const AboutMeSections = [
         id: 2,
         content: (
             <p className="text-lg mb-4">
-                A lo largo de mi carrera, he tenido la oportunidad de asistir a multitud de eventos, lo que me ha
-                permitido
-                desarrollar soluciones eficientes y escalables. Mi curiosidad insaciable me ha llevado a explorar el
-                fascinante
-                mundo de la inteligencia artificial y el Agile Testing, áreas en las que estoy ansioso por profundizar y
-                expandir
-                mis conocimientos.
+                En mi tiempo libre, me transformo en un ninja del código, erradicando bugs y depurando sistemas con
+                una destreza que haría palidecer a cualquier cirujano. Trabajo en Lean Mind, rodeado de otros
+                apasionados por la tecnología que comparten mi misión de transformar la anarquía de datos en obras
+                maestras funcionales. Entre sesiones de codificación intensas y debates sobre las últimas tendencias en
+                programación, afinamos nuestras herramientas para prepararnos para los desafíos que la tecnología nos
+                reserve. Si alguna vez te preguntas cómo hacer que tu código se comporte o simplemente quieres discutir
+                la belleza oculta de una función recursiva bien escrita, ¡aquí estoy!
             </p>
-        ),
-    },
-    {
-        id: 3,
-        content: (
-            <>
-                <p className="text-lg mb-4">
-                    En mi tiempo libre, disfruto contribuyendo a la comunidad de código abierto. Puedes echar un vistazo
-                    a algunos
-                    de mis proyectos en mi{" "}
-                    <a href="https://github.com/Wolfremium13" className="text-blue-500 underline">
-                        perfil de Github
-                    </a>
-                    . Cada proyecto que emprendo es un viaje de aprendizaje y una oportunidad para mejorar y
-                    perfeccionar mis
-                    habilidades.
-                </p>
-                <p className="text-lg">
-                    Actualmente, tengo el placer de ser parte del equipo de Leanmind, donde trabajo con un grupo de
-                    personas
-                    increíblemente talentosas y apasionadas por lo que hacen.
-                </p>
-            </>
         ),
     },
 ];
@@ -71,7 +52,8 @@ const AboutMe = () => {
                     </div>
                 </Card>
             </section>
-            <section className={"bg-kakashi-svg bg-center bg-cover bg-no-repeat min-h-screen absolute w-full top-8 brightness-50 blur-sm max-w-screen overflow-x-hidden"}/>
+            <section
+                className={"bg-kakashi-svg bg-center bg-cover bg-no-repeat min-h-screen absolute w-full top-8 brightness-50 blur-sm max-w-screen overflow-x-hidden"}/>
         </>
     );
 };
