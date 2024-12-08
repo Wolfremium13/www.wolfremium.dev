@@ -1,5 +1,5 @@
-import {GiCastleRuins, GiPunchBlast, GiScrollQuill} from "react-icons/gi";
-import React from "react";
+import {GiCastleRuins, GiPunchBlast, GiScrollQuill, GiKey, GiAnvilImpact} from "react-icons/gi";
+import React, { useState, useEffect } from "react";
 
 type NavLinksProps = {
     isOpen: boolean;
@@ -7,15 +7,35 @@ type NavLinksProps = {
 };
 
 const NavLinks: React.FC<NavLinksProps> = ({isOpen, isMobile}) => {
-    const navLinks = [
+    const [showManagementLinks, setShowManagementLinks] = useState(false);
+    const publicNavLinks = [
         {title: "Home", path: "/", icon: <GiCastleRuins size={30}/>},
         {title: "Katas", path: "/#", icon: <GiPunchBlast size={30}/>},
         {title: "Blog", path: "/blog", icon: <GiScrollQuill size={30}/>},
     ];
+    const managementLinks = [
+        {title: "Login", path: "/user/login", icon: <GiKey size={30}/>},
+        {title: "Registro", path: "/user/register", icon: <GiAnvilImpact size={30}/>}
+    ];
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.ctrlKey && event.key === 'l') {
+                event.preventDefault();
+                setShowManagementLinks(prev => !prev);
+            }
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
 
     if (isMobile && !isOpen) {
         return <></>;
     }
+
+    const linksToShow = showManagementLinks ? managementLinks : publicNavLinks;
 
     return (
         <div
@@ -23,7 +43,7 @@ const NavLinks: React.FC<NavLinksProps> = ({isOpen, isMobile}) => {
             data-testid="navbar-link-container"
         >
             <ul className="flex flex-col md:flex-row content-center font-medium md:space-x-8 w-full">
-                {navLinks.map((link, index) => (
+                {linksToShow.map((link, index) => (
                     <li
                         key={index}
                         className="md:min-w-[30%] text-center min-w-full py-1 md:py-0"
