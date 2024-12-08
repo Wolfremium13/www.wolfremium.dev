@@ -1,5 +1,5 @@
-import {GiCastleRuins, GiPunchBlast, GiScrollQuill, GiKey, GiAnvilImpact} from "react-icons/gi";
-import React, { useState, useEffect } from "react";
+import {GiCastleRuins, GiPunchBlast, GiScrollQuill, GiKey, GiAnvilImpact, GiDwarfHelmet} from "react-icons/gi";
+import React, {useState, useEffect} from "react";
 
 type NavLinksProps = {
     isOpen: boolean;
@@ -14,6 +14,7 @@ const NavLinks: React.FC<NavLinksProps> = ({isOpen, isMobile}) => {
         {title: "Blog", path: "/blog", icon: <GiScrollQuill size={30}/>},
     ];
     const managementLinks = [
+        {title: "Admin", path: "/admin", icon: <GiDwarfHelmet size={30}/>},
         {title: "Login", path: "/user/login", icon: <GiKey size={30}/>},
         {title: "Registro", path: "/user/register", icon: <GiAnvilImpact size={30}/>}
     ];
