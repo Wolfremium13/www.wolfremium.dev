@@ -21,7 +21,7 @@ const Footer = () => {
       <div className="max-w-screen-xl container mx-auto flex justify-between items-center md:flex-row flex-col">
         <div className="text-lg font-bold text-lightGreen">
           <p role="author">
-            Kevin Hierro Carrasco - {new Date().getFullYear()}
+             Kevin Hierro Carrasco - {"1.0.0"} - {new Date().getFullYear()}
           </p>
         </div>
         <div className="flex space-x-4 mt-4 md:mt-0">

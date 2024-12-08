@@ -53,7 +53,7 @@ const AboutMe = () => {
                 </Card>
             </section>
             <section
-                className={"bg-kakashi-svg bg-center bg-cover bg-no-repeat min-h-screen absolute w-full top-8 brightness-50 blur-sm max-w-screen overflow-x-hidden"}/>
+                className={"invisible lg:visible bg-kakashi-svg bg-center bg-cover bg-no-repeat min-h-screen absolute w-full top-8 brightness-50 blur-sm max-w-screen overflow-x-hidden"}/>
         </>
     );
 };
