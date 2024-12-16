@@ -5,15 +5,9 @@ import {JwtEnvSecret} from "@/core/shared/auth/config/jwt-env-secret";
 import {JwtApi} from "@/core/shared/auth/engine/jwt-api";
 
 export class JwtWebFactory {
-    static createForFront() {
+    static create() {
         const logger = ConsoleLoggerFactory.create();
         const jwtSecret = JwtEnvSecret.create();
         return new JwtApi(jwtSecret, logger);
-    }
-
-    static createForFirebase() {
-        const logger = ConsoleLoggerFactory.create();
-        const adminAdapter = FirebaseAdminAdapterFactory.create();
-        return new JwtFirebase(adminAdapter, logger);
     }
 }

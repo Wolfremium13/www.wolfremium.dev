@@ -28,3 +28,28 @@ export const PostsManagementControllerClientAllPosts =
             setLoading(false);
         }
     };
+
+export const PostsManagementControllerClientDelete =
+    async (
+        slug: string,
+        setLoading: (loading: boolean) => void,
+        setError: (error: (string | null)) => void,
+        setPosts: (value: (((prevState: Post[]) => Post[]) | Post[])) => void)
+        : Promise<void> => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            await fetch(`/api/posts/management?slug=${slug}`, {
+                method: "DELETE",
+            });
+            await PostsManagementControllerClientAllPosts(setLoading, setError, setPosts);
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setError(error.message);
+            }
+            setError("Error al eliminar el post");
+        } finally {
+            setLoading(false);
+        }
+    };

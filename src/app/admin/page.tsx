@@ -1,9 +1,10 @@
+"use client";
 import {GiDwarfHelmet} from "react-icons/gi";
 import Link from 'next/link';
 
 const AdminPage = () => {
     const links = [
-        {href: '/admin/posts', label: 'Administrador de posts'},
+        {href: '/admin/posts-management', label: 'Administrador de posts'},
     ];
 
     return (

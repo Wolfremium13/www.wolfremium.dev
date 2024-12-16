@@ -13,6 +13,21 @@ npm i && npm run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 result.
 
+Configure Firebase Admin SDK:
+
+Transform it into an environment variable:
+```sh
+cat serviceAccountKey.json | jq -c
+```
+
+Then, create a `.env.local` file in the root directory and add the following
+environment variables:
+
+```env
+FIREBASE_SERVICE_ACCOUNT=<serviceAccountKey.json>
+```
+
+
 ## 📝 Writing Posts
 
 To write a new post, create a new `.mdx` file inside the `posts` directory. The

@@ -12,7 +12,6 @@ export interface FirebaseAdapter {
 }
 
 export class FirebaseAdapterInitializer {
-  // TODO: review emulators from firebase and how to use them in the tests
   static create(config: FirebaseConfig): FirebaseAdapter {
     const app = initializeApp(config);
     const firestore = getFirestore(app);

@@ -1,29 +1,21 @@
-import {PostRepository} from "@/core/blog/posts/repository/post.repository";
-import {FirebaseAdapter} from "@/core/shared/firebase/firebase-adapter";
+import {PostRepository} from "@/core/blog/posts/repository/post-repository";
 import {Logger} from "@/core/shared/logging/logger";
 import {PostSlug} from "../../shared/models/post-slug";
 import {Post} from "../models/post";
-import {
-    collection,
-    getDocs,
-    doc,
-    setDoc,
-    deleteDoc,
-    getDoc,
-} from "@firebase/firestore";
 import {DatabaseException} from "@/core/shared/exceptions";
+import {FirebaseAdminAdapter} from "@/core/shared/firebase/firebase-admin-adapter";
 
 
 export class FirebasePostRepository implements PostRepository {
     constructor(
-        private readonly adapter: FirebaseAdapter,
+        private readonly adapter: FirebaseAdminAdapter,
         private readonly logger: Logger) {
     }
 
     async save(post: Post): Promise<void> {
         try {
             const firestore = this.adapter.firestore;
-            await setDoc(doc(firestore, "posts", post.getSlug()), {
+            await firestore.collection("posts").doc(post.getSlug()).set({
                 author: post.getAuthor(),
                 content: post.getContent(),
                 dateModified: post.getDateModified(),
@@ -34,7 +26,7 @@ export class FirebasePostRepository implements PostRepository {
                 shortDescription: post.getShortDescription(),
                 title: post.getTitle(),
                 tags: post.getTags(),
-                serializedPost: post.getSerializedPost(),
+                serializedPost: post.getSerializedPost()
             });
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -48,10 +40,10 @@ export class FirebasePostRepository implements PostRepository {
     async findBySlug(slug: PostSlug): Promise<Post | null> {
         try {
             const firestore = this.adapter.firestore;
-            const docRef = doc(firestore, "posts", slug.value());
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                const data = docSnap.data();
+            const docRef = firestore.collection("posts").doc(slug.value());
+            const doc = await docRef.get();
+            if (doc.exists) {
+                const data = doc.data() as any;
                 return Post.create(
                     data.author,
                     data.content,
@@ -82,8 +74,8 @@ export class FirebasePostRepository implements PostRepository {
     async findAll(): Promise<Post[]> {
         try {
             const firestore = this.adapter.firestore;
-            const postsCollection = collection(firestore, "posts");
-            const postsSnapshot = await getDocs(postsCollection);
+            const postsCollection = firestore.collection("posts");
+            const postsSnapshot = await postsCollection.get();
             const posts: Post[] = [];
             postsSnapshot.forEach((doc) => {
                 const data = doc.data();
@@ -113,17 +105,16 @@ export class FirebasePostRepository implements PostRepository {
 
     }
 
-    delete(post: PostSlug): Promise<void> {
+    async delete(slug: PostSlug): Promise<void> {
         try {
             const firestore = this.adapter.firestore;
-            const docRef = doc(firestore, "posts", post.value());
-            return deleteDoc(docRef);
+            await firestore.collection("posts").doc(slug.value()).delete();
         } catch (error: unknown) {
             if (error instanceof Error) {
-                this.logger.error(`Error while deleting post ${post.value()}: ${error.message}`);
-                throw error;
+                this.logger.error(`Error while deleting post ${slug.value()}: ${error.message}`);
+                throw new DatabaseException(`Error while deleting post with slug: ${slug.value()}`);
             }
-            throw new Error("Unknown error while deleting post");
+            throw new Error("Unknown error while deleting slug");
         }
     }
 }

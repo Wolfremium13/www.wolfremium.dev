@@ -100,7 +100,7 @@ export class Post {
         return this.tags.value();
     }
 
-    getSerializedPost(): SerializedPost {
-        return this.serializedPost;
+    getSerializedPost(): string {
+        return this.serializedPost.value();
     }
 }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, {useEffect, useState} from "react";
 import {GiWarlockEye} from "react-icons/gi";
-import {PostSearched} from "@/core/blog/post-searcher/domain/post-searched";
+import {PostSearched} from "@/core/blog/posts/models/post-searched";
 
 const PostSearchBar: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -46,15 +46,15 @@ const PostSearchBar: React.FC = () => {
                 <ul className="absolute bg-gray-900/90 backdrop-blur-sm shadow-md max-h-80 overflow-y-auto border border-darkGreen hover:border-lightGreen rounded-lg">
                     {posts.map((post) => (
                         <li
-                            key={post.slug}
+                            key={post.getSlug()}
                             className="px-4 py-2 hover:bg-lightViolet border-b-2 border-lightGreen/40 hover:border-lightGreen/80"
                         >
                             <Link
-                                href={`/blog/posts/${post.slug}`}
+                                href={`/blog/posts/${post.getSlug()}`}
                                 onClick={() => setSearchTerm("")}
                             >
-                                <span>{post.title}</span>
-                                <p>📅 {post.date}</p>
+                                <span>{post.getTitle()}</span>
+                                <p>📅 {post.getDate()}</p>
                             </Link>
                         </li>
                     ))}

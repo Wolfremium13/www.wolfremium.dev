@@ -21,7 +21,7 @@ export class PostsManagementController {
 
     async post(request: Request): Promise<Response> {
         try {
-            const token = JwtToken.fromRequest(request);
+            const token = JwtToken.fromAuthRequest(request);
             await this.postAuth.authenticate(token);
             const data = await request.json();
             const post = Post.create(
@@ -47,7 +47,7 @@ export class PostsManagementController {
 
     async get(request: Request): Promise<Response> {
         try {
-            const token = JwtToken.fromRequest(request);
+            const token = JwtToken.fromAuthRequest(request);
             await this.postAuth.authenticate(token);
             const url = new URL(request.url);
             const slug = url.searchParams.get('slug');
@@ -68,7 +68,7 @@ export class PostsManagementController {
 
     async delete(request: Request): Promise<Response> {
         try {
-            const token = JwtToken.fromRequest(request);
+            const token = JwtToken.fromAuthRequest(request);
             await this.postAuth.authenticate(token);
             const url = new URL(request.url);
             const slug = url.searchParams.get('slug');

@@ -10,12 +10,14 @@ import {
     MissingParameterException,
     NotFoundException
 } from "@/core/shared/exceptions";
+import {JwtFirebase} from "@/core/shared/auth/engine/jwt-firebase";
 
 export class UserLoginController {
     constructor(
         private readonly authentication: Authentication,
         private readonly sanitizer: Sanitizer,
         private readonly jwtApi: JwtApi,
+        private readonly jwtFirebase: JwtFirebase
     ) {
     }
 
@@ -28,13 +30,17 @@ export class UserLoginController {
             const jwtUuid = JwtUuid.create(loggedInUser.uuid());
             const jwtRole = JwtRole.create(loggedInUser.role());
             const token = await this.jwtApi.sign(jwtUuid, jwtRole);
+            const firebaseToken = await this.jwtFirebase.sign(jwtUuid, jwtRole);
             return new Response(
                 JSON.stringify({uid: loggedInUser.uuid(), email: loggedInUser.email()}),
                 {
                     status: 200,
                     headers: {
-                        "Set-Cookie": `auth=${token.value}; Path=/; HttpOnly; Secure; SameSite=Strict`
-                    }
+                        "Content-Type": "application/json",
+                        "Set-Cookie":
+                            `auth=${token.value}; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=86400, ` +
+                            `api_auth=${firebaseToken.value}; HttpOnly; Secure; SameSite=None; Path=/; Max-Age=86400`,
+                    },
                 }
             );
         } catch (error: unknown) {

@@ -14,4 +14,28 @@ export class JwtToken {
 
     return new JwtToken(value);
   }
+
+  static fromAuthRequest(request: Request): JwtToken {
+    const cookie = request.headers.get("Cookie");
+    if (!cookie) {
+      throw new MissingParameterException("Cookie is missing");
+    }
+    const token = cookie.split(";").find(c => c.startsWith("auth="));
+    if (!token) {
+      throw new MissingParameterException("Token is missing");
+    }
+    return JwtToken.create(token.replace("auth=", ""));
+  }
+
+  static fromApiAuthRequest(request: Request): JwtToken {
+    const cookie = request.headers.get("Cookie");
+    if (!cookie) {
+      throw new MissingParameterException("Cookie is missing");
+    }
+    const token = cookie.split(";").find(c => c.startsWith("api_auth="));
+    if (!token) {
+      throw new MissingParameterException("Token is missing");
+    }
+    return JwtToken.create(token.replace("api_auth=", ""));
+  }
 }

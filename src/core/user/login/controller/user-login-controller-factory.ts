@@ -3,7 +3,8 @@ import {AuthenticationService} from "@/core/user/login/use-case/authentication-s
 import {FirebaseUserAuthentication} from "@/core/user/login/proxy/firebase-user-authentication";
 import {FirebaseAdapterFactory} from "@/core/shared/firebase/firebase-adapter-factory";
 import {SanitizerFactory} from "@/core/shared/security/sanitizer-factory";
-import {JwtFactory} from "@/core/shared/auth/jwt-factory";
+import {JwtWebFactory} from "@/core/shared/auth/jwt-web-factory";
+import {JwtApiFactory} from "@/core/shared/auth/jwt-api-factory";
 
 export class UserLoginControllerFactory {
     static create() {
@@ -11,7 +12,8 @@ export class UserLoginControllerFactory {
         const userAuthentication = new FirebaseUserAuthentication(adapter);
         const authenticationService = new AuthenticationService(userAuthentication);
         const sanitizer = SanitizerFactory.create();
-        const jwtApi = JwtFactory.create();
-        return new UserLoginController(authenticationService, sanitizer, jwtApi);
+        const jwtApi = JwtWebFactory.create();
+        const jwtFirebase = JwtApiFactory.create();
+        return new UserLoginController(authenticationService, sanitizer, jwtApi, jwtFirebase);
     }
 }
