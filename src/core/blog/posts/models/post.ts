@@ -8,6 +8,8 @@ import {PostLang} from "@/core/blog/shared/models/post-lang";
 import {PostShortDescription} from "@/core/blog/shared/models/post-short-description";
 import {PostSlug} from "@/core/blog/shared/models/post-slug";
 import {PostTitle} from "@/core/blog/shared/models/post-title";
+import {PostTags} from "@/core/blog/shared/models/post-tags";
+import {SerializedPost} from "@/core/blog/markdown/models/serialized.post";
 
 export class Post {
     private constructor(
@@ -20,7 +22,9 @@ export class Post {
         private lang: PostLang,
         private shortDescription: PostShortDescription,
         private slug: PostSlug,
-        private title: PostTitle
+        private title: PostTitle,
+        private tags: PostTags,
+        private serializedPost: SerializedPost
     ) {
     }
 
@@ -34,20 +38,22 @@ export class Post {
         givenLang: string,
         givenShortDescription: string,
         givenSlug: string,
-        givenTitle: string
+        givenTitle: string,
+        givenTags: string[],
+        givenSerializedPost: string
     ): Post {
-        const author = PostAuthor.create(givenAuthor);
-        const content = PostContent.create(givenContent);
-        const dateModified = PostDateModified.create(givenDateModified);
-        const datePublished = PostDatePublished.create(givenDatePublished);
-        const imageAlt = PostImageAlt.create(givenImageAlt);
-        const imageUrl = PostImageUrl.create(givenImageUrl);
-        const lang = PostLang.create(givenLang);
-        const shortDescription = PostShortDescription.create(givenShortDescription);
-        const slug = PostSlug.create(givenSlug);
-        const title = PostTitle.create(givenTitle);
-
-        return new Post(author, content, dateModified, datePublished, imageAlt, imageUrl, lang, shortDescription, slug, title);
+        return new Post(PostAuthor.create(givenAuthor),
+            PostContent.create(givenContent),
+            PostDateModified.create(givenDateModified),
+            PostDatePublished.create(givenDatePublished),
+            PostImageAlt.create(givenImageAlt),
+            PostImageUrl.create(givenImageUrl),
+            PostLang.create(givenLang),
+            PostShortDescription.create(givenShortDescription),
+            PostSlug.create(givenSlug),
+            PostTitle.create(givenTitle),
+            PostTags.create(givenTags),
+            SerializedPost.create(givenSerializedPost));
     }
 
     getAuthor(): string {
@@ -88,5 +94,13 @@ export class Post {
 
     getTitle(): string {
         return this.title.value();
+    }
+
+    getTags(): string[] {
+        return this.tags.value();
+    }
+
+    getSerializedPost(): SerializedPost {
+        return this.serializedPost;
     }
 }
