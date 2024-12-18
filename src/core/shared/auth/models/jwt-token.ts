@@ -18,7 +18,7 @@ export class JwtToken {
   static fromAuthRequest(request: Request): JwtToken {
     const cookie = request.headers.get("Cookie");
     if (!cookie) {
-      throw new MissingParameterException("Cookie is missing");
+      throw new MissingParameterException("Cookie is missing for auth");
     }
     const token = cookie.split(";").find(c => c.startsWith("auth="));
     if (!token) {
@@ -30,7 +30,7 @@ export class JwtToken {
   static fromApiAuthRequest(request: Request): JwtToken {
     const cookie = request.headers.get("Cookie");
     if (!cookie) {
-      throw new MissingParameterException("Cookie is missing");
+      throw new MissingParameterException("Cookie is missing for api_auth");
     }
     const token = cookie.split(";").find(c => c.startsWith("api_auth="));
     if (!token) {

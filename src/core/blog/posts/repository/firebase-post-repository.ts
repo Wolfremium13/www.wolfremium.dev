@@ -26,7 +26,8 @@ export class FirebasePostRepository implements PostRepository {
                 shortDescription: post.getShortDescription(),
                 title: post.getTitle(),
                 tags: post.getTags(),
-                serializedPost: post.getSerializedPost()
+                serializedPost: post.getSerializedPost(),
+                published: post.isPublished()
             });
         } catch (error: unknown) {
             if (error instanceof Error) {
@@ -56,7 +57,8 @@ export class FirebasePostRepository implements PostRepository {
                     slug.value(),
                     data.title,
                     data.tags,
-                    data.serializedPost
+                    data.serializedPost,
+                    data.published
                 );
             }
             return null;
@@ -91,7 +93,8 @@ export class FirebasePostRepository implements PostRepository {
                     doc.id,
                     data.title,
                     data.tags,
-                    data.serializedPost
+                    data.serializedPost,
+                    data.published
                 ));
             });
             return posts;

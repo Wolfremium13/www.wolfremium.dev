@@ -1,5 +1,5 @@
 "use client";
-import Card from "@/core/shared/ui/components/Card";
+import Section from "@/core/shared/ui/components/Section";
 import {Press_Start_2P} from "next/font/google";
 
 const pressFont = Press_Start_2P({weight: "400", subsets: ["latin"]});
@@ -42,7 +42,7 @@ const AboutMe = () => {
     return (
         <>
             <section className={"relative z-10 mt-10"}>
-                <Card>
+                <Section>
                     <div className="flex flex-col items-center justify-center gap-8 p-8">
                         {AboutMeSections.map((section) => (
                             <div key={section.id} className={"text-left"}>
@@ -50,7 +50,7 @@ const AboutMe = () => {
                             </div>
                         ))}
                     </div>
-                </Card>
+                </Section>
             </section>
             <section
                 className={"invisible lg:visible bg-kakashi-svg bg-center bg-cover bg-no-repeat min-h-screen absolute w-full top-8 brightness-50 blur-sm max-w-screen overflow-x-hidden"}/>

@@ -6,4 +6,5 @@ export interface PostManagement {
     get(slug: PostSlug): Promise<Post | null>;
     save(post: Post): Promise<void>;
     delete(slug: PostSlug): Promise<void>;
+    update(post: Post): Promise<Post>;
 }

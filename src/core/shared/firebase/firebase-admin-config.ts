@@ -8,7 +8,8 @@ export class FirebaseAdminEnvironmentConfig implements FirebaseAdminConfig {
     private constructor(
         public readonly projectId: string,
         public readonly privateKey: string,
-        public readonly clientEmail: string
+        public readonly clientEmail: string,
+        public readonly storageBucket: string
     ) {
     }
 
@@ -25,7 +26,11 @@ export class FirebaseAdminEnvironmentConfig implements FirebaseAdminConfig {
             (() => {
                 throw new Error("FIREBASE_CLIENT_EMAIL not found");
             })();
+        const storageBucket = process.env.FIREBASE_STORAGE_BUCKET ??
+            (() => {
+                throw new Error("FIREBASE_STORAGE_BUCKET not found");
+            })();
 
-        return new FirebaseAdminEnvironmentConfig(projectId, privateKey, clientEmail);
+        return new FirebaseAdminEnvironmentConfig(projectId, privateKey, clientEmail, storageBucket);
     }
 }

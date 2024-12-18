@@ -15,7 +15,7 @@ export class PostShortDescription {
             throw new InvalidParameterException('Post description is too short');
         }
 
-        if (description.length > 252) {
+        if (description.length > 600) {
             throw new InvalidParameterException('Post description is too long');
         }
 

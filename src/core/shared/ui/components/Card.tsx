@@ -1,13 +1,24 @@
-import React from "react";
+import React, {PropsWithChildren} from "react"
 
-const Card = ({children}: { children: React.ReactNode}) => {
+interface Props extends PropsWithChildren {
+    onClick?: () => void
+    direction?: "vertical" | "horizontal"
+}
+
+export const Card = ({onClick, direction = "vertical", children}: Props) => {
+    const concatClasses = (...classes: string[]) => classes.join(" ")
+
     return (
-        <section className="flex justify-center items-center min-h-screen">
-            <section className={`m-0 md:m-8 bg-gray-950/50 p-4 rounded-xl w-full max-w-7xl`}>
-                {children}
-            </section>
-        </section>
-    );
-};
-
-export default Card;
+        <div
+            className={concatClasses(
+                "border border-primary-light p-4 rounded shadow-md bg-neutral-dark",
+                "flex overflow-hidden gap-4 transition-colors duration-300 ease-in-out",
+                direction === "vertical" ? "flex-col" : "flex-row",
+                onClick !== undefined ? "cursor-pointer hover:bg-secondary-light hover:bg-opacity-5" : ""
+            )}
+            onClick={onClick}
+        >
+            {children}
+        </div>
+    )
+}

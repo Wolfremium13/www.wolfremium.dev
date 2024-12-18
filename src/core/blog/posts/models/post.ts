@@ -24,7 +24,8 @@ export class Post {
         private slug: PostSlug,
         private title: PostTitle,
         private tags: PostTags,
-        private serializedPost: SerializedPost
+        private serializedPost: SerializedPost,
+        private published: boolean
     ) {
     }
 
@@ -40,7 +41,8 @@ export class Post {
         givenSlug: string,
         givenTitle: string,
         givenTags: string[],
-        givenSerializedPost: string
+        givenSerializedPost: string,
+        published: boolean
     ): Post {
         return new Post(PostAuthor.create(givenAuthor),
             PostContent.create(givenContent),
@@ -53,7 +55,8 @@ export class Post {
             PostSlug.create(givenSlug),
             PostTitle.create(givenTitle),
             PostTags.create(givenTags),
-            SerializedPost.create(givenSerializedPost));
+            SerializedPost.create(givenSerializedPost),
+            published);
     }
 
     getAuthor(): string {
@@ -102,5 +105,27 @@ export class Post {
 
     getSerializedPost(): string {
         return this.serializedPost.value();
+    }
+
+    isPublished(): boolean {
+        return this.published;
+    }
+
+    toJSON(): string {
+        return JSON.stringify({
+            author: this.getAuthor(),
+            content: this.getContent(),
+            dateModified: this.getDateModified(),
+            datePublished: this.getDatePublished(),
+            imageAlt: this.getImageAlt(),
+            imageUrl: this.getImageUrl(),
+            lang: this.getLang(),
+            shortDescription: this.getShortDescription(),
+            slug: this.getSlug(),
+            title: this.getTitle(),
+            tags: this.getTags(),
+            serializedPost: this.getSerializedPost(),
+            published: this.isPublished()
+        });
     }
 }

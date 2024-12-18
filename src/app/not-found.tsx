@@ -1,12 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import {TbError404} from "react-icons/tb";
-import Card from "@/core/shared/ui/components/Card";
+import Section from "@/core/shared/ui/components/Section";
 
 const Custom404: React.FC = () => {
     return (
         <div className="min-h-screen flex items-center justify-center ">
-            <Card>
+            <Section>
                 <div className=" p-8 rounded-lg text-center">
                     <TbError404 className="text-6xl mb-4"/>
                     <h1 className="text-2xl font-bold mb-4">
@@ -21,7 +21,7 @@ const Custom404: React.FC = () => {
                         </p>
                     </Link>
                 </div>
-            </Card>
+            </Section>
         </div>
     );
 };

@@ -26,4 +26,9 @@ export class PostManagementService implements PostManagement {
     all(): Promise<Post[]> {
         return this.postRepository.findAll();
     }
+
+    async update(post: Post): Promise<Post> {
+        await this.postRepository.save(post);
+        return post;
+    }
 }

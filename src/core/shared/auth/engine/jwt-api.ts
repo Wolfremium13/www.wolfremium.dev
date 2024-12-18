@@ -16,7 +16,7 @@ export class JwtApi implements Jwt {
     const secret = new TextEncoder().encode(this.secret.get().value);
     const rawToken = await new SignJWT({uuid: uuid.value, role: role.value})
       .setProtectedHeader({alg: "HS256"})
-      .setExpirationTime("1h")
+      .setExpirationTime("24h")
       .sign(secret);
     return JwtToken.create(rawToken);
   }

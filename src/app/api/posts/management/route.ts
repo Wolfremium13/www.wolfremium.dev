@@ -14,3 +14,8 @@ export async function DELETE(request: Request) {
     const controller = PostsManagementControllerFactory.create();
     return controller.delete(request);
 }
+
+export async function PATCH(request: Request) {
+    const controller = PostsManagementControllerFactory.create();
+    return controller.patch(request);
+}
