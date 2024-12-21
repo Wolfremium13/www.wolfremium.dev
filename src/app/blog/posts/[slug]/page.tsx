@@ -41,8 +41,7 @@ const getPost = async (slug: string): Promise<SerializedPost | null> => {
         imageAlt: post.getImageAlt(),
         tags: post.getTags(),
         datePublished: post.getDatePublished(),
-        content: post.getContent(),
-        serializedContent: post.getSerializedPost(),
+        content: post.getContent()
     }
 }
 

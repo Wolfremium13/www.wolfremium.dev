@@ -9,7 +9,6 @@ import {PostShortDescription} from "@/core/blog/shared/models/post-short-descrip
 import {PostSlug} from "@/core/blog/shared/models/post-slug";
 import {PostTitle} from "@/core/blog/shared/models/post-title";
 import {PostTags} from "@/core/blog/shared/models/post-tags";
-import {SerializedPost} from "@/core/blog/markdown/models/serialized.post";
 
 export class Post {
     private constructor(
@@ -24,7 +23,6 @@ export class Post {
         private slug: PostSlug,
         private title: PostTitle,
         private tags: PostTags,
-        private serializedPost: SerializedPost,
         private published: boolean
     ) {
     }
@@ -41,7 +39,6 @@ export class Post {
         givenSlug: string,
         givenTitle: string,
         givenTags: string[],
-        givenSerializedPost: string,
         published: boolean
     ): Post {
         return new Post(PostAuthor.create(givenAuthor),
@@ -55,7 +52,6 @@ export class Post {
             PostSlug.create(givenSlug),
             PostTitle.create(givenTitle),
             PostTags.create(givenTags),
-            SerializedPost.create(givenSerializedPost),
             published);
     }
 
@@ -103,10 +99,6 @@ export class Post {
         return this.tags.value();
     }
 
-    getSerializedPost(): string {
-        return this.serializedPost.value();
-    }
-
     isPublished(): boolean {
         return this.published;
     }
@@ -124,7 +116,6 @@ export class Post {
             slug: this.getSlug(),
             title: this.getTitle(),
             tags: this.getTags(),
-            serializedPost: this.getSerializedPost(),
             published: this.isPublished()
         });
     }

@@ -5,6 +5,5 @@ export type SerializedPost = {
     shortDescription: string;
     title: string;
     tags: string[];
-    serializedContent: string;
     content: string;
 }

@@ -1,5 +1,4 @@
 import {PostManagement} from "@/core/blog/posts/use-case/post-management";
-import {Serializer} from "@/core/blog/markdown/serializer";
 import {PostAuthentication} from "@/core/blog/posts/use-case/post-authentication";
 import {
     AuthenticationException,
@@ -17,7 +16,6 @@ export class PostsManagementController {
     constructor(
         private readonly postManagement: PostManagement,
         private readonly postAuth: PostAuthentication,
-        private readonly serializer: Serializer,
         private readonly timeManager: TimeManager
     ) {
     }
@@ -88,9 +86,6 @@ export class PostsManagementController {
     private async MapToPost(data: any) {
         const author = "Kevin Hierro";
         const lang = "es";
-        const serialized = await this.serializer.serialize(
-            PostContent.create(data.content)
-        );
         return Post.create(
             author,
             data.content,
@@ -103,7 +98,6 @@ export class PostsManagementController {
             data.slug,
             data.title,
             data.tags,
-            serialized.value(),
             data.published
         );
     }

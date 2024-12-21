@@ -54,7 +54,7 @@ export default async function BlogPage({params}: { params: { number: string } })
     return (
         <div className={"md:mt-24 mt-12"}>
             <Section>
-                <div className="container mx-auto px-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="container mx-auto p-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {posts.map((post: PostPreview) => (
                         <PostPreviewCard key={post.slug} post={post}/>
                     ))}

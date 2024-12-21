@@ -1,4 +1,3 @@
-import {SerializerFactory} from "@/core/blog/markdown/serializer.factory";
 import {PostManagementService} from "@/core/blog/posts/use-case/post-management-service";
 import {FirebasePostRepository} from "@/core/blog/posts/repository/firebase-post-repository";
 import {ConsoleLoggerFactory} from "@/core/shared/logging/console-logger-factory";
@@ -14,10 +13,9 @@ export class PostsManagementControllerFactory {
         const logger = ConsoleLoggerFactory.create();
         const postRepository = new FirebasePostRepository(adapter, logger);
         const postManagement = new PostManagementService(postRepository);
-        const serializer = SerializerFactory.create();
         const jwtApi = JwtWebFactory.create();
         const postAuth = new PostAuthenticationService(jwtApi, logger);
         const timeManager = TimeManagerFactory.create();
-        return new PostsManagementController(postManagement, postAuth, serializer, timeManager);
+        return new PostsManagementController(postManagement, postAuth, timeManager);
     }
 }
