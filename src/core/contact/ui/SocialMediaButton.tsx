@@ -7,7 +7,7 @@ export type SocialMediaButtonProps = {
   classes?: string;
 };
 
-const SocialMediaButton = ({
+export const SocialMediaButton = ({
   href,
   icon,
   label,
@@ -19,5 +19,3 @@ const SocialMediaButton = ({
     </a>
   );
 };
-
-export default SocialMediaButton;

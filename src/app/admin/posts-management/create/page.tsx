@@ -1,4 +1,4 @@
-import Section from "@/core/shared/ui/components/Section";
+import {Section} from "@/core/shared/ui/components/Section";
 import {Title} from "@/core/shared/ui/components/Title";
 import {CreatePost} from "@/core/blog/posts/ui/components/CreatePost";
 

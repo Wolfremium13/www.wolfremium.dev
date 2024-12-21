@@ -6,7 +6,7 @@ import {ForgotPasswordControllerClient} from "@/core/user/forgot-password/contro
 import Link from "next/link";
 
 const pressFont = Press_Start_2P({weight: "400", subsets: ["latin"]});
-const ForgotPasswordForm = () => {
+export const ForgotPasswordForm = () => {
     const [email, setEmail] = useState("");
     const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -64,4 +64,3 @@ const ForgotPasswordForm = () => {
         </div>
     );
 }
-export default ForgotPasswordForm;

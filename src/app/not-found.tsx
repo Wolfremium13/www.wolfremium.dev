@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import {TbError404} from "react-icons/tb";
-import Section from "@/core/shared/ui/components/Section";
+import {Section} from "@/core/shared/ui/components/Section";
 
 const Custom404: React.FC = () => {
     return (

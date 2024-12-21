@@ -1,6 +1,6 @@
 "use client";
-import Section from "@/core/shared/ui/components/Section";
 import {Press_Start_2P} from "next/font/google";
+import {Section} from "@/core/shared/ui/components/Section";
 
 const pressFont = Press_Start_2P({weight: "400", subsets: ["latin"]});
 const AboutMeSections = [
@@ -38,7 +38,7 @@ const AboutMeSections = [
     },
 ];
 
-const AboutMe = () => {
+export const AboutMe = () => {
     return (
         <>
             <section className={"relative z-10 mt-10"}>
@@ -57,5 +57,3 @@ const AboutMe = () => {
         </>
     );
 };
-
-export default AboutMe;

@@ -1,6 +1,6 @@
-import Navbar from "@/core/shared/ui/layout/navbar/Navbar";
+import {Navbar} from "@/core/shared/ui/layout/navbar/Navbar";
 
-const Header = () => {
+export const Header = () => {
     return (
         <header>
             <Navbar />
@@ -8,4 +8,3 @@ const Header = () => {
     )
 }
 
-export default Header;

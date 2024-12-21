@@ -2,7 +2,7 @@ import {PostManagement} from "@/core/blog/posts/use-case/post-management";
 import {PostRepository} from "@/core/blog/posts/repository/post-repository";
 import {Post} from "@/core/blog/posts/models/post";
 import {PostSlug} from "../../shared/models/post-slug";
-import {ClientSideException, NotFoundException} from "@/core/shared/exceptions";
+import {NotFoundException} from "@/core/shared/exceptions";
 
 export class PostManagementService implements PostManagement {
     constructor(private readonly postRepository: PostRepository) {

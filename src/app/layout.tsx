@@ -4,9 +4,9 @@ import "../../public/styles/github-corner.css";
 import "../../public/styles/github-markdown-dark.css";
 import type {Metadata} from "next";
 import React from "react";
-import Footer from "@/core/shared/ui/layout/Footer";
-import Header from "@/core/shared/ui/layout/Header";
-import Main from "@/core/shared/ui/layout/Main";
+import { Header } from "@/core/shared/ui/layout/Header";
+import {Main} from "@/core/shared/ui/layout/Main";
+import {Footer} from "@/core/shared/ui/layout/Footer";
 
 export const metadata: Metadata = {
     title: "Kevin Hierro - Wolfremium",

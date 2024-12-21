@@ -6,8 +6,7 @@ import {useRouter} from "next/navigation";
 import {Title} from "@/core/shared/ui/components/Title";
 import {PostForm} from "@/core/blog/posts/ui/components/PostForm";
 import {Button} from "@/core/shared/ui/components/Button";
-import Section from "@/core/shared/ui/components/Section";
-
+import {Section} from "@/core/shared/ui/components/Section";
 
 interface Props {
     post: Post

@@ -14,11 +14,11 @@ type NavLinksProps = {
     isMobile: boolean;
 };
 
-const NavLinks: React.FC<NavLinksProps> = ({isOpen, isMobile}) => {
+export const NavLinks: React.FC<NavLinksProps> = ({isOpen, isMobile}) => {
     const [showManagementLinks, setShowManagementLinks] = useState(false);
     const publicNavLinks = [
         {title: "Home", path: "/", icon: <GiCastleRuins size={30}/>},
-        {title: "Katas", path: "/#", icon: <GiPunchBlast size={30}/>},
+        // {title: "Katas", path: "/#", icon: <GiPunchBlast size={30}/>},
         {title: "Blog", path: "/blog", icon: <GiScrollQuill size={30}/>},
     ];
     const managementLinks = [
@@ -74,5 +74,3 @@ const NavLinks: React.FC<NavLinksProps> = ({isOpen, isMobile}) => {
         </div>
     );
 };
-
-export default NavLinks;

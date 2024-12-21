@@ -1,4 +1,4 @@
-const GitHubCorner = () => {
+export const GitHubCorner = () => {
   const websiteRepository =
     "https://github.com/Wolfremium13/www.wolfremium.dev";
   return (
@@ -39,5 +39,3 @@ const GitHubCorner = () => {
     </>
   );
 };
-
-export default GitHubCorner;

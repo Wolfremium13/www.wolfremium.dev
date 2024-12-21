@@ -7,7 +7,7 @@ import {useRouter} from 'next/navigation'
 
 
 const pressFont = Press_Start_2P({weight: "400", subsets: ["latin"]});
-const RegistrationForm = () => {
+export const RegistrationForm = () => {
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -62,4 +62,3 @@ const RegistrationForm = () => {
         </div>
     );
 }
-export default RegistrationForm;

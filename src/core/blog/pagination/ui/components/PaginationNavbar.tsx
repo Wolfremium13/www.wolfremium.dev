@@ -13,7 +13,7 @@ type PaginationNavProps = {
     totalPages: number;
 };
 
-const PaginationNavbar: React.FC<PaginationNavProps> = ({currentPage, totalPages}) => {
+export const PaginationNavbar: React.FC<PaginationNavProps> = ({currentPage, totalPages}) => {
     const paginationNumbersToShow = new PaginationNumbers(currentPage, totalPages).calculate();
 
     return (
@@ -68,4 +68,3 @@ const PaginationNavbar: React.FC<PaginationNavProps> = ({currentPage, totalPages
         </div>
     );
 };
-export default PaginationNavbar;

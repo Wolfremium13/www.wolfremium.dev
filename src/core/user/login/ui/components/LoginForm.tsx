@@ -7,7 +7,7 @@ import Link from "next/link";
 import {useRouter} from "next/navigation";
 
 const pressFont = Press_Start_2P({weight: "400", subsets: ["latin"]});
-const LoginForm = () => {
+export const LoginForm = () => {
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -59,7 +59,8 @@ const LoginForm = () => {
                        className={"w-20 rounded-md bg-darkViolet p-2 text-white border-2 border-darkGreen focus:outline-lightGreen"}
                 />
             </div>
-            <Link href={"/user/forgot-password"} className={"text-lightViolet text-sm"}> ¿Invocaste a las sombras y olvidaste
+            <Link href={"/user/forgot-password"} className={"text-lightViolet text-sm"}> ¿Invocaste a las sombras y
+                olvidaste
                 la llave? </Link>
 
             <button onClick={handleLogin} disabled={loading}
@@ -73,4 +74,3 @@ const LoginForm = () => {
         </div>
     );
 }
-export default LoginForm;

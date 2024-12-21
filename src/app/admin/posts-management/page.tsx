@@ -1,7 +1,7 @@
 "use client";
 import {Title} from "@/core/shared/ui/components/Title";
 import {PostList} from "@/core/blog/posts/ui/components/PostList";
-import Section from "@/core/shared/ui/components/Section";
+import {Section} from "@/core/shared/ui/components/Section";
 
 export default function PostsManagementPage() {
     return (

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {GiWarlockEye} from "react-icons/gi";
 import {PostSearched} from "@/core/blog/posts/models/post-searched";
 
-const PostSearchBar: React.FC = () => {
+export const PostSearchBar: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [posts, setPosts] = useState<PostSearched[]>([]);
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -63,5 +63,3 @@ const PostSearchBar: React.FC = () => {
         </div>
     );
 };
-
-export default PostSearchBar;

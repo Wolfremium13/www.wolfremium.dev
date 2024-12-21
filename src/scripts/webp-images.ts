@@ -22,7 +22,6 @@ fs.readdir(inputFolder, (err, files) => {
                         console.error(err);
                         return;
                     }
-                    console.log(`${fileName}.webp created`);
                 });
         }
     });
