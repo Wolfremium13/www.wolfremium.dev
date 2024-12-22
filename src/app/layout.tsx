@@ -20,9 +20,9 @@ export default function RootLayout({children}: { children: React.ReactNode; }) {
         <html lang="es">
         <body className="bg-darkViolet">
         <Header/>
+        <Analytics />
         <Main>{children}</Main>
         <Footer/>
-        <Analytics />
         </body>
         </html>
     );
