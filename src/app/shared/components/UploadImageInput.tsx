@@ -79,7 +79,6 @@ export const UploadImageInput: React.FC<UploadImageInputProps> = (
                 type="file"
                 onChange={handleFileChange}
                 className="hidden"
-                accept="image/png,image/jpeg,image/jpg,image/svg+xml"
             />
         </div>
     )
