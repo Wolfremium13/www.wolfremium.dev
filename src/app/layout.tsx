@@ -7,6 +7,7 @@ import React from "react";
 import { Header } from "@/app/shared/layout/Header";
 import {Main} from "@/app/shared/layout/Main";
 import {Footer} from "@/app/shared/layout/Footer";
+import { Analytics } from "@vercel/analytics/react"
 
 export const metadata: Metadata = {
     title: "Kevin Hierro - Wolfremium",
@@ -21,6 +22,7 @@ export default function RootLayout({children}: { children: React.ReactNode; }) {
         <Header/>
         <Main>{children}</Main>
         <Footer/>
+        <Analytics />
         </body>
         </html>
     );
