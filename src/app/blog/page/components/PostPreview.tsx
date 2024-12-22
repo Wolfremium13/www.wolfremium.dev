@@ -19,7 +19,7 @@ export const PostPreviewCard = ({post}: { post: PostPreview }) => {
                 />
                 <div className="p-4 absolute bottom-0 bg-gray-900/60 w-full">
                     <h2 className="text-xl font-semibold">{post.title}</h2>
-                    <p className="text-gray-400 text-sm mt-2">📅 {post.date}</p>
+                    <p className="text-gray-400 text-sm mt-2">📅 {new Date(post.date).toLocaleDateString()}</p>
                 </div>
             </Link>
         </div>
