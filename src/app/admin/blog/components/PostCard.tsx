@@ -45,6 +45,7 @@ export const PostCard: React.FC<PostCardProps> = ({post, onClick, onPublish, onD
                         height={400}
                         priority={true}
                         className="w-full h-80 object-cover border-2 border-mediumViolet rounded-2xl"
+                        unoptimized={true}
                     />
                 </figure>
             )}
