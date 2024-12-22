@@ -840,3 +840,12 @@
 .markdown-body ::-webkit-calendar-picker-indicator {
   filter: invert(50%);
 }
+
+.markdown-body img {
+  height: 400px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+}
