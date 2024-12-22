@@ -9,7 +9,7 @@ export default defineConfig({
     },
     test: {
         globals: true,
-        include: ["**/*.test.ts"],
+        include: ["**/*.unit.test.ts"],
         watch: false
     },
 });

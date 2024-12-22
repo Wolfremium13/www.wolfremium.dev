@@ -1,4 +1,4 @@
-import {Section} from "@/core/shared/ui/components/Section";
+import {Section} from "@/app/shared/components/Section";
 import Link from "next/link";
 import React from "react";
 import {GiDialPadlock} from "react-icons/gi";

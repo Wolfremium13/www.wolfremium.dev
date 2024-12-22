@@ -1,6 +1,6 @@
 import {NextResponse, type NextRequest} from "next/server";
-import {JwtWebFactory} from "./core/shared/auth/jwt-web-factory";
-import {JwtToken} from "./core/shared/auth/models/jwt-token";
+import {JwtWebFactory} from "@/core/auth/jwt-web-factory";
+import {JwtToken} from "@/core/auth/models/jwt-token";
 
 export async function middleware(request: NextRequest) {
     function toUnauthorizedPage() {
@@ -23,5 +23,10 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/admin/:path*", "/user/register/:path*"],
+    matcher: [
+        "/admin/:path*",
+        "/api/admin/:path*",
+        "/user/register/:path*", // Disallow registration after mine is created
+        "/api/public/user/register/:path*"
+    ],
 };

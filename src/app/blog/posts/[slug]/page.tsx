@@ -1,17 +1,16 @@
 import {Metadata} from "next";
-import {Section} from "@/core/shared/ui/components/Section";
-import {SerializedPost} from "@/core/blog/markdown/ui/types/serialized-post";
-import {PostManagementServiceFactory} from "@/core/blog/posts/use-case/post-management-service-factory";
-import {PostSlug} from "@/core/blog/shared/models/post-slug";
+import {Section} from "@/app/shared/components/Section";
+import {SerializedPost} from "@/app/blog/posts/types/serialized-post";
+import {PostManagementServiceFactory} from "@/app/api/admin/blog/posts/use-case/post-management-service-factory";
+import {PostSlug} from "@/app/api/admin/blog/posts/models/blog/shared/models/post-slug";
 import {notFound} from "next/navigation";
 import dynamic from "next/dynamic";
 import {serialize} from "next-mdx-remote/serialize";
+import {SERVER_URL} from "@/app/api/server-url";
 
-const MdxContent = dynamic(() => import('@/core/blog/markdown/ui/components/MdxContent'), {ssr: false});
+const MdxContent = dynamic(() => import('@/app/blog/posts/components/MdxContent'), {ssr: false});
 
-const BASE_URL = process.env.NEXT_PUBLIC_VERCEL_URL
-    ? process.env.NEXT_PUBLIC_VERCEL_URL
-    : 'http://localhost:3000';
+const BASE_URL = SERVER_URL.current;
 
 export const revalidate = 172800;
 
@@ -20,9 +19,6 @@ export async function generateStaticParams() {
     const posts = await service.all();
     return posts
         .filter((post) => post.isPublished())
-        .sort((a, b) => {
-            return new Date(b.getDatePublished()).getTime() - new Date(a.getDatePublished()).getTime();
-        })
         .map((post) => {
             return {slug: post.getSlug()}
         });
@@ -91,8 +87,8 @@ export default async function PostPage({params}: { params: { slug: string } }) {
     return (
         <div className={"md:mt-24 mt-12"}>
             <Section>
-                <section className="markdown-body flex justify-center content-center pt-8 w-full">
-                    <div className="w-full px-4 md:px-0 md:max-w-5xl ">
+                <section className="markdown-body flex justify-center content-center w-full">
+                    <div className="w-full p-2">
                         <h1>{post.title}</h1>
                         <div className="flex justify-between">
                             <div className="flex">

@@ -1,4 +1,4 @@
-import {RegistrationForm} from "@/core/user/register/ui/components/RegistrationForm";
+import {RegistrationForm} from "@/app/user/register/components/RegistrationForm";
 
 const RegisterPage = () => {
     return (

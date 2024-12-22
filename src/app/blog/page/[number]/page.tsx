@@ -1,67 +1,74 @@
 import {Metadata} from 'next'
-import {Section} from "@/core/shared/ui/components/Section";
-import {PaginationNavbar} from "@/core/blog/pagination/ui/components/PaginationNavbar";
-import {PostPreviewCard} from "@/core/blog/pagination/ui/components/PostPreview";
-import {PostPreview} from "@/core/blog/pagination/ui/types/post-preview";
+import {Section} from "@/app/shared/components/Section";
+import {PaginationNavbar} from "@/app/blog/page/components/PaginationNavbar";
+import {PostPreviewCard} from "@/app/blog/page/components/PostPreview";
+import {PostPreview} from "@/app/blog/page/types/post-preview";
+import {PostPaginationFactory} from "@/app/api/public/posts/pagination/use-case/post-pagination-factory";
+import {SERVER_URL} from "@/app/api/server-url";
+import {PageNumber} from "@/app/api/public/posts/models/page-number";
+import {notFound} from "next/navigation";
 
-
-const BASE_URL = process.env.NEXT_PUBLIC_VERCEL_URL
-    ? process.env.NEXT_PUBLIC_VERCEL_URL
-    : 'http://localhost:3000';
-
+const BASE_URL = SERVER_URL.current;
 export const dynamicParams = false;
+
+type PaginatedPosts = {
+    posts: PostPreview[];
+    totalPages: number;
+}
+
+async function getPaginatedPosts(pageNumber: PageNumber): Promise<PaginatedPosts> {
+    const service = PostPaginationFactory.create();
+    const totalPages = await service.getTotalPages();
+    const posts = await service.getPaginatedPosts(pageNumber);
+    return {posts, totalPages: totalPages.value()};
+}
+
 export async function generateStaticParams() {
-    const res = await fetch(`${BASE_URL}/api/posts/pagination?page=1`);
-    if (!res.ok) {
-        throw new Error('No se pudo obtener los datos para generar las rutas estáticas.');
-    }
-    const data = await res.json();
-    const { totalPages } = data;
-    return Array.from({ length: totalPages }, (_, i) => ({
+    const service = PostPaginationFactory.create();
+    const totalPages = await service.getTotalPages();
+    return Array.from({length: totalPages.value()}, (_, i) => ({
         number: (i + 1).toString()
     }));
 }
 
-export async function generateMetadata({ params }: { params: { number: string } }): Promise<Metadata> {
-    const page = parseInt(params.number, 10);
+export async function generateMetadata({params}: { params: { number: string } }): Promise<Metadata> {
+    const pageNumber = parseInt(params.number, 10);
     return {
-        title: `Blog - ${!isNaN(page) ? page.toString() : "Desconocida"}`,
+        title: `Blog - ${!isNaN(pageNumber) ? pageNumber : "Desconocida"}`,
         description: "Lista de artículos publicados en nuestro blog.",
         robots: {
             index: true,
             follow: true,
         },
         alternates: {
-            canonical: `${BASE_URL}/blog/page/${page}`
+            canonical: `${BASE_URL}/blog/page/${pageNumber}`
         }
     }
 }
 
 export default async function BlogPage({params}: { params: { number: string } }) {
-    const currentPage = parseInt(params.number, 10);
-    let totalPages = 1;
-    let posts: PostPreview[] = []
+    let paginatedPosts: PaginatedPosts;
+    let currentPage = 1;
     try {
-        const response = await fetch(`${BASE_URL}/api/posts/pagination?page=${currentPage}`);
-        const data = await response.json();
-        totalPages = data.totalPages;
-        posts = data.posts.map((post: string) => JSON.parse(post));
-    } catch (e: unknown){
-        if (e instanceof Error) {
-            console.error(e);
+        currentPage = parseInt(params.number, 10);
+        paginatedPosts = await getPaginatedPosts(PageNumber.create(currentPage));
+        if (currentPage > paginatedPosts.totalPages) {
+            return notFound();
         }
+    } catch (e) {
+        return notFound();
     }
+
     return (
         <div className={"md:mt-24 mt-12"}>
             <Section>
                 <div className="container mx-auto p-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {posts.map((post: PostPreview) => (
+                    {paginatedPosts.posts.map((post: PostPreview) => (
                         <PostPreviewCard key={post.slug} post={post}/>
                     ))}
                 </div>
-                <PaginationNavbar currentPage={currentPage} totalPages={totalPages}/>
+                <PaginationNavbar currentPage={currentPage} totalPages={paginatedPosts.totalPages}/>
             </Section>
         </div>
-
     );
 }
