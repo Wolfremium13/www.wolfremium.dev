@@ -15,7 +15,7 @@ export default function HomePage() {
                         Me llamo Kevin Hierro, aunque prefiero que me llames Wolfremium porque mi habilidad para
                         desenterrar
                         bugs es tan misteriosa como un lobo acechando en la oscuridad. Mi devoción por el Nestea solo es
-                        eclipsada por mi pasión por llevar el código al borde del colapso emocional, utilizando Chsarp
+                        eclipsada por mi pasión por llevar el código al borde del colapso emocional, utilizando {"\"Sisharp\""}
                         como
                         mi herramienta de tortura preferida. Este pasatiempo es considerablemente más entretenido que
                         intentar encontrar sentido en una reunión de desarrolladores JavaScript discutiendo sobre
