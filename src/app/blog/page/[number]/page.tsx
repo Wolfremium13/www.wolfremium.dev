@@ -10,6 +10,8 @@ import {notFound} from "next/navigation";
 
 const BASE_URL = SERVER_URL.current;
 export const dynamicParams = false;
+export const revalidate = 172800;
+
 
 type PaginatedPosts = {
     posts: PostPreview[];
