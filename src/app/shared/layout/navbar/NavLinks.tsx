@@ -19,13 +19,13 @@ export const NavLinks: React.FC<NavLinksProps> = ({isOpen, isMobile}) => {
     const publicNavLinks = [
         {title: "Home", path: "/", icon: <GiCastleRuins size={30}/>},
         // {title: "Katas", path: "/#", icon: <GiPunchBlast size={30}/>},
-        {title: "Blog", path: "/blog", icon: <GiScrollQuill size={30}/>},
+        // {title: "Blog", path: "/blog", icon: <GiScrollQuill size={30}/>},
     ];
     const managementLinks = [
-        {title: "Admin", path: "/admin", icon: <GiDwarfHelmet size={30}/>},
-        {title: "Login", path: "/user/login", icon: <GiKey size={30}/>},
-        {title: "Posts", path: "/admin/blog", icon: <GiAnvilImpact size={30}/>},
-        {title: "Salir", path: "/api/user/sign-out", icon: <GiChalkOutlineMurder size={30}/>}
+        // {title: "Admin", path: "/admin", icon: <GiDwarfHelmet size={30}/>},
+        // {title: "Login", path: "/user/login", icon: <GiKey size={30}/>},
+        // {title: "Posts", path: "/admin/blog", icon: <GiAnvilImpact size={30}/>},
+        // {title: "Salir", path: "/api/user/sign-out", icon: <GiChalkOutlineMurder size={30}/>}
     ];
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export const NavLinks: React.FC<NavLinksProps> = ({isOpen, isMobile}) => {
         return <></>;
     }
 
-    const linksToShow = showManagementLinks ? managementLinks : publicNavLinks;
+    const linksToShow = publicNavLinks;
 
     return (
         <div
