@@ -5,9 +5,29 @@ interface Props {
   title: string;
   description: string;
   lang: 'en' | 'es';
+  keywords?: string;
+  canonicalUrl?: string;
 }
 
-const { title, description, lang } = Astro.props;
+const { title, description, lang, keywords, canonicalUrl } = Astro.props;
+
+const siteUrl = 'https://www.wolfremium.dev';
+const canonical = canonicalUrl ?? (lang === 'en' ? siteUrl : `${siteUrl}/es`);
+const alternateEn = siteUrl;
+const alternateEs = `${siteUrl}/es`;
+const ogImage = `${siteUrl}/og-image.png`;
+
+const personSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Kevin Hierro Carrasco",
+  "url": siteUrl,
+  "jobTitle": lang === 'en' ? "Full Stack Engineer" : "Ingeniero Full Stack",
+  "sameAs": [
+    "https://github.com/Wolfremium13",
+    "https://www.linkedin.com/in/kevin-hierro/"
+  ]
+});
 ---
 
 <!doctype html>
@@ -23,18 +43,35 @@ const { title, description, lang } = Astro.props;
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
+    <meta name="author" content="Kevin Hierro Carrasco" />
+    <meta name="robots" content="index, follow" />
+    {keywords && <meta name="keywords" content={keywords} />}
+
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={alternateEn} />
+    <link rel="alternate" hreflang="es" href={alternateEs} />
+    <link rel="alternate" hreflang="x-default" href={alternateEn} />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.wolfremium.dev" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'es_ES'} />
+    <meta property="og:locale:alternate" content={lang === 'en' ? 'es_ES' : 'en_US'} />
+    <meta property="og:site_name" content="Wolfremium Dev" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://www.wolfremium.dev" />
+    <meta property="twitter:url" content={canonical} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json" set:html={personSchema} />
   </head>
   <body>
     <slot />

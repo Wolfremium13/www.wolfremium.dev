@@ -12,9 +12,10 @@ import { parseCV } from '../utils/cvParser';
 const cvData = parseCV('en');
 const title = `${cvData.name} | ${cvData.title}`;
 const description = `Portfolio of ${cvData.name}, a Full Stack Engineer specialized in clean code, BDD/TDD, and robust developer systems.`;
+const keywords = `Kevin Hierro, Full Stack Engineer, Software Engineer, Portfolio, Clean Code, TDD, BDD, TypeScript, Kotlin, Python, React, Spring Boot`;
 ---
 
-<Layout title={title} description={description} lang="en">
+<Layout title={title} description={description} lang="en" keywords={keywords}>
   <Navigation lang="en" />
   
   <main>
