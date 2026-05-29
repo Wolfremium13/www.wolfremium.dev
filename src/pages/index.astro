@@ -1,17 +1,54 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Hero from '../components/Hero.astro';
+import AboutIDE from '../components/AboutIDE.astro';
+import SkillsGrid from '../components/SkillsGrid.astro';
+import Certifications from '../components/Certifications.astro';
+import Footer from '../components/Footer.astro';
 
+import { parseCV } from '../utils/cvParser';
+
+const cvData = parseCV('en');
+const title = `${cvData.name} | ${cvData.title}`;
+const description = `Portfolio of ${cvData.name}, a Full Stack Engineer specialized in clean code, BDD/TDD, and robust developer systems.`;
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title={title} description={description} lang="en">
+  <Navigation lang="en" />
+  
+  <main>
+    <Hero 
+      lang="en"
+      name={cvData.name}
+      title={cvData.title}
+      github={cvData.github}
+      linkedin={cvData.linkedin}
+      email={cvData.email}
+    />
+    
+    <AboutIDE 
+      lang="en"
+      profileText={cvData.profile}
+      education={cvData.education}
+      experience={cvData.experience}
+    />
+    
+    <SkillsGrid 
+      lang="en"
+      skillsList={cvData.skills}
+    />
+    
+    <Certifications 
+      lang="en"
+      certificationsList={cvData.certifications}
+    />
+  </main>
+  
+  <Footer 
+    lang="en"
+    email={cvData.email}
+    linkedin={cvData.linkedin}
+    github={cvData.github}
+  />
+</Layout>

@@ -1,0 +1,501 @@
+---
+import { useTranslations } from '../i18n/translations';
+
+interface Certification {
+  name: string;
+  link: string;
+  provider: string;
+  year: string;
+}
+
+interface Props {
+  lang: 'en' | 'es';
+  certificationsList: Certification[];
+}
+
+const { lang, certificationsList } = Astro.props;
+const t = useTranslations(lang);
+
+// Extract unique years and count occurrences
+const uniqueYears = [...new Set(certificationsList.map(c => {
+  const match = c.year.match(/\b\d{4}\b/);
+  return match ? match[0] : '';
+}).filter(Boolean))].sort((a, b) => b.localeCompare(a));
+
+const yearCounts = certificationsList.reduce((acc, curr) => {
+  const match = curr.year.match(/\b\d{4}\b/);
+  if (match) {
+    const yr = match[0];
+    acc[yr] = (acc[yr] || 0) + 1;
+  }
+  return acc;
+}, {} as Record<string, number>);
+
+function getProviderStyle(provider: string) {
+  const p = provider.toLowerCase();
+  if (p.includes('codely')) {
+    return {
+      color: 'var(--color-role-data)', // PyCharm Green
+      bg: 'rgba(33, 215, 137, 0.08)',
+      border: 'rgba(33, 215, 137, 0.25)',
+      glow: 'var(--glow-data)',
+      gradient: 'var(--gradient-pycharm)'
+    };
+  } else if (p.includes('coursera')) {
+    return {
+      color: 'var(--color-role-webdev)', // WebStorm Cyan
+      bg: 'rgba(8, 124, 250, 0.08)',
+      border: 'rgba(8, 124, 250, 0.25)',
+      glow: 'var(--glow-webdev)',
+      gradient: 'var(--gradient-webstorm)'
+    };
+  } else if (p.includes('udemy')) {
+    return {
+      color: '#a435f0', // Udemy Purple
+      bg: 'rgba(164, 53, 240, 0.08)',
+      border: 'rgba(164, 53, 240, 0.25)',
+      glow: '0 0 30px rgba(164, 53, 240, 0.25)',
+      gradient: 'linear-gradient(135deg, #a435f0 0%, #e225a5 100%)'
+    };
+  } else if (p.includes('openwebinars')) {
+    return {
+      color: '#f89820', // OpenWebinars Orange
+      bg: 'rgba(248, 152, 32, 0.08)',
+      border: 'rgba(248, 152, 32, 0.25)',
+      glow: 'var(--glow-internship)',
+      gradient: 'var(--gradient-intellij)'
+    };
+  }
+  
+  // Default/Fallback (NTT DATA, etc.)
+  return {
+    color: 'var(--color-role-fullstack)', // Brand Violet
+    bg: 'rgba(127, 82, 255, 0.08)',
+    border: 'rgba(127, 82, 255, 0.25)',
+    glow: 'var(--glow-fullstack)',
+    gradient: 'var(--gradient-brand)'
+  };
+}
+---
+
+<section class="certifications-section" id="certifications">
+  <div class="container">
+    <div class="section-header-block">
+      <h2 class="section-title">{t('section.certifications.title')}</h2>
+      <div class="title-line"></div>
+    </div>
+
+    <!-- Year Filter Bar -->
+    <div class="filters-panel">
+      <div class="cert-filter-container">
+        <span class="filter-label">{lang === 'en' ? 'Filter by Year:' : 'Filtrar por Año:'}</span>
+        <div class="cert-filter-tabs">
+          <button class="cert-year-tab active" data-year-filter="all">
+            {t('experience.role.all')} ({certificationsList.length})
+          </button>
+          {uniqueYears.map(yr => (
+            <button class="cert-year-tab" data-year-filter={yr}>
+              {yr} ({yearCounts[yr]})
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Certifications Grid -->
+    <div class="certs-grid">
+      {certificationsList.map((cert) => {
+        const style = getProviderStyle(cert.provider);
+        const certYearMatch = cert.year.match(/\b\d{4}\b/);
+        const yearAttr = certYearMatch ? certYearMatch[0] : '';
+        
+        return (
+          <div 
+            class="cert-card glow-card" 
+            data-provider={cert.provider} 
+            data-year={yearAttr}
+            style={`--card-glow: ${style.glow}; --card-gradient: ${style.gradient}`}
+          >
+            <div class="cert-header">
+              <span 
+                class="cert-provider" 
+                style={`color: ${style.color}; background: ${style.bg}; border-color: ${style.border}`}
+              >
+                {cert.provider}
+              </span>
+              <span class="cert-date">{cert.year}</span>
+            </div>
+            
+            <div class="cert-body">
+              <h3 class="cert-name">{cert.name}</h3>
+            </div>
+            
+            <div class="cert-footer">
+              <a href={cert.link} class="verify-link" target="_blank" rel="noopener noreferrer" style={`--hover-color: ${style.color}`}>
+                <span>{lang === 'en' ? 'Verify Credential' : 'Verificar Credencial'}</span>
+                <span class="verify-arrow">↗</span>
+              </a>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <!-- Client-side Pagination Controls -->
+    <div class="pagination-controls"></div>
+  </div>
+</section>
+
+<script>
+  let currentPage = 1;
+  const PAGE_SIZE = 6;
+
+  const yearTabs = document.querySelectorAll('.cert-year-tab');
+  const certCards = document.querySelectorAll('.cert-card');
+  const paginationContainer = document.querySelector('.pagination-controls');
+
+  let selectedYear = 'all';
+
+  function updatePagination() {
+    if (!paginationContainer) return;
+    
+    // Find all cards matching active filters (not filtered-out)
+    const visibleCards = Array.from(certCards).filter(card => !card.classList.contains('filtered-out'));
+    const totalPages = Math.ceil(visibleCards.length / PAGE_SIZE) || 1;
+
+    // Reset current page if out of bounds
+    if (currentPage > totalPages) {
+      currentPage = 1;
+    }
+
+    // Toggle display of cards for active page
+    visibleCards.forEach((card, index) => {
+      const pageIndex = Math.floor(index / PAGE_SIZE) + 1;
+      if (pageIndex === currentPage) {
+        card.classList.remove('paginated-out');
+      } else {
+        card.classList.add('paginated-out');
+      }
+    });
+
+    // Render paging elements
+    paginationContainer.innerHTML = '';
+
+    if (totalPages > 1) {
+      // Previous arrow
+      const prevBtn = document.createElement('button');
+      prevBtn.className = `page-control-btn ${currentPage === 1 ? 'disabled' : ''}`;
+      prevBtn.innerHTML = '←';
+      prevBtn.disabled = currentPage === 1;
+      prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          updatePagination();
+        }
+      });
+      paginationContainer.appendChild(prevBtn);
+
+      // Page numbers
+      for (let p = 1; p <= totalPages; p++) {
+        const pageBtn = document.createElement('button');
+        pageBtn.className = `page-btn ${p === currentPage ? 'active' : ''}`;
+        pageBtn.textContent = p.toString();
+        pageBtn.addEventListener('click', () => {
+          currentPage = p;
+          updatePagination();
+        });
+        paginationContainer.appendChild(pageBtn);
+      }
+
+      // Next arrow
+      const nextBtn = document.createElement('button');
+      nextBtn.className = `page-control-btn ${currentPage === totalPages ? 'disabled' : ''}`;
+      nextBtn.innerHTML = '→';
+      nextBtn.disabled = currentPage === totalPages;
+      nextBtn.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          updatePagination();
+        }
+      });
+      paginationContainer.appendChild(nextBtn);
+    }
+  }
+
+  function applyFilters() {
+    certCards.forEach(card => {
+      const year = card.getAttribute('data-year') || '';
+      const matchesYear = selectedYear === 'all' || year === selectedYear;
+
+      if (matchesYear) {
+        card.classList.remove('filtered-out');
+      } else {
+        card.classList.add('filtered-out');
+      }
+    });
+
+    updatePagination();
+  }
+
+  // Bind year filters
+  yearTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      yearTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      selectedYear = tab.getAttribute('data-year-filter') || 'all';
+      currentPage = 1;
+      applyFilters();
+    });
+  });
+
+  // Initial setup
+  applyFilters();
+</script>
+
+<style>
+  .certifications-section {
+    padding: 100px 0;
+    position: relative;
+    background: var(--bg-dark-obsidian);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .section-header-block {
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .section-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #ffffff 0%, #a0a0a0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .title-line {
+    width: 60px;
+    height: 4px;
+    background: var(--gradient-brand);
+    margin-top: 10px;
+    border-radius: 2px;
+  }
+
+  /* Filters Layout */
+  .filters-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    width: 100%;
+  }
+
+  .cert-filter-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .filter-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-gray-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .cert-filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .cert-year-tab {
+    background: var(--bg-dark-charcoal);
+    border: 1px solid var(--border-color);
+    color: var(--text-gray-light);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+  }
+
+  .cert-year-tab:hover {
+    border-color: var(--text-gray-dark);
+    color: var(--text-white);
+  }
+
+  .cert-year-tab.active {
+    background: var(--gradient-brand);
+    border-color: transparent;
+    color: #000000;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(127, 82, 255, 0.25);
+  }
+
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    min-height: 480px; /* Prevent layout jump on pagination change */
+  }
+
+  .cert-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 2rem;
+    transition: var(--transition-smooth);
+  }
+
+  .cert-card::before {
+    background: var(--gradient-border);
+  }
+
+  .cert-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-glow);
+  }
+
+  .cert-card:hover::before {
+    background: var(--card-gradient);
+  }
+
+  .cert-card.filtered-out, .cert-card.paginated-out {
+    display: none !important;
+  }
+
+  .cert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .cert-provider {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    letter-spacing: 0.02em;
+  }
+
+  .cert-date {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-gray-muted);
+  }
+
+  .cert-body {
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .cert-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-white);
+    line-height: 1.45;
+  }
+
+  .cert-footer {
+    display: flex;
+    justify-content: flex-start;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+  }
+
+  .verify-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-gray-light);
+    transition: var(--transition-fast);
+  }
+
+  .verify-link:hover {
+    color: var(--hover-color);
+  }
+
+  .verify-arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .verify-link:hover .verify-arrow {
+    transform: translate(2px, -2px);
+  }
+
+  /* Horizontal Pagination CSS styling */
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 3.5rem;
+    width: 100%;
+  }
+
+  .pagination-controls :global(.page-btn), 
+  .pagination-controls :global(.page-control-btn) {
+    background: var(--bg-dark-panel);
+    border: 1px solid var(--border-color);
+    color: var(--text-gray-light);
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+    user-select: none;
+  }
+
+  .pagination-controls :global(.page-btn:hover), 
+  .pagination-controls :global(.page-control-btn:hover:not(:disabled)) {
+    border-color: var(--text-gray-muted);
+    color: var(--text-white);
+    transform: translateY(-1px);
+  }
+
+  .pagination-controls :global(.page-btn.active) {
+    background: var(--gradient-brand);
+    border-color: transparent;
+    color: #000000;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(127, 82, 255, 0.25);
+  }
+
+  .pagination-controls :global(.page-control-btn:disabled) {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    .certs-grid {
+      min-height: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .cert-card {
+      padding: 1.5rem;
+    }
+  }
+</style>

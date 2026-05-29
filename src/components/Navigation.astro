@@ -1,0 +1,332 @@
+---
+import { useTranslations } from '../i18n/translations';
+
+interface Props {
+  lang: 'en' | 'es';
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Determine the URL for the opposite language
+const toggleUrl = lang === 'en' ? '/es/' : '/';
+const toggleText = lang === 'en' ? 'ES' : 'EN';
+---
+
+<header class="site-header">
+  <div class="nav-container">
+    <a href="#" class="brand-logo">
+      <div class="logo-box">
+        <span>KH</span>
+      </div>
+      <span class="logo-text">Kevin Hierro</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
+      <a href="#about" class="nav-link">{t('nav.about')}</a>
+      <a href="#experience" class="nav-link">{t('nav.experience')}</a>
+      <a href="#skills" class="nav-link">{t('nav.skills')}</a>
+      <a href="#certifications" class="nav-link">{t('nav.certifications')}</a>
+    </nav>
+
+    <div class="header-actions">
+      <!-- Language Switcher -->
+      <a href={toggleUrl} class="lang-toggle" aria-label="Switch Language">
+        <span class="lang-globe">🌐</span>
+        <span class="lang-text">{toggleText}</span>
+      </a>
+      
+      <!-- Mobile Menu Button -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation Menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown Menu -->
+  <div class="mobile-nav-menu" id="mobileNavMenu">
+    <nav class="mobile-nav">
+      <a href="#about" class="mobile-nav-link">{t('nav.about')}</a>
+      <a href="#experience" class="mobile-nav-link">{t('nav.experience')}</a>
+      <a href="#skills" class="mobile-nav-link">{t('nav.skills')}</a>
+      <a href="#certifications" class="mobile-nav-link">{t('nav.certifications')}</a>
+      <a href={toggleUrl} class="mobile-nav-link mobile-lang-switch">
+        <span>🌐</span> {lang === 'en' ? 'Español (ES)' : 'English (EN)'}
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileNavMenu = document.getElementById('mobileNavMenu');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+  if (mobileMenuBtn && mobileNavMenu) {
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenuBtn.classList.toggle('active');
+      mobileNavMenu.classList.toggle('active');
+      document.body.classList.toggle('no-scroll');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenuBtn.classList.remove('active');
+        mobileNavMenu.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+      });
+    });
+  }
+
+  // Active section highlights on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.desktop-nav .nav-link');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    const scrollY = window.pageYOffset;
+    
+    sections.forEach(section => {
+      const sectionHeight = (section as HTMLElement).offsetHeight;
+      const sectionTop = (section as HTMLElement).offsetTop - 120;
+      const sectionId = section.getAttribute('id');
+      
+      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+        current = sectionId || '';
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(11, 11, 14, 0.8);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition-smooth);
+  }
+
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+  }
+
+  .logo-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: var(--gradient-brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg-dark-obsidian);
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 8px rgba(127, 82, 255, 0.4);
+  }
+
+  .logo-text {
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .desktop-nav {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .nav-link {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text-gray-light);
+    position: relative;
+    padding: 0.5rem 0;
+    transition: var(--transition-fast);
+  }
+
+  .nav-link:hover, .nav-link.active {
+    color: var(--text-white);
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--gradient-brand);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.25s ease-out;
+  }
+
+  .nav-link:hover::after, .nav-link.active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-dark-panel);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-gray-light);
+    cursor: pointer;
+    transition: var(--transition-fast);
+  }
+
+  .lang-toggle:hover {
+    background: var(--border-color);
+    color: var(--text-white);
+    border-color: var(--text-gray-dark);
+  }
+
+  .lang-globe {
+    font-size: 0.9rem;
+  }
+
+  /* Mobile Menu Hamburger */
+  .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 20px;
+    height: 14px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 101;
+  }
+
+  .mobile-menu-btn .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-white);
+    transition: var(--transition-smooth);
+    border-radius: 2px;
+  }
+
+  .mobile-menu-btn.active .bar:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .mobile-menu-btn.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-btn.active .bar:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* Mobile Dropdown */
+  .mobile-nav-menu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: var(--bg-dark-obsidian);
+    border-bottom: 1px solid var(--border-color);
+    overflow: hidden;
+    transition: var(--transition-smooth);
+    z-index: 99;
+  }
+
+  .mobile-nav-menu.active {
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem;
+    gap: 2rem;
+  }
+
+  .mobile-nav-link {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-gray-light);
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0;
+    transition: var(--transition-fast);
+  }
+
+  .mobile-nav-link:hover {
+    color: var(--text-white);
+  }
+
+  .mobile-lang-switch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-top: 1px solid var(--border-color);
+    width: 80%;
+    padding-top: 2rem;
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: var(--text-gray-muted);
+  }
+
+  .mobile-lang-switch:hover {
+    color: var(--text-white);
+  }
+
+  @media (max-width: 768px) {
+    .desktop-nav {
+      display: none;
+    }
+
+    .mobile-menu-btn {
+      display: flex;
+    }
+  }
+</style>

@@ -24,7 +24,7 @@
 
 **Experiencia Profesional**
 
-**Artesano de Software | Lean Mind | Enero 2024 \- Presente**
+**Ingeniero Full Stack | Lean Mind | Enero 2024 \- Presente**
 
 * Lideré el mantenimiento de un sistema .NET para facturación electrónica, impactando a más de 5 países y reduciendo los errores de despliegue en un 99%.  
 * Aceleré la entrega continua de productos mediante la implementación de mejores prácticas de CI/CD y el aprovechamiento de los servicios en la nube de Azure.  
@@ -36,7 +36,7 @@
 * Capacité a los equipos de Ciencia de Datos para ofrecer un mayor valor de negocio integrando prácticas de Programación Extrema (XP) y explorando formas pragmáticas de obtener valor de los datos de prueba.  
 * *Tecnologías: Python, Pandas, Snowflake, Kubernetes, Soda, GitLab, AWS, Airflow*.
 
-**Desarrollador Back-end | Lean Mind | Mayo 2021 \- Septiembre 2021**
+**Desarrollador Web | Lean Mind | Mayo 2021 \- Septiembre 2021**
 
 * Desarrollé una aplicación backend en Kotlin para la visualización de registros de ciberseguridad recopilados por IA, procesando más de 500 GB de registros diarios.  
 * Aproveché las capacidades de Elasticsearch para optimizar las consultas de datos y garantizar una visualización de registros altamente eficiente.  

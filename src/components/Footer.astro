@@ -1,0 +1,214 @@
+---
+import { useTranslations } from '../i18n/translations';
+
+interface Props {
+  lang: 'en' | 'es';
+  email: string;
+  linkedin: string;
+  github: string;
+}
+
+const { lang, email, linkedin, github } = Astro.props;
+const t = useTranslations(lang);
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer" id="footer">
+  <div class="container footer-content">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="logo-box"><span>KH</span></div>
+        <span class="logo-text">Kevin Hierro</span>
+      </div>
+      <p class="footer-motto">{t('footer.motto')}</p>
+    </div>
+    
+    <div class="footer-links-group">
+      <h3 class="footer-links-title">{lang === 'en' ? 'Navigate' : 'Navegación'}</h3>
+      <div class="footer-nav-links">
+        <a href="#about" class="footer-nav-link">{t('nav.about')}</a>
+        <a href="#experience" class="footer-nav-link">{t('nav.experience')}</a>
+        <a href="#skills" class="footer-nav-link">{t('nav.skills')}</a>
+        <a href="#certifications" class="footer-nav-link">{t('nav.certifications')}</a>
+      </div>
+    </div>
+    
+    <div class="footer-contact-group">
+      <h3 class="footer-links-title">{t('nav.contact')}</h3>
+      <div class="contact-methods">
+        <a href={`mailto:${email}`} class="contact-link">
+          <span class="contact-icon">✉</span>
+          <span class="contact-text">{email}</span>
+        </a>
+        <a href={linkedin} class="contact-link" target="_blank" rel="noopener noreferrer">
+          <span class="contact-icon">💼</span>
+          <span class="contact-text">LinkedIn</span>
+        </a>
+        <a href={github} class="contact-link" target="_blank" rel="noopener noreferrer">
+          <span class="contact-icon">🐙</span>
+          <span class="contact-text">GitHub</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <div class="container footer-bottom-content">
+      <p class="copyright">{t('footer.copyright').replace('{year}', currentYear.toString())}</p>
+      <div class="tech-stack-indicator">
+        <span>Powered by</span>
+        <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="astro-link">Astro</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #0f0f11;
+    border-top: 1px solid var(--border-color);
+    padding: 80px 0 30px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 1fr;
+    gap: 4rem;
+    margin-bottom: 50px;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 1.15rem;
+  }
+
+  .logo-box {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    background: var(--gradient-brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg-dark-obsidian);
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 0.9rem;
+  }
+
+  .logo-text {
+    color: var(--text-white);
+  }
+
+  .footer-motto {
+    font-size: 0.9rem;
+    color: var(--text-gray-muted);
+    max-width: 280px;
+    line-height: 1.5;
+  }
+
+  .footer-links-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-gray-dark);
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer-nav-link {
+    font-size: 0.9rem;
+    color: var(--text-gray-light);
+    transition: var(--transition-fast);
+  }
+
+  .footer-nav-link:hover {
+    color: var(--text-white);
+    transform: translateX(2px);
+  }
+
+  .contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--text-gray-light);
+    transition: var(--transition-fast);
+  }
+
+  .contact-link:hover {
+    color: var(--text-white);
+  }
+
+  .contact-icon {
+    font-size: 1.1rem;
+    color: #7f52ff;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border-color);
+    padding-top: 30px;
+  }
+
+  .footer-bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .copyright {
+    font-size: 0.8rem;
+    color: var(--text-gray-muted);
+  }
+
+  .tech-stack-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--text-gray-muted);
+  }
+
+  .astro-link {
+    color: var(--text-gray-light);
+    font-weight: 600;
+    transition: var(--transition-fast);
+  }
+
+  .astro-link:hover {
+    color: #ff5d01;
+    text-shadow: 0 0 8px rgba(255, 93, 1, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+</style>

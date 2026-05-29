@@ -1,0 +1,413 @@
+---
+import { useTranslations } from '../i18n/translations';
+
+interface Props {
+  lang: 'en' | 'es';
+  name: string;
+  title: string;
+  github: string;
+  linkedin: string;
+  email: string;
+}
+
+const { lang, name, title, github, linkedin, email } = Astro.props;
+const t = useTranslations(lang);
+
+// PDF filenames that we will copy to public/
+const cvFilename = lang === 'en' 
+  ? '/kevin-hierro-carrasco-en-cv-2026.pdf' 
+  : '/kevin-hierro-carrasco-es-cv-2026.pdf';
+---
+
+<section class="hero-section" id="hero">
+  <!-- Glowing Background Orbs -->
+  <div class="glow-orb orb-green"></div>
+  <div class="glow-orb orb-purple"></div>
+  <div class="glow-orb orb-cyan"></div>
+  
+  <div class="container hero-content">
+    <div class="hero-text">
+      <p class="greeting">{t('hero.greeting')}</p>
+      <h1 class="main-name">{name}</h1>
+      <h2 class="sub-title">
+        <span class="typing-text">{title}</span>
+        <span class="cursor">|</span>
+      </h2>
+      
+      <p class="location">
+        <span class="loc-icon">📍</span> {t('hero.meta.location')}
+      </p>
+      
+      <div class="cta-buttons">
+        <a href="#footer" class="btn btn-primary">
+          <span class="btn-text">{t('hero.cta.contact')}</span>
+          <span class="btn-icon">➔</span>
+        </a>
+        <a href={cvFilename} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+          <span class="btn-icon-left">📥</span>
+          <span class="btn-text">{t('hero.cta.cv')}</span>
+        </a>
+      </div>
+    </div>
+    
+    <!-- Code Editor Mockup Graphic -->
+    <div class="hero-graphic">
+      <div class="code-box">
+        <div class="code-header">
+          <div class="dots">
+            <span class="dot close"></span>
+            <span class="dot minimize"></span>
+            <span class="dot expand"></span>
+          </div>
+          <span class="file-name">Program.cs</span>
+        </div>
+        <pre class="code-body"><code><span class="keyword">using</span> Dev.Wolfremium.Tdd;
+
+<span class="keyword">class</span> <span class="type">Program</span>
+&#123;
+    <span class="keyword">static void</span> <span class="function">Main</span>()
+    &#123;
+        <span class="keyword">var</span> dev = <span class="keyword">new</span> FullStackEngineer();
+
+        dev.WriteFailingTest();
+        dev.MakeTestPass();
+        dev.RefactorAndPolish();
+    &#125;
+&#125;</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 100px;
+    overflow: hidden;
+  }
+
+  /* Glowing background blobs */
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 1;
+    animation: floatOrb 10s infinite ease-in-out alternate;
+  }
+
+  .orb-green {
+    width: 350px;
+    height: 350px;
+    background: #21d789;
+    top: 15%;
+    left: -5%;
+  }
+
+  .orb-purple {
+    width: 450px;
+    height: 450px;
+    background: #8c46ff;
+    bottom: 10%;
+    right: 5%;
+    animation-delay: -3s;
+  }
+
+  .orb-cyan {
+    width: 300px;
+    height: 300px;
+    background: #3cd5f7;
+    top: 50%;
+    left: 45%;
+    animation-delay: -6s;
+  }
+
+  @keyframes floatOrb {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-40px) scale(1.15); }
+  }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tech-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(33, 215, 137, 0.1);
+    border: 1px solid rgba(33, 215, 137, 0.25);
+    padding: 6px 12px;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #21d789;
+    box-shadow: 0 0 10px #21d789;
+  }
+
+  .badge-text {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #21d789;
+  }
+
+  .greeting {
+    font-family: var(--font-mono);
+    color: var(--text-gray-light);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .main-name {
+    font-size: 4rem;
+    line-height: 1.1;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 20px rgba(127, 82, 255, 0.25));
+  }
+
+  .sub-title {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--text-white);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .cursor {
+    animation: blink 0.8s infinite step-end;
+    color: #7f52ff;
+    margin-left: 2px;
+    font-weight: 700;
+  }
+
+  @keyframes blink {
+    from, to { color: transparent }
+    50% { color: #7f52ff; }
+  }
+
+  .location {
+    font-size: 0.95rem;
+    color: var(--text-gray-muted);
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 1.8rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--gradient-brand);
+    color: #000000;
+    box-shadow: 0 4px 15px rgba(127, 82, 255, 0.4);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(127, 82, 255, 0.6);
+  }
+
+  .btn-icon {
+    margin-left: 8px;
+    transition: transform 0.2s ease;
+  }
+
+  .btn-primary:hover .btn-icon {
+    transform: translateX(4px);
+  }
+
+  .btn-secondary {
+    background: var(--bg-dark-charcoal);
+    color: var(--text-white);
+    border: 1px solid var(--border-color);
+  }
+
+  .btn-secondary:hover {
+    background: var(--bg-dark-panel);
+    border-color: var(--text-gray-dark);
+    transform: translateY(-2px);
+  }
+
+  .btn-icon-left {
+    margin-right: 8px;
+  }
+
+  /* Code Graphic */
+  .hero-graphic {
+    display: flex;
+    justify-content: center;
+    perspective: 1000px;
+  }
+
+  .code-box {
+    width: 100%;
+    max-width: 460px;
+    background: #0f0f11;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    transform: rotateY(-8deg) rotateX(4deg);
+    transition: var(--transition-smooth);
+  }
+
+  .code-box:hover {
+    transform: rotateY(0deg) rotateX(0deg) scale(1.02);
+    box-shadow: var(--glow-fullstack);
+  }
+
+  .code-header {
+    background: #19191c;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+  }
+
+  .dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .close { background-color: #ff5f56; }
+  .minimize { background-color: #ffbd2e; }
+  .expand { background-color: #27c93f; }
+
+  .file-name {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-gray-muted);
+  }
+
+  .code-body {
+    padding: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #c9d1d9;
+    text-align: left;
+  }
+
+  /* Syntax Highlighting */
+  .keyword { color: #ff7b72; }
+  .function { color: #d2a8ff; }
+  .comment { color: #8b949e; font-style: italic; }
+  .string { color: #a5d6ff; }
+
+  @media (max-width: 992px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      text-align: center;
+    }
+
+    .hero-text {
+      align-items: center;
+    }
+
+    .main-name {
+      font-size: 3rem;
+    }
+
+    .sub-title {
+      font-size: 1.5rem;
+    }
+
+    .cta-buttons {
+      justify-content: center;
+    }
+
+    .hero-graphic {
+      order: -1;
+    }
+    
+    .code-box {
+      transform: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .cta-buttons {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .btn {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  // Dynamic character typewriter effect for the role title
+  const typingTextEl = document.querySelector('.typing-text');
+  if (typingTextEl) {
+    const fullText = typingTextEl.textContent || '';
+    typingTextEl.textContent = '';
+    let index = 0;
+    
+    function type() {
+      if (index < fullText.length) {
+        typingTextEl.textContent += fullText.charAt(index);
+        index++;
+        setTimeout(type, 70);
+      }
+    }
+    
+    // Slight initial delay before typewriting starts
+    setTimeout(type, 300);
+  }
+</script>

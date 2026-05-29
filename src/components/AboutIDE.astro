@@ -1,0 +1,682 @@
+---
+import { useTranslations } from '../i18n/translations';
+
+interface Experience {
+  role: string;
+  company: string;
+  period: string;
+  bullets: string[];
+  technologies: string[];
+}
+
+interface Props {
+  lang: 'en' | 'es';
+  profileText: string;
+  education: Array<{ title: string; institution: string; period: string }>;
+  experience: Experience[];
+}
+
+const { lang, profileText, education, experience } = Astro.props;
+const t = useTranslations(lang);
+
+function getRoleStyles(role: string) {
+  const r = role.toLowerCase();
+  
+  // 1. Data Engineer first (to prevent matching 'engineer' in the fullstack block)
+  if (r.includes('data') || r.includes('datos')) {
+    return {
+      id: 'data',
+      gradient: 'var(--gradient-pycharm)', // Green/teal
+      color: 'var(--color-role-data)',
+      glow: 'var(--glow-data)',
+      product: 'Pycharm'
+    };
+  }
+  
+  // 2. Web Developer roles (grouped under webdev color themes, but keeping unique IDE badges)
+  if (
+    r.includes('web') || 
+    r.includes('backend') || 
+    r.includes('back-end') || 
+    r.includes('internship') || 
+    r.includes('prácticas') || 
+    r.includes('practicas')
+  ) {
+    let productBadge = 'WebStorm';
+    if (r.includes('software')) {
+      productBadge = 'PhpStorm';
+    } else if (r.includes('intern') || r.includes('prácticas') || r.includes('practicas')) {
+      productBadge = 'IntelliJ IDEA';
+    }
+    
+    return {
+      id: 'webdev',
+      gradient: 'var(--gradient-webstorm)', // Cyan/blue
+      color: 'var(--color-role-webdev)',
+      glow: 'var(--glow-webdev)',
+      product: productBadge
+    };
+  }
+  
+  // 3. Full Stack Engineer (Rider)
+  return {
+    id: 'fullstack',
+    gradient: 'var(--gradient-brand)', // Brand gradient: green/violet
+    color: 'var(--color-role-fullstack)',
+    glow: 'var(--glow-fullstack)',
+    product: 'JetBrains Rider'
+  };
+}
+---
+
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="section-header-block">
+      <h2 class="section-title">{t('section.about.header')}</h2>
+      <div class="title-line"></div>
+    </div>
+    
+    <!-- Explanatory Bio Paragraph before the IDE window -->
+    <div class="about-intro-block">
+      <p class="about-intro-text">{profileText}</p>
+    </div>
+    
+    <div class="about-grid-vertical">
+      <!-- Faux JetBrains IDE Window (Full Width) -->
+      <div class="terminal-window ide-window">
+        <!-- Window Controls Header -->
+        <div class="terminal-header">
+          <div class="terminal-buttons">
+            <span class="terminal-button terminal-close"></span>
+            <span class="terminal-button terminal-minimize"></span>
+            <span class="terminal-button terminal-maximize"></span>
+          </div>
+          <span class="terminal-title">JetBrains Rider</span>
+        </div>
+        
+        <!-- IDE Tabs -->
+        <div class="terminal-tabs">
+          <button class="terminal-tab active" id="tabProfile" aria-label="Show Profile File">
+            <span class="tab-icon font-cs">C#</span>
+            <span class="tab-label">{t('ide.tab.profile')}</span>
+          </button>
+          <button class="terminal-tab" id="tabEducation" aria-label="Show Education File">
+            <span class="tab-icon font-json">&#123;&#125;</span>
+            <span class="tab-label">{t('ide.tab.education')}</span>
+          </button>
+        </div>
+        
+        <!-- IDE Body -->
+        <div class="terminal-body">
+          <!-- Profile C# Code -->
+          <div class="code-view active" id="viewProfile">
+            <div class="code-line"><span class="line-num">1</span><span class="keyword">using </span>System;</div>
+            <div class="code-line"><span class="line-num">2</span><span class="keyword">using </span>System.Collections.Generic;</div>
+            <div class="code-line"><span class="line-num">3</span></div>
+            <div class="code-line"><span class="line-num">4</span><span class="keyword">namespace </span>Dev.Wolfremium;</div>
+            <div class="code-line"><span class="line-num">5</span></div>
+            <div class="code-line"><span class="line-num">6</span><span class="keyword">public class </span><span class="type">{lang === 'en' ? 'FullStackEngineer' : 'IngenieroFullStack'}</span></div>
+            <div class="code-line"><span class="line-num">7</span>&#123;</div>
+            <div class="code-line"><span class="line-num">8</span>    <span class="keyword">public string </span>{t('ide.profile.name')} =&gt; <span class="string">"Kevin Hierro Carrasco"</span>;</div>
+            <div class="code-line"><span class="line-num">9</span>    <span class="keyword">public string </span>{t('ide.profile.alias')} =&gt; <span class="string">"Wolfremium"</span>;</div>
+            <div class="code-line"><span class="line-num">10</span>    <span class="keyword">public string </span>{t('ide.profile.devotion')} =&gt; <span class="string">"Nestea"</span>;</div>
+            <div class="code-line"><span class="line-num">11</span>    <span class="keyword">public string </span>{t('ide.profile.weapon')} =&gt; <span class="string">"C# (Sisharp)"</span>;</div>
+            <div class="code-line"><span class="line-num">12</span>    </div>
+            <div class="code-line"><span class="line-num">13</span>    <span class="keyword">public </span><span class="type">List</span>&lt;<span class="keyword">string</span>&gt; {t('ide.profile.passions')} =&gt; <span class="keyword">new</span>()</div>
+            <div class="code-line"><span class="line-num">14</span>    &#123;</div>
+            <div class="code-line"><span class="line-num">15</span>        <span class="string">"{t('ide.profile.like1')}"</span>,</div>
+            <div class="code-line"><span class="line-num">16</span>        <span class="string">"{t('ide.profile.like2')}"</span>,</div>
+            <div class="code-line"><span class="line-num">17</span>        <span class="string">"{t('ide.profile.like3')}"</span></div>
+            <div class="code-line"><span class="line-num">18</span>    &#125;;</div>
+            <div class="code-line"><span class="line-num">19</span></div>
+            <div class="code-line"><span class="line-num">20</span>    <span class="keyword">public bool </span>{t('ide.profile.active')}(<span class="type">{t('ide.profile.activity')} </span>activity) =&gt; activity <span class="keyword">switch</span></div>
+            <div class="code-line"><span class="line-num">21</span>    &#123;</div>
+            <div class="code-line"><span class="line-num">22</span>        <span class="type">{t('ide.profile.activity')}</span>.{t('ide.profile.act1')} =&gt; <span class="keyword">true</span>, <span class="comment">{t('ide.profile.comment1')}</span></div>
+            <div class="code-line"><span class="line-num">23</span>        <span class="type">{t('ide.profile.activity')}</span>.{t('ide.profile.act2')} =&gt; <span class="keyword">true</span>,</div>
+            <div class="code-line"><span class="line-num">24</span>        <span class="type">{t('ide.profile.activity')}</span>.{t('ide.profile.act3')} =&gt; <span class="keyword">false</span>, <span class="comment">{t('ide.profile.comment2')}</span></div>
+            <div class="code-line"><span class="line-num">25</span>        _ =&gt; <span class="keyword">false</span></div>
+            <div class="code-line"><span class="line-num">26</span>    &#125;;</div>
+            <div class="code-line"><span class="line-num">27</span>&#125;</div>
+          </div>
+          
+          <!-- Education JSON Code -->
+          <div class="code-view" id="viewEducation">
+            <div class="code-line"><span class="line-num">1</span>&#123;</div>
+            <div class="code-line"><span class="line-num">2</span>  <span class="json-key">"education"</span>: [</div>
+            {education.map((edu, idx) => (
+              <>
+                <div class="code-line"><span class="line-num">{3 + idx * 5}</span>    &#123;</div>
+                <div class="code-line"><span class="line-num">{4 + idx * 5}</span>      <span class="json-key">"degree"</span>: <span class="string">"{edu.title}"</span>,</div>
+                <div class="code-line"><span class="line-num">{5 + idx * 5}</span>      <span class="json-key">"school"</span>: <span class="string">"{edu.institution}"</span>,</div>
+                <div class="code-line"><span class="line-num">{6 + idx * 5}</span>      <span class="json-key">"period"</span>: <span class="string">"{edu.period}"</span></div>
+                <div class="code-line"><span class="line-num">{7 + idx * 5}</span>    &#125;{idx < education.length - 1 ? ',' : ''}</div>
+              </>
+            ))}
+            <div class="code-line"><span class="line-num">{3 + education.length * 5}</span>  ]</div>
+            <div class="code-line"><span class="line-num">{4 + education.length * 5}</span>&#125;</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Experience Timeline (Below the IDE) -->
+      <div class="about-experience-section">
+        <h3 class="experience-heading">{t('section.experience.title')}</h3>
+        
+        <!-- Interactive Role Filter -->
+        <div class="experience-filter-container">
+          <span class="filter-label">{t('experience.filter')}</span>
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all" aria-label="Show all roles">
+              <span class="filter-dot all-dot"></span>
+              <span class="filter-text">{t('experience.role.all')}</span>
+            </button>
+            <button class="filter-btn" data-filter="fullstack" aria-label="Filter by Full Stack Engineer">
+              <span class="filter-dot" style="background: var(--color-role-fullstack); box-shadow: 0 0 8px var(--color-role-fullstack)"></span>
+              <span class="filter-text">{t('experience.role.crafter')}</span>
+            </button>
+            <button class="filter-btn" data-filter="data" aria-label="Filter by Data Engineer">
+              <span class="filter-dot" style="background: var(--color-role-data); box-shadow: 0 0 8px var(--color-role-data)"></span>
+              <span class="filter-text">{t('experience.role.data')}</span>
+            </button>
+            <button class="filter-btn" data-filter="webdev" aria-label="Filter by Web Developer">
+              <span class="filter-dot" style="background: var(--color-role-webdev); box-shadow: 0 0 8px var(--color-role-webdev)"></span>
+              <span class="filter-text">{t('experience.role.backend')}</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="vertical-timeline">
+          <div class="timeline-line"></div>
+          
+          {experience.map((job, idx) => {
+            const roleStyle = getRoleStyles(job.role);
+            return (
+              <div class="timeline-item" data-role-category={roleStyle.id} style={`--marker-color: ${roleStyle.color}`}>
+                <!-- Timeline node marker -->
+                <div class="timeline-marker" style={`background: ${roleStyle.color}`}></div>
+                
+                <!-- Job Detail Card -->
+                <div class="timeline-content glow-card" style={`--hover-gradient: ${roleStyle.gradient}; --hover-glow: ${roleStyle.glow}`}>
+                  <div class="timeline-header-block">
+                    <div class="job-meta">
+                      <div class="role-title-wrapper">
+                        <h4 class="job-role" style={`color: ${roleStyle.color}`}>{job.role}</h4>
+                        <span class="product-badge" style={`border-color: ${roleStyle.color}30; color: ${roleStyle.color}; background: ${roleStyle.color}0d`}>{roleStyle.product}</span>
+                      </div>
+                      <span class="job-company-block">@ <span class="job-company-name" style={`background: ${roleStyle.gradient}; -webkit-background-clip: text; -webkit-text-fill-color: transparent;`}>{job.company}</span></span>
+                    </div>
+                    <span class="job-period-badge">{job.period}</span>
+                  </div>
+                  
+                  <ul class="job-bullets">
+                    {job.bullets.map(bullet => (
+                      <li style={`--bullet-color: ${roleStyle.color}`}>{bullet}</li>
+                    ))}
+                  </ul>
+                  
+                  {job.technologies.length > 0 && (
+                    <div class="job-tech">
+                      <span class="tech-label">{t('experience.technologies')}</span>
+                      <div class="tech-chips">
+                        {job.technologies.map(tech => (
+                          <span class="tech-chip" style={`--tech-accent: ${roleStyle.color}`}>{tech}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // IDE Tabs switcher logic
+  const tabProfile = document.getElementById('tabProfile');
+  const tabEducation = document.getElementById('tabEducation');
+  const viewProfile = document.getElementById('viewProfile');
+  const viewEducation = document.getElementById('viewEducation');
+
+  if (tabProfile && tabEducation && viewProfile && viewEducation) {
+    tabProfile.addEventListener('click', () => {
+      tabProfile.classList.add('active');
+      tabEducation.classList.remove('active');
+      viewProfile.classList.add('active');
+      viewEducation.classList.remove('active');
+    });
+
+    tabEducation.addEventListener('click', () => {
+      tabEducation.classList.add('active');
+      tabProfile.classList.remove('active');
+      viewEducation.classList.add('active');
+      viewProfile.classList.remove('active');
+    });
+  }
+
+  // Interactive timeline role filtering logic
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const timelineItems = document.querySelectorAll('.timeline-item');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Remove active class from all buttons
+      filterBtns.forEach(b => b.classList.remove('active'));
+      // Add active to current button
+      btn.classList.add('active');
+
+      const filterValue = btn.getAttribute('data-filter');
+
+      timelineItems.forEach(item => {
+        const itemCategory = item.getAttribute('data-role-category');
+        if (filterValue === 'all' || itemCategory === filterValue) {
+          item.classList.remove('filtered-out');
+        } else {
+          item.classList.add('filtered-out');
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .about-section {
+    padding: 100px 0;
+    position: relative;
+    background: linear-gradient(180deg, var(--bg-dark-obsidian) 0%, rgba(25, 25, 28, 0.4) 100%);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .section-header-block {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* About Bio Paragraph */
+  .about-intro-block {
+    max-width: 850px;
+    margin-bottom: 3.5rem;
+  }
+
+  .about-intro-text {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--text-gray-light);
+  }
+
+  .section-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #ffffff 0%, #a0a0a0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .title-line {
+    width: 60px;
+    height: 4px;
+    background: var(--gradient-brand);
+    margin-top: 10px;
+    border-radius: 2px;
+  }
+
+  .about-grid-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 4.5rem;
+  }
+
+  /* IDE Mockup Styling */
+  .ide-window {
+    width: 100%;
+    min-height: 400px;
+    border-radius: 12px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  }
+
+  .tab-icon {
+    font-size: 0.65rem;
+    font-weight: 800;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .font-cs {
+    background-color: #7f52ff;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 800;
+  }
+
+  .font-json {
+    background-color: #f8a51d;
+    color: black;
+  }
+
+  .code-view {
+    display: none;
+  }
+
+  .code-view.active {
+    display: block;
+  }
+
+  .code-line {
+    display: flex;
+    align-items: flex-start;
+    white-space: pre-wrap;
+    word-break: break-all;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+
+  .line-num {
+    display: inline-block;
+    width: 32px;
+    color: var(--text-gray-dark);
+    user-select: none;
+    text-align: right;
+    margin-right: 1.5rem;
+    border-right: 1px solid var(--border-color);
+    padding-right: 0.5rem;
+  }
+
+  /* IDE Syntax Colors */
+  .keyword { color: #f97e25; font-weight: 600; }
+  .type { color: #3cd5f7; }
+  .string { color: #21d789; }
+  .json-key { color: #8c46ff; font-weight: 600; }
+
+  /* Experience section below */
+  .about-experience-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .experience-heading {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--text-white);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Interactive Experience Filter Styles */
+  .experience-filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-gray-muted);
+  }
+
+  .filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-gray-light);
+    background: var(--bg-dark-panel);
+    border: 1px solid var(--border-color);
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    user-select: none;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--text-gray-muted);
+    color: var(--text-white);
+    transform: translateY(-1px);
+  }
+
+  .filter-btn.active {
+    background: var(--bg-dark-charcoal);
+    color: var(--text-white);
+    border-color: var(--text-white);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+  }
+
+  .filter-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    transition: var(--transition-fast);
+  }
+
+  .all-dot {
+    background: #ffffff;
+    box-shadow: 0 0 8px #ffffff;
+  }
+
+  /* Vertical Timeline */
+  .vertical-timeline {
+    position: relative;
+    padding-left: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .timeline-line {
+    position: absolute;
+    left: 16px;
+    top: 10px;
+    bottom: 10px;
+    width: 1px;
+    background: var(--border-color);
+  }
+
+  .timeline-item {
+    position: relative;
+    transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .timeline-item.filtered-out {
+    opacity: 0.12;
+    transform: scale(0.98);
+    pointer-events: none;
+  }
+
+  .timeline-marker {
+    position: absolute;
+    left: -27px; /* Aligns center with the 1px line at left: 16px relative to vertical-timeline padding-left: 2.5rem */
+    top: 29px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    z-index: 5;
+    transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .timeline-item:hover .timeline-marker {
+    transform: scale(1.6);
+    box-shadow: 0 0 10px var(--marker-color);
+  }
+
+  .timeline-content {
+    background: var(--bg-dark-charcoal);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  .timeline-header-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .job-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .role-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .product-badge {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .job-role {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-white);
+  }
+
+  .job-company-block {
+    font-size: 1.15rem;
+    color: var(--text-gray-muted);
+  }
+
+  .job-company-name {
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+  }
+
+  .job-period-badge {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-gray-light);
+    background: var(--bg-dark-panel);
+    border: 1px solid var(--border-color);
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
+  .job-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-gray-light);
+    font-size: 0.95rem;
+  }
+
+  .job-bullets li {
+    position: relative;
+    padding-left: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .job-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--bullet-color, #ff0055);
+    font-weight: 700;
+  }
+
+  .job-tech {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 1rem;
+  }
+
+  .tech-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-gray-muted);
+  }
+
+  .tech-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tech-chip {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: #0f0f11;
+    color: #3cd5f7;
+    border: 1px solid var(--border-color);
+    padding: 3px 10px;
+    border-radius: 4px;
+    transition: var(--transition-fast);
+  }
+
+  .tech-chip:hover {
+    border-color: var(--tech-accent, #3cd5f7);
+    color: var(--text-white);
+    background: color-mix(in srgb, var(--tech-accent, #3cd5f7) 10%, transparent);
+  }
+
+  /* Role-specific hover overrides for cards */
+  .timeline-content:hover {
+    box-shadow: var(--hover-glow) !important;
+  }
+
+  .timeline-content:hover::before {
+    background: var(--hover-gradient) !important;
+  }
+
+  @media (max-width: 768px) {
+    .timeline-header-block {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+</style>

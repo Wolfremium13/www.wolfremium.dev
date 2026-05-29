@@ -24,7 +24,7 @@
 
 **Professional Experience**
 
-**Software Crafter | Lean Mind | January 2024 \- Present**
+**Full Stack Engineer | Lean Mind | January 2024 \- Present**
 
 * Spearheaded maintenance of a .NET system for electronic invoicing, impacting 5+ countries and reducing deployment errors by 99%.  
 * Accelerated continuous product delivery by implementing best practices for CI/CD and leveraging Azure cloud services.  
@@ -36,7 +36,7 @@
 * Empowered Data Science teams to deliver greater business value by integrating Extreme Programming (XP) practices and exploring pragmatic ways to derive value from testing data.  
 * *Technologies: Python, Pandas, Snowflake, Kubernetes, Soda, GitLab, AWS, Airflow*.
 
-**Back-end Developer | Lean Mind | May 2021 \- September 2021**
+**Web Developer | Lean Mind | May 2021 \- September 2021**
 
 * Developed a waste-free backend application in Kotlin for visualizing AI-collected cybersecurity logs, processing \+500 GB of logs daily.  
 * Leveraged Elasticsearch capabilities to optimize data queries and ensure highly efficient log visualization.  

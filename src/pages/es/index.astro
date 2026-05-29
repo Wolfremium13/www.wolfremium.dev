@@ -1,0 +1,54 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Hero from '../../components/Hero.astro';
+import AboutIDE from '../../components/AboutIDE.astro';
+import SkillsGrid from '../../components/SkillsGrid.astro';
+import Certifications from '../../components/Certifications.astro';
+import Footer from '../../components/Footer.astro';
+
+import { parseCV } from '../../utils/cvParser';
+
+const cvData = parseCV('es');
+const title = `${cvData.name} | ${cvData.title}`;
+const description = `Portafolio de ${cvData.name}, Ingeniero Full Stack especializado en código limpio, BDD/TDD y sistemas de desarrollo robustos.`;
+---
+
+<Layout title={title} description={description} lang="es">
+  <Navigation lang="es" />
+  
+  <main>
+    <Hero 
+      lang="es"
+      name={cvData.name}
+      title={cvData.title}
+      github={cvData.github}
+      linkedin={cvData.linkedin}
+      email={cvData.email}
+    />
+    
+    <AboutIDE 
+      lang="es"
+      profileText={cvData.profile}
+      education={cvData.education}
+      experience={cvData.experience}
+    />
+    
+    <SkillsGrid 
+      lang="es"
+      skillsList={cvData.skills}
+    />
+    
+    <Certifications 
+      lang="es"
+      certificationsList={cvData.certifications}
+    />
+  </main>
+  
+  <Footer 
+    lang="es"
+    email={cvData.email}
+    linkedin={cvData.linkedin}
+    github={cvData.github}
+  />
+</Layout>

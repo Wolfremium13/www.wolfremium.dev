@@ -1,0 +1,190 @@
+---
+import { useTranslations } from '../i18n/translations';
+
+interface SkillCategory {
+  category: string;
+  list: string[];
+}
+
+interface Props {
+  lang: 'en' | 'es';
+  skillsList: SkillCategory[];
+}
+
+const { lang, skillsList } = Astro.props;
+const t = useTranslations(lang);
+
+// Custom styling identifiers for JetBrains theme variations
+const gradients = [
+  'var(--gradient-brand)', // Brand gradient: green/violet
+  'var(--gradient-webstorm)', // Cyan-purple (WebStorm)
+  'var(--gradient-pycharm)', // Green-teal (PyCharm)
+  'var(--gradient-phpstorm)', // Purple-magenta (PhpStorm)
+  'var(--gradient-intellij)' // Orange-red (IntelliJ)
+];
+
+const glows = [
+  'var(--glow-fullstack)',
+  'var(--glow-webdev)',
+  'var(--glow-data)',
+  'var(--glow-web)',
+  'var(--glow-internship)'
+];
+---
+
+<section class="skills-section" id="skills">
+  <div class="container">
+    <div class="section-header-block">
+      <h2 class="section-title">{t('section.skills.title')}</h2>
+      <div class="title-line"></div>
+    </div>
+    
+    <div class="skills-grid">
+      {skillsList.map((skillGroup, idx) => {
+        const borderGradient = gradients[idx % gradients.length];
+        const hoverGlow = glows[idx % glows.length];
+        
+        return (
+          <div class="skills-card glow-card" style={`--hover-gradient: ${borderGradient}; --hover-glow: ${hoverGlow}`}>
+            <div class="skills-card-header">
+              <!-- Dot Indicator -->
+              <span class="skills-card-icon" style={`background: ${borderGradient}`}></span>
+              <h3 class="skills-card-title">{skillGroup.category}</h3>
+            </div>
+            
+            <div class="skills-tag-container">
+              {skillGroup.list.map(skill => (
+                <div class="skills-tag">
+                  <span class="tag-bullet">></span>
+                  <span class="tag-name">{skill}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills-section {
+    padding: 100px 0;
+    position: relative;
+    background: linear-gradient(180deg, rgba(25, 25, 28, 0.4) 0%, var(--bg-dark-obsidian) 100%);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .section-header-block {
+    margin-bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .section-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #ffffff 0%, #a0a0a0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .title-line {
+    width: 60px;
+    height: 4px;
+    background: var(--gradient-brand);
+    margin-top: 10px;
+    border-radius: 2px;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  /* Custom skills card hover properties */
+  .skills-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 2.25rem;
+  }
+
+  .skills-card::before {
+    background: var(--gradient-border);
+  }
+
+  .skills-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--hover-glow);
+  }
+
+  .skills-card:hover::before {
+    background: var(--hover-gradient);
+  }
+
+  .skills-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.75rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+  }
+
+  .skills-card-icon {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  .skills-card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-white);
+  }
+
+  .skills-tag-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .skills-tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: #0f0f11;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    transition: var(--transition-fast);
+  }
+
+  .skills-tag:hover {
+    background: var(--bg-dark-panel);
+    border-color: var(--text-gray-dark);
+    transform: translateX(4px);
+  }
+
+  .tag-bullet {
+    font-family: var(--font-mono);
+    color: #f97e25;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .tag-name {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-gray-light);
+  }
+
+  .skills-tag:hover .tag-name {
+    color: var(--text-white);
+  }
+</style>
