@@ -1,43 +1,78 @@
-# Astro Starter Kit: Minimal
+# www.wolfremium.dev
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Personal portfolio website for **Kevin Hierro Carrasco** (aka Wolfremium) — a Full Stack Developer. Built with [Astro](https://astro.build) and designed with a JetBrains IDE aesthetic.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+🌐 **Live site:** [wolfremium.dev](https://wolfremium.dev)
+
+---
+
+## ✨ Features
+
+- **Bilingual support** — fully translated in English (`/`) and Spanish (`/es`)
+- **Hero section** — introduction with name, role, and call-to-action links
+- **About / IDE section** — profile and education displayed in a faux JetBrains IDE window with syntax highlighting and tab switching
+- **Skills grid** — visual overview of technologies and tools
+- **Experience timeline** — interactive filterable vertical timeline of work experience by role category (Full Stack, Data, Web/Backend)
+- **Certifications** — list of professional certifications
+- **CV downloads** — PDF résumés available in English and Spanish
+- **Sitemap** — auto-generated via `@astrojs/sitemap`
+
+---
 
 ## 🚀 Project Structure
 
-Inside of your Astro project, you'll see the following folders and files:
-
 ```text
 /
-├── public/
+├── docs/                        # CV source files (Markdown + HTML + JSON)
+├── public/                      # Static assets (favicon, PDFs, robots.txt)
+├── scripts/                     # Utility scripts (e.g. favicon generation)
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── components/              # Astro UI components
+│   │   ├── AboutIDE.astro       # IDE-style about + experience section
+│   │   ├── Certifications.astro
+│   │   ├── Footer.astro
+│   │   ├── Hero.astro
+│   │   ├── Navigation.astro
+│   │   └── SkillsGrid.astro
+│   ├── i18n/
+│   │   └── translations.ts      # All UI strings for en/es
+│   ├── layouts/
+│   │   └── Layout.astro         # Base HTML layout
+│   ├── pages/
+│   │   ├── index.astro          # English page
+│   │   └── es/index.astro       # Spanish page
+│   ├── styles/
+│   │   └── global.css
+│   └── utils/
+│       └── cvParser.ts          # Parses CV Markdown into structured data
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
+---
 
 ## 🧞 Commands
 
-All commands are run from the root of the project, from a terminal:
+All commands are run from the root of the project:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| Command           | Action                                       |
+| :---------------- | :------------------------------------------- |
+| `npm install`     | Install dependencies                         |
+| `npm run dev`     | Start local dev server at `localhost:4321`   |
+| `npm run build`   | Build production site to `./dist/`           |
+| `npm run preview` | Preview the production build locally         |
 
-## 👀 Want to learn more?
+---
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 🛠️ Tech Stack
+
+- **[Astro](https://astro.build)** — static site framework
+- **TypeScript** — type-safe components and utilities
+- **CSS** (vanilla, with custom properties) — no CSS framework
+- **Inter & JetBrains Mono** — variable fonts via `@fontsource-variable`
+- **sharp** — image processing (favicon generation)
+
+---
+
+## � CV
+
+The CV is authored in Markdown (`docs/`) and parsed at build time into structured data used by the components. Pre-rendered PDFs are served from `public/`.
