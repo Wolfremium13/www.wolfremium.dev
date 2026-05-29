@@ -50,30 +50,25 @@ const cvFilename = lang === 'en'
       </div>
     </div>
     
-    <!-- Code Editor Mockup Graphic -->
+    <!-- Animated Code Terminal Mockup -->
     <div class="hero-graphic">
-      <div class="code-box">
-        <div class="code-header">
-          <div class="dots">
-            <span class="dot close"></span>
-            <span class="dot minimize"></span>
-            <span class="dot expand"></span>
+      <div class="terminal-box">
+        <div class="terminal-window-header">
+          <div class="terminal-window-buttons">
+            <span class="terminal-window-btn btn-close"></span>
+            <span class="terminal-window-btn btn-minimize"></span>
+            <span class="terminal-window-btn btn-expand"></span>
           </div>
-          <span class="file-name">Program.cs</span>
+          <span class="terminal-window-title">bash - guest@wolfremium.dev</span>
         </div>
-        <pre class="code-body"><code><span class="keyword">using</span> Dev.Wolfremium.Tdd;
-
-<span class="keyword">class</span> <span class="type">Program</span>
-&#123;
-    <span class="keyword">static void</span> <span class="function">Main</span>()
-    &#123;
-        <span class="keyword">var</span> dev = <span class="keyword">new</span> FullStackEngineer();
-
-        dev.WriteFailingTest();
-        dev.MakeTestPass();
-        dev.RefactorAndPolish();
-    &#125;
-&#125;</code></pre>
+        <div class="terminal-window-body" data-lang={lang}>
+          <div class="terminal-prompt-line">
+            <span class="terminal-prompt">guest@wolfremium.dev:~$</span>
+            <span class="terminal-command" id="termCommand"></span>
+            <span class="terminal-cursor">█</span>
+          </div>
+          <div class="terminal-output" id="termOutput"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -274,33 +269,38 @@ const cvFilename = lang === 'en'
     margin-right: 8px;
   }
 
-  /* Code Graphic */
+  /* Animated Terminal Styling */
   .hero-graphic {
     display: flex;
     justify-content: center;
     perspective: 1000px;
   }
 
-  .code-box {
+  .terminal-box {
     width: 100%;
     max-width: 460px;
-    background: #0f0f11;
+    background: #09090b; /* Pitch black terminal */
     border: 1px solid var(--border-color);
     border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
     overflow: hidden;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    height: 380px;
+    text-align: left;
     transform: rotateY(-8deg) rotateX(4deg);
     transition: var(--transition-smooth);
   }
 
-  .code-box:hover {
+  .terminal-box:hover {
     transform: rotateY(0deg) rotateX(0deg) scale(1.02);
     box-shadow: var(--glow-fullstack);
+    border-color: var(--color-role-fullstack);
   }
 
-  .code-header {
-    background: #19191c;
-    height: 40px;
+  .terminal-window-header {
+    background: #18181b; /* dark charcoal header */
+    height: 38px;
     display: flex;
     align-items: center;
     padding: 0 1rem;
@@ -308,44 +308,105 @@ const cvFilename = lang === 'en'
     position: relative;
   }
 
-  .dots {
+  .terminal-window-buttons {
     display: flex;
     gap: 6px;
+    position: absolute;
+    left: 1rem;
   }
 
-  .dot {
-    width: 10px;
-    height: 10px;
+  .terminal-window-btn {
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
   }
 
-  .close { background-color: #ff5f56; }
-  .minimize { background-color: #ffbd2e; }
-  .expand { background-color: #27c93f; }
+  .btn-close { background-color: #ef4444; }
+  .btn-minimize { background-color: #eab308; }
+  .btn-expand { background-color: #22c55e; }
 
-  .file-name {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+  .terminal-window-title {
+    width: 100%;
+    text-align: center;
     font-family: var(--font-mono);
     font-size: 0.75rem;
     color: var(--text-gray-muted);
   }
 
-  .code-body {
+  .terminal-window-body {
     padding: 1.5rem;
     font-family: var(--font-mono);
     font-size: 0.85rem;
     line-height: 1.6;
-    color: #c9d1d9;
-    text-align: left;
+    color: var(--text-gray-light);
+    flex-grow: 1;
+    overflow-y: auto;
+    position: relative;
   }
 
-  /* Syntax Highlighting */
-  .keyword { color: #ff7b72; }
-  .function { color: #d2a8ff; }
-  .comment { color: #8b949e; font-style: italic; }
-  .string { color: #a5d6ff; }
+  /* Scanlines overlay */
+  .terminal-window-body::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
+    z-index: 10;
+    background-size: 100% 4px;
+    pointer-events: none;
+  }
+
+  .terminal-prompt {
+    color: #21d789; /* Green prompt */
+    font-weight: 600;
+  }
+
+  .terminal-command {
+    color: #c084fc; /* Purple command color */
+    font-weight: 600;
+  }
+
+  .terminal-cursor {
+    animation: termBlink 1s step-start infinite;
+    color: #ffffff;
+    font-weight: bold;
+    margin-left: 2px;
+  }
+
+  @keyframes termBlink {
+    50% { opacity: 0; }
+  }
+
+  /* Line color utilities */
+  .terminal-out-line {
+    margin-top: 4px;
+    white-space: pre-wrap;
+  }
+
+  .terminal-out-line.muted {
+    color: var(--text-gray-muted);
+  }
+
+  .terminal-out-line.border {
+    color: var(--border-color);
+  }
+
+  .terminal-out-line.label {
+    color: #22d3ee; /* Cyan labels */
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  .terminal-out-line span.value {
+    color: #ffffff;
+    font-weight: 500;
+  }
+
+  .terminal-out-line.success {
+    color: #21d789; /* Green success check */
+    font-weight: 600;
+    margin-top: 10px;
+  }
 
   @media (max-width: 992px) {
     .hero-content {
@@ -374,7 +435,7 @@ const cvFilename = lang === 'en'
       order: -1;
     }
     
-    .code-box {
+    .terminal-box {
       transform: none;
     }
   }
@@ -409,5 +470,113 @@ const cvFilename = lang === 'en'
     
     // Slight initial delay before typewriting starts
     setTimeout(type, 300);
+  }
+
+  // Typewriter Terminal Animation
+  const termCommand = document.getElementById('termCommand');
+  const termOutput = document.getElementById('termOutput');
+  const termBody = document.querySelector('.terminal-window-body');
+
+  if (termCommand && termOutput && termBody) {
+    const lang = termBody.getAttribute('data-lang') || 'en';
+    const commandText = 'npx wolfremium';
+    
+    // Define lines to print
+    const lines = lang === 'es' ? [
+      { text: 'Inicializando Wolfremium CLI...', color: 'muted', delay: 350 },
+      { text: '----------------------------------------', color: 'border', delay: 100 },
+      { text: '● Nombre: ', color: 'label', isInline: true, delay: 100 },
+      { text: 'Kevin Hierro Carrasco', color: 'value', delay: 100 },
+      { text: '● Rol:    ', color: 'label', isInline: true, delay: 100 },
+      { text: 'Ingeniero Full Stack', color: 'value', delay: 100 },
+      { text: '● Habil:  ', color: 'label', isInline: true, delay: 100 },
+      { text: 'TDD, BDD, Código Limpio', color: 'value', delay: 100 },
+      { text: '● Stack:  ', color: 'label', isInline: true, delay: 100 },
+      { text: '.NET, C#, Kotlin, Python, JS', color: 'value', delay: 100 },
+      { text: '● Ciudad: ', color: 'label', isInline: true, delay: 100 },
+      { text: 'Tenerife, España', color: 'value', delay: 100 },
+      { text: '----------------------------------------', color: 'border', delay: 100 },
+      { text: '✔ Diagnóstico: 100% estable. Listo.', color: 'success', delay: 300 }
+    ] : [
+      { text: 'Initializing Wolfremium CLI...', color: 'muted', delay: 350 },
+      { text: '----------------------------------------', color: 'border', delay: 100 },
+      { text: '● Name:   ', color: 'label', isInline: true, delay: 100 },
+      { text: 'Kevin Hierro Carrasco', color: 'value', delay: 100 },
+      { text: '● Role:   ', color: 'label', isInline: true, delay: 100 },
+      { text: 'Full Stack Engineer', color: 'value', delay: 100 },
+      { text: '● Skills: ', color: 'label', isInline: true, delay: 100 },
+      { text: 'TDD, BDD, Clean Code', color: 'value', delay: 100 },
+      { text: '● Stack:  ', color: 'label', isInline: true, delay: 100 },
+      { text: '.NET, C#, Kotlin, Python, JS', color: 'value', delay: 100 },
+      { text: '● Locate: ', color: 'label', isInline: true, delay: 100 },
+      { text: 'Tenerife, Spain', color: 'value', delay: 100 },
+      { text: '----------------------------------------', color: 'border', delay: 100 },
+      { text: '✔ Diagnostics: 100% stable. Ready.', color: 'success', delay: 300 }
+    ];
+
+    let cmdIdx = 0;
+    function typeCommand() {
+      if (cmdIdx < commandText.length) {
+        termCommand.textContent += commandText.charAt(cmdIdx);
+        cmdIdx++;
+        setTimeout(typeCommand, 60 + Math.random() * 40); // Variable typing speed
+      } else {
+        setTimeout(startOutput, 400);
+      }
+    }
+
+    let lineIdx = 0;
+    let currentContainer = null;
+
+    function startOutput() {
+      if (lineIdx < lines.length) {
+        const line = lines[lineIdx];
+        
+        // If inline, append to current container, else create new paragraph
+        if (!line.isInline || !currentContainer) {
+          currentContainer = document.createElement('div');
+          currentContainer.className = `terminal-out-line ${line.color}`;
+          termOutput.appendChild(currentContainer);
+        } else {
+          // If it is value for the previous label
+          const valSpan = document.createElement('span');
+          valSpan.className = line.color;
+          currentContainer.appendChild(valSpan);
+          typeLineText(valSpan, line.text, () => {
+            lineIdx++;
+            setTimeout(startOutput, line.delay);
+          });
+          return;
+        }
+
+        typeLineText(currentContainer, line.text, () => {
+          lineIdx++;
+          setTimeout(startOutput, line.delay);
+        });
+      }
+    }
+
+    function typeLineText(container, text, callback) {
+      if (text.startsWith('---') || text.includes('✔')) {
+        container.textContent = text;
+        callback();
+        return;
+      }
+      
+      let charIdx = 0;
+      function typeChar() {
+        if (charIdx < text.length) {
+          container.textContent += text.charAt(charIdx);
+          charIdx++;
+          setTimeout(typeChar, 8 + Math.random() * 10); // Fast output typing
+        } else {
+          callback();
+        }
+      }
+      typeChar();
+    }
+
+    // Start typing after initial load delay
+    setTimeout(typeCommand, 500);
   }
 </script>
