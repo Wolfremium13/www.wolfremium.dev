@@ -402,16 +402,18 @@ function getRoleStyles(role: string) {
 
   .code-view.active {
     display: block;
+    overflow-x: auto;
   }
 
   .code-line {
     display: flex;
     align-items: flex-start;
-    white-space: pre-wrap;
-    word-break: break-all;
+    white-space: pre;
+    word-break: normal;
     font-family: var(--font-mono);
     font-size: 0.82rem;
     line-height: 1.6;
+    min-width: max-content;
   }
 
   .line-num {
