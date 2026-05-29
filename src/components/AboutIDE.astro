@@ -22,7 +22,7 @@ const t = useTranslations(lang);
 function getRoleStyles(role: string) {
   const r = role.toLowerCase();
   
-  // 1. Data Engineer first (to prevent matching 'engineer' in the fullstack block)
+  // 1. Data Developer first (to prevent matching 'developer' in the fullstack block)
   if (r.includes('data') || r.includes('datos')) {
     return {
       id: 'data',
@@ -58,7 +58,7 @@ function getRoleStyles(role: string) {
     };
   }
   
-  // 3. Full Stack Engineer (Rider)
+  // 3. Full Stack Developer (Rider)
   return {
     id: 'fullstack',
     gradient: 'var(--gradient-brand)', // Brand gradient: green/violet
@@ -115,7 +115,7 @@ function getRoleStyles(role: string) {
             <div class="code-line"><span class="line-num">3</span></div>
             <div class="code-line"><span class="line-num">4</span><span class="keyword">namespace </span>Dev.Wolfremium;</div>
             <div class="code-line"><span class="line-num">5</span></div>
-            <div class="code-line"><span class="line-num">6</span><span class="keyword">public class </span><span class="type">{lang === 'en' ? 'FullStackEngineer' : 'IngenieroFullStack'}</span></div>
+            <div class="code-line"><span class="line-num">6</span><span class="keyword">public class </span><span class="type">{lang === 'en' ? 'FullStackDeveloper' : 'DesarrolladorFullStack'}</span></div>
             <div class="code-line"><span class="line-num">7</span>&#123;</div>
             <div class="code-line"><span class="line-num">8</span>    <span class="keyword">public string </span>{t('ide.profile.name')} =&gt; <span class="string">"Kevin Hierro Carrasco"</span>;</div>
             <div class="code-line"><span class="line-num">9</span>    <span class="keyword">public string </span>{t('ide.profile.alias')} =&gt; <span class="string">"Wolfremium"</span>;</div>
@@ -170,11 +170,11 @@ function getRoleStyles(role: string) {
               <span class="filter-dot all-dot"></span>
               <span class="filter-text">{t('experience.role.all')}</span>
             </button>
-            <button class="filter-btn" data-filter="fullstack" aria-label="Filter by Full Stack Engineer">
+            <button class="filter-btn" data-filter="fullstack" aria-label="Filter by Full Stack Developer">
               <span class="filter-dot" style="background: var(--color-role-fullstack); box-shadow: 0 0 8px var(--color-role-fullstack)"></span>
               <span class="filter-text">{t('experience.role.crafter')}</span>
             </button>
-            <button class="filter-btn" data-filter="data" aria-label="Filter by Data Engineer">
+            <button class="filter-btn" data-filter="data" aria-label="Filter by Data Developer">
               <span class="filter-dot" style="background: var(--color-role-data); box-shadow: 0 0 8px var(--color-role-data)"></span>
               <span class="filter-text">{t('experience.role.data')}</span>
             </button>

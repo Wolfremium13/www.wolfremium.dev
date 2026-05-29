@@ -13,7 +13,7 @@ export const translations = {
     'nav.certifications': 'Certifications',
     'nav.contact': 'Contact',
     'hero.greeting': 'Hi, I am',
-    'hero.sub': 'Full Stack Engineer',
+    'hero.sub': 'Full Stack Developer',
     'hero.cta.contact': 'Get in Touch',
     'hero.cta.cv': 'Download CV',
     'hero.meta.location': 'Based in San Cristóbal de La Laguna, Spain',
@@ -28,7 +28,7 @@ export const translations = {
     'skills.category.data': 'Data & Databases',
     'skills.category.tools': 'Tools & CI/CD',
     'skills.category.methodologies': 'Methodologies',
-    'footer.copyright': '© {year} Kevin Hierro Carrasco. Built with Astro & Clean Code.',
+    'footer.copyright': '© {year} Kevin Hierro Carrasco. Clean Code & Craft.',
     'footer.motto': 'Simple, high-quality, free software solutions.',
     'ide.tab.profile': 'Profile.cs',
     'ide.tab.education': 'education.json',
@@ -51,8 +51,8 @@ export const translations = {
     'experience.present': 'Present',
     'experience.filter': 'Filter by role:',
     'experience.role.all': 'All',
-    'experience.role.crafter': 'Full Stack Engineer',
-    'experience.role.data': 'Data Engineer',
+    'experience.role.crafter': 'Full Stack Developer',
+    'experience.role.data': 'Data Developer',
     'experience.role.backend': 'Web Developer'
   },
   es: {
@@ -62,7 +62,7 @@ export const translations = {
     'nav.certifications': 'Certificaciones',
     'nav.contact': 'Contacto',
     'hero.greeting': 'Hola, soy',
-    'hero.sub': 'Ingeniero Full Stack',
+    'hero.sub': 'Desarrollador Full Stack',
     'hero.cta.contact': 'Contactar',
     'hero.cta.cv': 'Descargar CV',
     'hero.meta.location': 'Ubicado en San Cristóbal de La Laguna, España',
@@ -77,7 +77,7 @@ export const translations = {
     'skills.category.data': 'Datos y Bases de Datos',
     'skills.category.tools': 'Herramientas y CI/CD',
     'skills.category.methodologies': 'Metodologías',
-    'footer.copyright': '© {year} Kevin Hierro Carrasco. Creado con Astro y Código Limpio.',
+    'footer.copyright': '© {year} Kevin Hierro Carrasco. Código Limpio y Artesanal.',
     'footer.motto': 'Soluciones de software sencillas, de alta calidad y libres.',
     'ide.tab.profile': 'Perfil.cs',
     'ide.tab.education': 'educacion.json',
@@ -100,8 +100,8 @@ export const translations = {
     'experience.present': 'Presente',
     'experience.filter': 'Filtrar por rol:',
     'experience.role.all': 'Todos',
-    'experience.role.crafter': 'Ingeniero Full Stack',
-    'experience.role.data': 'Ingeniero de Datos',
+    'experience.role.crafter': 'Desarrollador Full Stack',
+    'experience.role.data': 'Desarrollador de Datos',
     'experience.role.backend': 'Desarrollador Web'
   }
 } as const;
