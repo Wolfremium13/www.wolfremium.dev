@@ -66,7 +66,7 @@ function getProviderStyle(provider: string) {
       gradient: 'var(--gradient-intellij)'
     };
   }
-  
+
   // Default/Fallback (NTT DATA, etc.)
   return {
     color: 'var(--color-role-fullstack)', // Brand Violet
@@ -89,47 +89,49 @@ function getProviderStyle(provider: string) {
     <div class="filters-panel">
       <div class="cert-filter-container">
         <span class="filter-label">{lang === 'en' ? 'Filter by Year:' : 'Filtrar por Año:'}</span>
-        <div class="cert-filter-tabs">
-          <button class="cert-year-tab active" data-year-filter="all">
-            {t('experience.role.all')} ({certificationsList.length})
-          </button>
-          {uniqueYears.map(yr => (
-            <button class="cert-year-tab" data-year-filter={yr}>
-              {yr} ({yearCounts[yr]})
+        <div class="cert-filter-scroll">
+          <div class="cert-filter-tabs">
+            <button class="cert-year-tab active" data-year-filter="all">
+              {t('experience.role.all')} ({certificationsList.length})
             </button>
-          ))}
+            {uniqueYears.map(yr => (
+              <button class="cert-year-tab" data-year-filter={yr}>
+                {yr} ({yearCounts[yr]})
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
-    
+
     <!-- Certifications Grid -->
     <div class="certs-grid">
       {certificationsList.map((cert) => {
         const style = getProviderStyle(cert.provider);
         const certYearMatch = cert.year.match(/\b\d{4}\b/);
         const yearAttr = certYearMatch ? certYearMatch[0] : '';
-        
+
         return (
-          <div 
-            class="cert-card glow-card" 
-            data-provider={cert.provider} 
+          <div
+            class="cert-card glow-card"
+            data-provider={cert.provider}
             data-year={yearAttr}
             style={`--card-glow: ${style.glow}; --card-gradient: ${style.gradient}`}
           >
             <div class="cert-header">
-              <span 
-                class="cert-provider" 
+              <span
+                class="cert-provider"
                 style={`color: ${style.color}; background: ${style.bg}; border-color: ${style.border}`}
               >
                 {cert.provider}
               </span>
               <span class="cert-date">{cert.year}</span>
             </div>
-            
+
             <div class="cert-body">
               <h3 class="cert-name">{cert.name}</h3>
             </div>
-            
+
             <div class="cert-footer">
               <a href={cert.link} class="verify-link" target="_blank" rel="noopener noreferrer" style={`--hover-color: ${style.color}`}>
                 <span>{lang === 'en' ? 'Verify Credential' : 'Verificar Credencial'}</span>
@@ -156,19 +158,18 @@ function getProviderStyle(provider: string) {
 
   let selectedYear = 'all';
 
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
   function updatePagination() {
     if (!paginationContainer) return;
-    
-    // Find all cards matching active filters (not filtered-out)
+
     const visibleCards = Array.from(certCards).filter(card => !card.classList.contains('filtered-out'));
     const totalPages = Math.ceil(visibleCards.length / PAGE_SIZE) || 1;
 
-    // Reset current page if out of bounds
-    if (currentPage > totalPages) {
-      currentPage = 1;
-    }
+    if (currentPage > totalPages) currentPage = 1;
 
-    // Toggle display of cards for active page
     visibleCards.forEach((card, index) => {
       const pageIndex = Math.floor(index / PAGE_SIZE) + 1;
       if (pageIndex === currentPage) {
@@ -178,66 +179,55 @@ function getProviderStyle(provider: string) {
       }
     });
 
-    // Render paging elements
     paginationContainer.innerHTML = '';
+    if (totalPages <= 1) return;
 
-    if (totalPages > 1) {
-      // Previous arrow
-      const prevBtn = document.createElement('button');
-      prevBtn.className = `page-control-btn ${currentPage === 1 ? 'disabled' : ''}`;
-      prevBtn.innerHTML = '←';
-      prevBtn.disabled = currentPage === 1;
-      prevBtn.addEventListener('click', () => {
-        if (currentPage > 1) {
-          currentPage--;
-          updatePagination();
-        }
-      });
-      paginationContainer.appendChild(prevBtn);
+    const prevBtn = document.createElement('button');
+    prevBtn.className = `page-control-btn${currentPage === 1 ? ' disabled' : ''}`;
+    prevBtn.innerHTML = '←';
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.setAttribute('aria-label', 'Previous page');
+    prevBtn.addEventListener('click', () => { if (currentPage > 1) { currentPage--; updatePagination(); } });
+    paginationContainer.appendChild(prevBtn);
 
-      // Page numbers
+    if (isMobile()) {
+      // Mobile: compact "2 / 5" label instead of all page buttons
+      const label = document.createElement('span');
+      label.className = 'page-counter';
+      label.textContent = `${currentPage} / ${totalPages}`;
+      paginationContainer.appendChild(label);
+    } else {
       for (let p = 1; p <= totalPages; p++) {
         const pageBtn = document.createElement('button');
-        pageBtn.className = `page-btn ${p === currentPage ? 'active' : ''}`;
+        pageBtn.className = `page-btn${p === currentPage ? ' active' : ''}`;
         pageBtn.textContent = p.toString();
-        pageBtn.addEventListener('click', () => {
-          currentPage = p;
-          updatePagination();
-        });
+        pageBtn.addEventListener('click', () => { currentPage = p; updatePagination(); });
         paginationContainer.appendChild(pageBtn);
       }
-
-      // Next arrow
-      const nextBtn = document.createElement('button');
-      nextBtn.className = `page-control-btn ${currentPage === totalPages ? 'disabled' : ''}`;
-      nextBtn.innerHTML = '→';
-      nextBtn.disabled = currentPage === totalPages;
-      nextBtn.addEventListener('click', () => {
-        if (currentPage < totalPages) {
-          currentPage++;
-          updatePagination();
-        }
-      });
-      paginationContainer.appendChild(nextBtn);
     }
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = `page-control-btn${currentPage === totalPages ? ' disabled' : ''}`;
+    nextBtn.innerHTML = '→';
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.setAttribute('aria-label', 'Next page');
+    nextBtn.addEventListener('click', () => { if (currentPage < totalPages) { currentPage++; updatePagination(); } });
+    paginationContainer.appendChild(nextBtn);
   }
 
   function applyFilters() {
     certCards.forEach(card => {
       const year = card.getAttribute('data-year') || '';
       const matchesYear = selectedYear === 'all' || year === selectedYear;
-
       if (matchesYear) {
         card.classList.remove('filtered-out');
       } else {
         card.classList.add('filtered-out');
       }
     });
-
     updatePagination();
   }
 
-  // Bind year filters
   yearTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       yearTabs.forEach(t => t.classList.remove('active'));
@@ -248,7 +238,8 @@ function getProviderStyle(provider: string) {
     });
   });
 
-  // Initial setup
+  window.addEventListener('resize', () => updatePagination());
+
   applyFilters();
 </script>
 
@@ -309,23 +300,43 @@ function getProviderStyle(provider: string) {
     letter-spacing: 0.05em;
   }
 
+  /* Scrollable filter row — no wrapping on mobile */
+  .cert-filter-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* fade-out mask on the right to hint scrollability */
+    -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  }
+
+  .cert-filter-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
   .cert-filter-tabs {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 0.5rem;
+    padding-bottom: 4px; /* prevents clipping active shadow */
   }
 
   .cert-year-tab {
     background: var(--bg-dark-charcoal);
     border: 1px solid var(--border-color);
     color: var(--text-gray-light);
-    padding: 5px 12px;
+    padding: 7px 14px;
     border-radius: 20px;
     font-family: var(--font-sans);
     font-weight: 500;
     font-size: 0.8rem;
     cursor: pointer;
     transition: var(--transition-fast);
+    white-space: nowrap;
+    flex-shrink: 0;
+    /* Bigger tap area on mobile */
+    min-height: 36px;
   }
 
   .cert-year-tab:hover {
@@ -343,7 +354,8 @@ function getProviderStyle(provider: string) {
 
   .certs-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 320px));
+    justify-content: start;
     gap: 2rem;
     min-height: 480px; /* Prevent layout jump on pagination change */
   }
@@ -424,6 +436,8 @@ function getProviderStyle(provider: string) {
     font-weight: 600;
     color: var(--text-gray-light);
     transition: var(--transition-fast);
+    /* Larger tap area */
+    padding: 6px 0;
   }
 
   .verify-link:hover {
@@ -438,7 +452,7 @@ function getProviderStyle(provider: string) {
     transform: translate(2px, -2px);
   }
 
-  /* Horizontal Pagination CSS styling */
+  /* Pagination */
   .pagination-controls {
     display: flex;
     justify-content: center;
@@ -448,7 +462,7 @@ function getProviderStyle(provider: string) {
     width: 100%;
   }
 
-  .pagination-controls :global(.page-btn), 
+  .pagination-controls :global(.page-btn),
   .pagination-controls :global(.page-control-btn) {
     background: var(--bg-dark-panel);
     border: 1px solid var(--border-color);
@@ -467,7 +481,7 @@ function getProviderStyle(provider: string) {
     user-select: none;
   }
 
-  .pagination-controls :global(.page-btn:hover), 
+  .pagination-controls :global(.page-btn:hover),
   .pagination-controls :global(.page-control-btn:hover:not(:disabled)) {
     border-color: var(--text-gray-muted);
     color: var(--text-white);
@@ -487,15 +501,42 @@ function getProviderStyle(provider: string) {
     cursor: not-allowed;
   }
 
-  @media (max-width: 768px) {
-    .certs-grid {
-      min-height: auto;
-    }
+  .pagination-controls :global(.page-counter) {
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-gray-light);
+    min-width: 56px;
+    text-align: center;
   }
 
-  @media (max-width: 480px) {
+  /* ── Mobile overrides ── */
+  @media (max-width: 768px) {
+    .certifications-section {
+      padding: 60px 0;
+    }
+
+    .certs-grid {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      gap: 1.25rem;
+    }
+
     .cert-card {
-      padding: 1.5rem;
+      padding: 1.25rem;
+    }
+
+    /* Bigger pagination arrows on mobile */
+    .pagination-controls :global(.page-control-btn) {
+      width: 48px;
+      height: 48px;
+      font-size: 1.1rem;
+      border-radius: 12px;
+    }
+
+    .pagination-controls {
+      gap: 0.75rem;
+      margin-top: 2rem;
     }
   }
 </style>

@@ -1,4 +1,6 @@
 ---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
 
 interface Props {
@@ -75,6 +77,11 @@ const personSchema = JSON.stringify({
   </head>
   <body>
     <slot />
+
+    <!-- Back to Top Button (mobile only) -->
+    <a href="#hero" class="back-to-top" id="backToTop" aria-label="Back to top">
+      <span class="back-to-top-arrow">↑</span>
+    </a>
   </body>
 </html>
 
@@ -89,4 +96,57 @@ const personSchema = JSON.stringify({
     background-color: var(--bg-dark-obsidian);
     color: var(--text-white);
   }
+
+  /* Back to Top Button — mobile only */
+  .back-to-top {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .back-to-top {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      right: 1.25rem;
+      bottom: calc(72px + 1rem + env(safe-area-inset-bottom));
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #21d789 0%, #7f52ff 100%);
+      color: #0b0b0e;
+      font-size: 1.2rem;
+      font-weight: 800;
+      box-shadow: 0 4px 20px rgba(127, 82, 255, 0.4);
+      z-index: 150;
+      opacity: 0;
+      transform: translateY(12px) scale(0.85);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      text-decoration: none;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .back-to-top:active {
+      transform: scale(0.92);
+    }
+  }
 </style>
+
+<script>
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+  }
+</script>

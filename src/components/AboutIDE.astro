@@ -21,7 +21,7 @@ const t = useTranslations(lang);
 
 function getRoleStyles(role: string) {
   const r = role.toLowerCase();
-  
+
   // 1. Data Developer first (to prevent matching 'developer' in the fullstack block)
   if (r.includes('data') || r.includes('datos')) {
     return {
@@ -32,14 +32,14 @@ function getRoleStyles(role: string) {
       product: 'Pycharm'
     };
   }
-  
+
   // 2. Web Developer roles (grouped under webdev color themes, but keeping unique IDE badges)
   if (
-    r.includes('web') || 
-    r.includes('backend') || 
-    r.includes('back-end') || 
-    r.includes('internship') || 
-    r.includes('prácticas') || 
+    r.includes('web') ||
+    r.includes('backend') ||
+    r.includes('back-end') ||
+    r.includes('internship') ||
+    r.includes('prácticas') ||
     r.includes('practicas')
   ) {
     let productBadge = 'WebStorm';
@@ -48,7 +48,7 @@ function getRoleStyles(role: string) {
     } else if (r.includes('intern') || r.includes('prácticas') || r.includes('practicas')) {
       productBadge = 'IntelliJ IDEA';
     }
-    
+
     return {
       id: 'webdev',
       gradient: 'var(--gradient-webstorm)', // Cyan/blue
@@ -57,7 +57,7 @@ function getRoleStyles(role: string) {
       product: productBadge
     };
   }
-  
+
   // 3. Full Stack Developer (Rider)
   return {
     id: 'fullstack',
@@ -75,12 +75,12 @@ function getRoleStyles(role: string) {
       <h2 class="section-title">{t('section.about.header')}</h2>
       <div class="title-line"></div>
     </div>
-    
+
     <!-- Explanatory Bio Paragraph before the IDE window -->
     <div class="about-intro-block">
       <p class="about-intro-text">{profileText}</p>
     </div>
-    
+
     <div class="about-grid-vertical">
       <!-- Faux JetBrains IDE Window (Full Width) -->
       <div class="terminal-window ide-window">
@@ -93,7 +93,7 @@ function getRoleStyles(role: string) {
           </div>
           <span class="terminal-title">JetBrains Rider</span>
         </div>
-        
+
         <!-- IDE Tabs -->
         <div class="terminal-tabs">
           <button class="terminal-tab active" id="tabProfile" aria-label="Show Profile File">
@@ -105,7 +105,7 @@ function getRoleStyles(role: string) {
             <span class="tab-label">{t('ide.tab.education')}</span>
           </button>
         </div>
-        
+
         <!-- IDE Body -->
         <div class="terminal-body">
           <!-- Profile C# Code -->
@@ -138,7 +138,7 @@ function getRoleStyles(role: string) {
             <div class="code-line"><span class="line-num">26</span>    &#125;;</div>
             <div class="code-line"><span class="line-num">27</span>&#125;</div>
           </div>
-          
+
           <!-- Education JSON Code -->
           <div class="code-view" id="viewEducation">
             <div class="code-line"><span class="line-num">1</span>&#123;</div>
@@ -157,11 +157,11 @@ function getRoleStyles(role: string) {
           </div>
         </div>
       </div>
-      
+
       <!-- Experience Timeline (Below the IDE) -->
-      <div class="about-experience-section">
+      <div class="about-experience-section" id="experience">
         <h3 class="experience-heading">{t('section.experience.title')}</h3>
-        
+
         <!-- Interactive Role Filter -->
         <div class="experience-filter-container">
           <span class="filter-label">{t('experience.filter')}</span>
@@ -184,17 +184,17 @@ function getRoleStyles(role: string) {
             </button>
           </div>
         </div>
-        
+
         <div class="vertical-timeline">
           <div class="timeline-line"></div>
-          
+
           {experience.map((job, idx) => {
             const roleStyle = getRoleStyles(job.role);
             return (
-              <div class="timeline-item" data-role-category={roleStyle.id} style={`--marker-color: ${roleStyle.color}`}>
+              <div class="timeline-item" data-role-category={roleStyle.id} data-original-index={idx} style={`--marker-color: ${roleStyle.color}`}>
                 <!-- Timeline node marker -->
                 <div class="timeline-marker" style={`background: ${roleStyle.color}`}></div>
-                
+
                 <!-- Job Detail Card -->
                 <div class="timeline-content glow-card" style={`--hover-gradient: ${roleStyle.gradient}; --hover-glow: ${roleStyle.glow}`}>
                   <div class="timeline-header-block">
@@ -207,13 +207,13 @@ function getRoleStyles(role: string) {
                     </div>
                     <span class="job-period-badge">{job.period}</span>
                   </div>
-                  
+
                   <ul class="job-bullets">
                     {job.bullets.map(bullet => (
                       <li style={`--bullet-color: ${roleStyle.color}`}>{bullet}</li>
                     ))}
                   </ul>
-                  
+
                   {job.technologies.length > 0 && (
                     <div class="job-tech">
                       <span class="tech-label">{t('experience.technologies')}</span>
@@ -259,17 +259,26 @@ function getRoleStyles(role: string) {
 
   // Interactive timeline role filtering logic
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const timelineItems = document.querySelectorAll('.timeline-item');
+  const timeline = document.querySelector('.vertical-timeline') as HTMLElement | null;
+
+  function extractStartYear(item: Element): number {
+    const badge = item.querySelector('.job-period-badge');
+    if (!badge) return 0;
+    const text = badge.textContent || '';
+    // Grab the first 4-digit year found (start of period)
+    const match = text.match(/\d{4}/);
+    return match ? parseInt(match[0], 10) : 0;
+  }
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      // Remove active class from all buttons
       filterBtns.forEach(b => b.classList.remove('active'));
-      // Add active to current button
       btn.classList.add('active');
 
       const filterValue = btn.getAttribute('data-filter');
+      const timelineItems = Array.from(document.querySelectorAll('.timeline-item'));
 
+      // Show/hide
       timelineItems.forEach(item => {
         const itemCategory = item.getAttribute('data-role-category');
         if (filterValue === 'all' || itemCategory === filterValue) {
@@ -278,6 +287,30 @@ function getRoleStyles(role: string) {
           item.classList.add('filtered-out');
         }
       });
+
+      // Re-sort: matching items by date desc, then non-matching at the end
+      if (timeline && filterValue !== 'all') {
+        const line = timeline.querySelector('.timeline-line');
+        const sorted = [...timelineItems].sort((a, b) => {
+          const aMatch = a.getAttribute('data-role-category') === filterValue;
+          const bMatch = b.getAttribute('data-role-category') === filterValue;
+          if (aMatch && !bMatch) return -1;
+          if (!aMatch && bMatch) return 1;
+          // Both match: sort by year descending
+          return extractStartYear(b) - extractStartYear(a);
+        });
+        sorted.forEach(item => timeline.appendChild(item));
+        if (line) timeline.prepend(line);
+      } else if (timeline && filterValue === 'all') {
+        // Restore original DOM order via data-original-index
+        const line = timeline.querySelector('.timeline-line');
+        const allItems = Array.from(document.querySelectorAll('.timeline-item'));
+        const byIndex = [...allItems].sort((a, b) => {
+          return parseInt(a.getAttribute('data-original-index') || '0') - parseInt(b.getAttribute('data-original-index') || '0');
+        });
+        byIndex.forEach(item => timeline.appendChild(item));
+        if (line) timeline.prepend(line);
+      }
     });
   });
 </script>

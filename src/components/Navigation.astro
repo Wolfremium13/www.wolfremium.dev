@@ -36,7 +36,7 @@ const toggleText = lang === 'en' ? 'ES' : 'EN';
         <span class="lang-globe">🌐</span>
         <span class="lang-text">{toggleText}</span>
       </a>
-      
+
       <!-- Mobile Menu Button -->
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation Menu">
         <span class="bar"></span>
@@ -46,7 +46,7 @@ const toggleText = lang === 'en' ? 'ES' : 'EN';
     </div>
   </div>
 
-  <!-- Mobile Dropdown Menu -->
+  <!-- Mobile Dropdown Menu (hidden on mobile, replaced by bottom bar) -->
   <div class="mobile-nav-menu" id="mobileNavMenu">
     <nav class="mobile-nav">
       <a href="#about" class="mobile-nav-link">{t('nav.about')}</a>
@@ -59,6 +59,34 @@ const toggleText = lang === 'en' ? 'ES' : 'EN';
     </nav>
   </div>
 </header>
+
+<!-- Mobile Bottom Nav Bar -->
+<nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+  <a href="#hero" class="bottom-nav-item" data-section="hero" aria-label="Home">
+    <span class="bottom-nav-icon">⌂</span>
+    <span class="bottom-nav-label">{lang === 'en' ? 'Home' : 'Inicio'}</span>
+  </a>
+  <a href="#about" class="bottom-nav-item" data-section="about" aria-label={t('nav.about')}>
+    <span class="bottom-nav-icon">◻</span>
+    <span class="bottom-nav-label">{t('nav.about')}</span>
+  </a>
+  <a href="#experience" class="bottom-nav-item" data-section="experience" aria-label={t('nav.experience')}>
+    <span class="bottom-nav-icon">◈</span>
+    <span class="bottom-nav-label">{t('nav.experience')}</span>
+  </a>
+  <a href="#skills" class="bottom-nav-item" data-section="skills" aria-label={t('nav.skills')}>
+    <span class="bottom-nav-icon">⬡</span>
+    <span class="bottom-nav-label">{t('nav.skills')}</span>
+  </a>
+  <a href="#certifications" class="bottom-nav-item" data-section="certifications" aria-label={t('nav.certifications')}>
+    <span class="bottom-nav-icon">✦</span>
+    <span class="bottom-nav-label">{t('nav.certifications')}</span>
+  </a>
+  <a href={toggleUrl} class="bottom-nav-item" aria-label="Switch Language">
+    <span class="bottom-nav-icon">🌐</span>
+    <span class="bottom-nav-label">{toggleText}</span>
+  </a>
+</nav>
 
 <script>
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -82,22 +110,34 @@ const toggleText = lang === 'en' ? 'ES' : 'EN';
   }
 
   // Active section highlights on scroll
-  const sections = document.querySelectorAll('section[id]');
+  const sections = document.querySelectorAll('section[id], div[id="experience"]');
   const navLinks = document.querySelectorAll('.desktop-nav .nav-link');
+  const bottomNavItems = document.querySelectorAll('.bottom-nav-item[data-section]');
 
-  window.addEventListener('scroll', () => {
-    let current = '';
+  function updateActiveSection() {
     const scrollY = window.pageYOffset;
-    
-    sections.forEach(section => {
-      const sectionHeight = (section as HTMLElement).offsetHeight;
-      const sectionTop = (section as HTMLElement).offsetTop - 120;
-      const sectionId = section.getAttribute('id');
-      
-      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-        current = sectionId || '';
-      }
+    const offset = 130; // navbar height + buffer
+
+    // Build list of { id, top, bottom } using getBoundingClientRect for accuracy
+    const sectionRects = Array.from(sections).map(section => {
+      const rect = (section as HTMLElement).getBoundingClientRect();
+      return {
+        id: section.getAttribute('id') || '',
+        top: rect.top + scrollY,
+        bottom: rect.bottom + scrollY,
+      };
     });
+
+    // Sort so more-specific (deeper / smaller) sections are evaluated last and win
+    // #experience is nested inside #about, so it should override when in range
+    sectionRects.sort((a, b) => (b.bottom - b.top) - (a.bottom - a.top));
+
+    let current = '';
+    for (const s of sectionRects) {
+      if (scrollY + offset >= s.top && scrollY + offset < s.bottom) {
+        current = s.id;
+      }
+    }
 
     navLinks.forEach(link => {
       link.classList.remove('active');
@@ -105,7 +145,17 @@ const toggleText = lang === 'en' ? 'ES' : 'EN';
         link.classList.add('active');
       }
     });
-  });
+
+    bottomNavItems.forEach(item => {
+      item.classList.remove('active');
+      if (item.getAttribute('data-section') === current) {
+        item.classList.add('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveSection);
+  updateActiveSection();
 </script>
 
 <style>
@@ -326,7 +376,94 @@ const toggleText = lang === 'en' ? 'ES' : 'EN';
     }
 
     .mobile-menu-btn {
+      display: none;
+    }
+
+    .lang-toggle {
+      display: none;
+    }
+
+    /* Add bottom padding to body so content isn't hidden behind bottom nav */
+    :global(body) {
+      padding-bottom: 72px;
+    }
+  }
+
+  /* ─── Mobile Bottom Navigation Bar ─── */
+  .mobile-bottom-nav {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .mobile-bottom-nav {
       display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: rgba(11, 11, 14, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border-color);
+      height: 64px;
+      padding: 0 0.5rem;
+      padding-bottom: env(safe-area-inset-bottom);
+      align-items: stretch;
+      justify-content: space-around;
+    }
+
+    .bottom-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      flex: 1;
+      padding: 8px 4px;
+      color: var(--text-gray-muted);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .bottom-nav-item::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 24px;
+      height: 2px;
+      background: var(--gradient-brand);
+      border-radius: 2px;
+      transition: transform 0.25s ease;
+    }
+
+    .bottom-nav-item.active::before {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    .bottom-nav-item.active {
+      color: var(--text-white);
+    }
+
+    .bottom-nav-item:hover {
+      color: var(--text-white);
+    }
+
+    .bottom-nav-icon {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .bottom-nav-label {
+      font-size: 0.56rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
     }
   }
 </style>
