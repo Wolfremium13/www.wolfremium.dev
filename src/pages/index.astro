@@ -17,9 +17,9 @@ const keywords = `Kevin Hierro, Full Stack Engineer, Software Engineer, Portfoli
 
 <Layout title={title} description={description} lang="en" keywords={keywords}>
   <Navigation lang="en" />
-  
+
   <main>
-    <Hero 
+    <Hero
       lang="en"
       name={cvData.name}
       title={cvData.title}
@@ -27,26 +27,26 @@ const keywords = `Kevin Hierro, Full Stack Engineer, Software Engineer, Portfoli
       linkedin={cvData.linkedin}
       email={cvData.email}
     />
-    
-    <AboutIDE 
+
+    <AboutIDE
       lang="en"
       profileText={cvData.profile}
       education={cvData.education}
       experience={cvData.experience}
     />
-    
-    <SkillsGrid 
+
+    <SkillsGrid
       lang="en"
       skillsList={cvData.skills}
     />
-    
-    <Certifications 
+
+    <Certifications
       lang="en"
       certificationsList={cvData.certifications}
     />
   </main>
-  
-  <Footer 
+
+  <Footer
     lang="en"
     email={cvData.email}
     linkedin={cvData.linkedin}
