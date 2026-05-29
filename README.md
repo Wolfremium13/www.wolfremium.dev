@@ -73,6 +73,6 @@ All commands are run from the root of the project:
 
 ---
 
-## � CV
+## 📝 CV
 
 The CV is authored in Markdown (`docs/`) and parsed at build time into structured data used by the components. Pre-rendered PDFs are served from `public/`.
