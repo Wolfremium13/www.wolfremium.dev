@@ -22,7 +22,7 @@ const currentYear = new Date().getFullYear();
       </div>
       <p class="footer-motto">{t('footer.motto')}</p>
     </div>
-    
+
     <div class="footer-links-group">
       <h3 class="footer-links-title">{lang === 'en' ? 'Navigate' : 'Navegación'}</h3>
       <div class="footer-nav-links">
@@ -32,12 +32,17 @@ const currentYear = new Date().getFullYear();
         <a href="#certifications" class="footer-nav-link">{t('nav.certifications')}</a>
       </div>
     </div>
-    
+
     <div class="footer-contact-group">
       <h3 class="footer-links-title">{t('nav.contact')}</h3>
       <div class="contact-methods">
         <a href={`mailto:${email}`} class="contact-link">
-          <span class="contact-icon">✉</span>
+          <span class="contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="4" width="20" height="16" rx="2"/>
+              <polyline points="2,4 12,13 22,4"/>
+            </svg>
+          </span>
           <span class="contact-text">{email}</span>
         </a>
         <a href={linkedin} class="contact-link" target="_blank" rel="noopener noreferrer">
@@ -51,7 +56,7 @@ const currentYear = new Date().getFullYear();
       </div>
     </div>
   </div>
-  
+
   <div class="footer-bottom">
     <div class="container footer-bottom-content">
       <p class="copyright">{t('footer.copyright').replace('{year}', currentYear.toString())}</p>
