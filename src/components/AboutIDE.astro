@@ -22,60 +22,55 @@ const t = useTranslations(lang);
 function getRoleStyles(role: string) {
   const r = role.toLowerCase();
 
-  // 1. Data Developer first (to prevent matching 'developer' in the fullstack block)
+  // Data Developer → PyCharm (Python/data work)
   if (r.includes('data') || r.includes('datos')) {
     return {
       id: 'data',
-      gradient: 'var(--gradient-pycharm)', // Green/teal
-      color: 'var(--color-role-data)',
+      gradient: 'var(--gradient-pycharm)',
+      color: '#21d789', // green
       glow: 'var(--glow-data)',
-      product: 'Pycharm'
+      product: 'PyCharm'
     };
   }
 
-  // 2. Web Developer roles (grouped under webdev color themes, but keeping unique IDE badges)
-  if (
-    r.includes('web') ||
-    r.includes('backend') ||
-    r.includes('back-end') ||
-    r.includes('internship') ||
-    r.includes('prácticas') ||
-    r.includes('practicas')
-  ) {
-    if (r.includes('software')) {
-      // PhpStorm — purple
-      return {
-        id: 'webdev',
-        gradient: 'var(--gradient-phpstorm)',
-        color: '#9b6fff',
-        glow: 'var(--glow-web)',
-        product: 'PhpStorm'
-      };
-    } else if (r.includes('intern') || r.includes('prácticas') || r.includes('practicas')) {
-      // IntelliJ IDEA — red
-      return {
-        id: 'webdev',
-        gradient: 'var(--gradient-intellij)',
-        color: '#e52e71',
-        glow: 'var(--glow-internship)',
-        product: 'IntelliJ IDEA'
-      };
-    }
-    // WebStorm — blue
+  // Web Developer Internship → WebStorm (web/JS learning environment)
+  if (r.includes('intern') || r.includes('prácticas') || r.includes('practicas')) {
     return {
       id: 'webdev',
       gradient: 'var(--gradient-webstorm)',
-      color: 'var(--color-role-webdev)',
+      color: '#087cfa', // blue
       glow: 'var(--glow-webdev)',
       product: 'WebStorm'
     };
   }
 
-  // 3. Full Stack Developer (Rider)
+  // Web Software Developer (PHP/AGH) → PhpStorm
+  if (r.includes('software')) {
+    return {
+      id: 'webdev',
+      gradient: 'var(--gradient-rider)',
+      color: '#ff6ec7', // pink
+      glow: 'var(--glow-soft)',
+      product: 'PhpStorm'
+    };
+  }
+
+  // Web Developer (Kotlin backend, Lean Mind) → IntelliJ IDEA (Kotlin is IntelliJ's domain)
+  if (r.includes('web') || r.includes('backend') || r.includes('back-end')) {
+    return {
+      id: 'webdev',
+      gradient: 'var(--gradient-intellij)',
+      color: '#f89820', // orange
+      glow: 'var(--glow-internship)',
+      product: 'IntelliJ IDEA'
+    };
+  }
+
+  // Full Stack Engineer → JetBrains Rider (C#/.NET)
   return {
     id: 'fullstack',
-    gradient: 'var(--gradient-brand)', // Brand gradient: green/violet
-    color: 'var(--color-role-fullstack)',
+    gradient: 'var(--gradient-brand)',
+    color: '#7f52ff', // violet
     glow: 'var(--glow-fullstack)',
     product: 'JetBrains Rider'
   };
