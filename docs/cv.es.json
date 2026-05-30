@@ -1,0 +1,98 @@
+{
+  "name": "Kevin Hierro Carrasco",
+  "title": "Ingeniero Full Stack",
+  "location": "San Cristóbal de La Laguna, España",
+  "email": "wolfremiuminformatica@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/kevin-hierro-carrasco",
+  "github": "https://github.com/Wolfremium13",
+  "website": "https://www.wolfremium.dev",
+  "profile": "Desarrollador de software con experiencia en equipos multidisciplinares internacionales de alto rendimiento utilizando el inglés. Enfocado en crear software que empodere a las personas a través de soluciones libres y de alta calidad. Experto en metodologías ágiles (BDD, TDD, XP), pruebas y código limpio. Impulsado por una cultura que prioriza los problemas para ofrecer soluciones sencillas que desbloqueen funciones y reduzcan el tiempo de comercialización.",
+  "education": [
+    {
+      "title": "Formación Profesional de Grado Superior en Desarrollo de Aplicaciones Web",
+      "institution": "CIFP César Manrique",
+      "period": "2019 - 2021"
+    },
+    {
+      "title": "Formación Profesional de Grado Medio en Sistemas Microinformáticos y Redes",
+      "institution": "IES Santa Ana",
+      "period": "2016 - 2019"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Lenguajes de Programación",
+      "list": ["C#", "Kotlin", "Python", "TypeScript", "JavaScript", "Java"]
+    },
+    {
+      "category": "Infraestructura y Nube",
+      "list": ["Azure", "AWS", "Kubernetes", "Terraform", "VMWare", "Ciberseguridad Blue Team"]
+    },
+    {
+      "category": "Datos y Bases de Datos",
+      "list": ["Oracle", "Snowflake", "Pandas", "Airflow", "Soda", "Elasticsearch", "RabbitMQ"]
+    },
+    {
+      "category": "Herramientas y CI/CD",
+      "list": ["GitHub", "GitLab", "CI/CD", "Pruebas de Software"]
+    },
+    {
+      "category": "Metodologías",
+      "list": ["BDD", "TDD", "XP", "Testing Exploratorio", "Design Thinking"]
+    },
+    {
+      "category": "Habilidades Blandas",
+      "list": ["Mentoría", "Resolución de Problemas", "Trabajo en Equipo", "Adaptabilidad", "Aprendizaje Continuo", "Comunicación Efectiva"]
+    }
+  ],
+  "experience": [
+    {
+      "role": "Ingeniero Full Stack",
+      "company": "Lean Mind",
+      "period": "Ene 2024 - Presente",
+      "bullets": [
+        "Lideré el mantenimiento de un sistema .NET para facturación electrónica, impactando a más de 5 países y reduciendo los errores de código en un 99%.",
+        "Aceleré la entrega continua de productos mediante la implementación de mejores prácticas de CI/CD y el aprovechamiento de los servicios en la nube de Azure."
+      ],
+      "technologies": ["C#", "Oracle", "Azure", "Terraform", "GitHub"]
+    },
+    {
+      "role": "Ingeniero de Datos",
+      "company": "Lean Mind",
+      "period": "Sep 2021 - Ene 2024",
+      "bullets": [
+        "Diseñé y optimicé procesos ETL (Extracción-Transformación-Carga) personalizados y tuberías de datos utilizando Airflow y Python, reduciendo el tiempo de procesamiento de datos en un 521%.",
+        "Capacité a los equipos de Ciencia de Datos para ofrecer un mayor valor de negocio integrando prácticas de Programación Extrema (XP) y explorando formas pragmáticas de obtener valor de los datos de prueba."
+      ],
+      "technologies": ["Python", "Pandas", "Snowflake", "Kubernetes", "Soda", "GitLab", "AWS", "Airflow"]
+    },
+    {
+      "role": "Desarrollador Web",
+      "company": "Lean Mind",
+      "period": "May 2021 - Sep 2021",
+      "bullets": [
+        "Desarrollé una aplicación backend en Kotlin para la visualización de registros de ciberseguridad recopilados por IA, procesando más de 500 GB de registros diarios.",
+        "Aproveché las capacidades de Elasticsearch para optimizar las consultas de datos y garantizar una visualización de registros altamente eficiente."
+      ],
+      "technologies": ["Elasticsearch", "Kotlin", "Kubernetes", "GitLab", "AWS"]
+    },
+    {
+      "role": "Desarrollador de Software Web",
+      "company": "AGH Infogaltier Consultores",
+      "period": "Mar 2021 - Sep 2021",
+      "bullets": [
+        "Desarrollé soluciones de API REST utilizando PHP para un sistema ERP conectado a entornos en la nube, mejorando la eficiencia en la recuperación de datos en un 100%."
+      ],
+      "technologies": ["PHP", "Azure", "VMWare"]
+    },
+    {
+      "role": "Prácticas como Desarrollador Web",
+      "company": "Lean Mind",
+      "period": "Mar 2021 - May 2021",
+      "bullets": [
+        "Adquirí experiencia práctica en metodologías ágiles (BDD, TDD, XP) y código limpio, contribuyendo con éxito a las pruebas y refactorización de módulos/funciones del proyecto \"Diseño Ágil con TDD\"."
+      ],
+      "technologies": []
+    }
+  ]
+}

@@ -20,7 +20,18 @@ const gradients = [
   'var(--gradient-webstorm)', // Cyan-purple (WebStorm)
   'var(--gradient-pycharm)', // Green-teal (PyCharm)
   'var(--gradient-phpstorm)', // Purple-magenta (PhpStorm)
-  'var(--gradient-intellij)' // Orange-red (IntelliJ)
+  'var(--gradient-intellij)', // Orange-red (IntelliJ)
+  'var(--gradient-rider)' // Pink-fuchsia (Rider)
+];
+
+// Per-card accent colors matching each gradient's dominant hue
+const accentColors = [
+  '#21d789', // brand: green
+  '#087cfa', // webstorm: blue
+  '#07c3f2', // pycharm: teal
+  '#9b6fff', // phpstorm: violet
+  '#f89820', // intellij: orange
+  '#ff6ec7'  // rider: pink
 ];
 
 const glows = [
@@ -28,7 +39,8 @@ const glows = [
   'var(--glow-webdev)',
   'var(--glow-data)',
   'var(--glow-web)',
-  'var(--glow-internship)'
+  'var(--glow-internship)',
+  'var(--glow-soft)'
 ];
 ---
 
@@ -38,20 +50,21 @@ const glows = [
       <h2 class="section-title">{t('section.skills.title')}</h2>
       <div class="title-line"></div>
     </div>
-    
+
     <div class="skills-grid">
       {skillsList.map((skillGroup, idx) => {
         const borderGradient = gradients[idx % gradients.length];
         const hoverGlow = glows[idx % glows.length];
-        
+        const accent = accentColors[idx % accentColors.length];
+
         return (
-          <div class="skills-card glow-card" style={`--hover-gradient: ${borderGradient}; --hover-glow: ${hoverGlow}`}>
+          <div class="skills-card glow-card" style={`--hover-gradient: ${borderGradient}; --hover-glow: ${hoverGlow}; --card-accent: ${accent}`}>
             <div class="skills-card-header">
               <!-- Dot Indicator -->
               <span class="skills-card-icon" style={`background: ${borderGradient}`}></span>
               <h3 class="skills-card-title">{skillGroup.category}</h3>
             </div>
-            
+
             <div class="skills-tag-container">
               {skillGroup.list.map(skill => (
                 <div class="skills-tag">
@@ -172,7 +185,7 @@ const glows = [
 
   .tag-bullet {
     font-family: var(--font-mono);
-    color: #f97e25;
+    color: var(--card-accent, #f97e25);
     font-weight: 700;
     font-size: 0.85rem;
   }

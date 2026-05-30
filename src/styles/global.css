@@ -16,8 +16,9 @@
   --gradient-brand: linear-gradient(135deg, #21d789 0%, #7f52ff 100%); /* Green to Dark Violet */
   --gradient-webstorm: linear-gradient(135deg, #087cfa 0%, #3cd5f7 50%, #8c46ff 100%); /* WebStorm Blue/Cyan */
   --gradient-pycharm: linear-gradient(135deg, #21d789 0%, #07c3f2 100%); /* PyCharm Green/Teal */
-  --gradient-phpstorm: linear-gradient(135deg, #8c46ff 0%, #e225a5 100%); /* PhpStorm Purple/Magenta */
+  --gradient-phpstorm: linear-gradient(135deg, #7f52ff 0%, #b44fff 100%); /* PhpStorm Violet */
   --gradient-intellij: linear-gradient(135deg, #f89820 0%, #e52e71 100%); /* IntelliJ Orange/Red */
+  --gradient-rider: linear-gradient(135deg, #ff6ec7 0%, #ff2d78 50%, #c94bff 100%); /* Rider Pink/Fuchsia */
   --gradient-border: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 100%);
 
   /* Role Brand Colors */
@@ -37,6 +38,7 @@
   --glow-webdev: 0 0 30px rgba(8, 124, 250, 0.2);
   --glow-web: 0 0 30px rgba(140, 70, 255, 0.2);
   --glow-internship: 0 0 30px rgba(248, 152, 32, 0.2);
+  --glow-soft: 0 0 30px rgba(255, 110, 199, 0.25);
 
   /* Transitions */
   --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);

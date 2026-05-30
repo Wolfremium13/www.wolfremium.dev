@@ -42,19 +42,32 @@ function getRoleStyles(role: string) {
     r.includes('prácticas') ||
     r.includes('practicas')
   ) {
-    let productBadge = 'WebStorm';
     if (r.includes('software')) {
-      productBadge = 'PhpStorm';
+      // PhpStorm — purple
+      return {
+        id: 'webdev',
+        gradient: 'var(--gradient-phpstorm)',
+        color: '#9b6fff',
+        glow: 'var(--glow-web)',
+        product: 'PhpStorm'
+      };
     } else if (r.includes('intern') || r.includes('prácticas') || r.includes('practicas')) {
-      productBadge = 'IntelliJ IDEA';
+      // IntelliJ IDEA — red
+      return {
+        id: 'webdev',
+        gradient: 'var(--gradient-intellij)',
+        color: '#e52e71',
+        glow: 'var(--glow-internship)',
+        product: 'IntelliJ IDEA'
+      };
     }
-
+    // WebStorm — blue
     return {
       id: 'webdev',
-      gradient: 'var(--gradient-webstorm)', // Cyan/blue
+      gradient: 'var(--gradient-webstorm)',
       color: 'var(--color-role-webdev)',
       glow: 'var(--glow-webdev)',
-      product: productBadge
+      product: 'WebStorm'
     };
   }
 
@@ -685,7 +698,7 @@ function getRoleStyles(role: string) {
     font-size: 0.75rem;
     font-weight: 500;
     background: #0f0f11;
-    color: #3cd5f7;
+    color: var(--tech-accent, #3cd5f7);
     border: 1px solid var(--border-color);
     padding: 3px 10px;
     border-radius: 4px;

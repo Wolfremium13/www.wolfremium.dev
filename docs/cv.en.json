@@ -1,0 +1,98 @@
+{
+  "name": "Kevin Hierro Carrasco",
+  "title": "Full Stack Engineer",
+  "location": "San Cristóbal de La Laguna, Spain",
+  "email": "wolfremiuminformatica@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/kevin-hierro-carrasco",
+  "github": "https://github.com/Wolfremium13",
+  "website": "https://www.wolfremium.dev",
+  "profile": "Software developer experienced in international, high-performance multidisciplinary teams using English. Focused on creating software that empowers people through free, high-quality solutions. Expert in agile methodologies (BDD, TDD, XP), testing, and clean code. Driven by a problem-first culture to deliver simple solutions that unlock features and reduce time-to-market.",
+  "education": [
+    {
+      "title": "Higher Vocational Training in Web Application Development",
+      "institution": "CIFP Cesar Manrique",
+      "period": "2019 - 2021"
+    },
+    {
+      "title": "Intermediate Vocational Training in Network Computer Systems Administration",
+      "institution": "IES Santa Ana",
+      "period": "2016 - 2019"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Programming Languages",
+      "list": ["C#", "Kotlin", "Python", "TypeScript", "JavaScript", "Java"]
+    },
+    {
+      "category": "Infrastructure & Cloud",
+      "list": ["Azure", "AWS", "Kubernetes", "Terraform", "VMWare", "Blue Team Cybersecurity"]
+    },
+    {
+      "category": "Data & Databases",
+      "list": ["Oracle", "Snowflake", "Pandas", "Airflow", "Soda", "Elasticsearch", "RabbitMQ"]
+    },
+    {
+      "category": "Tools & CI/CD",
+      "list": ["GitHub", "GitLab", "CI/CD", "Software Testing"]
+    },
+    {
+      "category": "Methodologies",
+      "list": ["BDD", "TDD", "XP", "Exploratory Testing", "Design Thinking"]
+    },
+    {
+      "category": "Soft Skills",
+      "list": ["Mentorship", "Problem Solving", "Team Collaboration", "Adaptability", "Continuous Learning", "Effective Communication"]
+    }
+  ],
+  "experience": [
+    {
+      "role": "Full Stack Engineer",
+      "company": "Lean Mind",
+      "period": "Jan 2024 - Present",
+      "bullets": [
+        "Spearheaded maintenance of a .NET system for electronic invoicing, impacting 5+ countries and reducing code errors by 99%.",
+        "Accelerated continuous product delivery by implementing best practices for CI/CD and leveraging Azure cloud services."
+      ],
+      "technologies": ["C#", "Oracle", "Azure", "Terraform", "GitHub"]
+    },
+    {
+      "role": "Data Engineer",
+      "company": "Lean Mind",
+      "period": "Sep 2021 - Jan 2024",
+      "bullets": [
+        "Engineered and optimized custom ETL (Extract-Transform-Load) processes and data pipelines using Airflow and Python, reducing data processing time by 521%.",
+        "Empowered Data Science teams to deliver greater business value by integrating Extreme Programming (XP) practices and exploring pragmatic ways to derive value from testing data."
+      ],
+      "technologies": ["Python", "Pandas", "Snowflake", "Kubernetes", "Soda", "GitLab", "AWS", "Airflow"]
+    },
+    {
+      "role": "Web Developer",
+      "company": "Lean Mind",
+      "period": "May 2021 - Sep 2021",
+      "bullets": [
+        "Developed a waste-free backend application in Kotlin for visualizing AI-collected cybersecurity logs, processing +500 GB of logs daily.",
+        "Leveraged Elasticsearch capabilities to optimize data queries and ensure highly efficient log visualization."
+      ],
+      "technologies": ["Elasticsearch", "Kotlin", "Kubernetes", "GitLab", "AWS"]
+    },
+    {
+      "role": "Web Software Developer",
+      "company": "AGH Infogaltier Consultores",
+      "period": "Mar 2021 - Sep 2021",
+      "bullets": [
+        "Developed REST API solutions using PHP for an ERP system connected to cloud environments, improving data retrieval efficiency by 100%."
+      ],
+      "technologies": ["PHP", "Azure", "VMWare"]
+    },
+    {
+      "role": "Web Developer Internship",
+      "company": "Lean Mind",
+      "period": "Mar 2021 - May 2021",
+      "bullets": [
+        "Gained hands-on experience in agile methodologies (BDD, TDD, XP) and clean code, successfully contributing to the testing and refactoring of \"Diseño Ágil con TDD\" project modules/features."
+      ],
+      "technologies": []
+    }
+  ]
+}
