@@ -78,13 +78,7 @@ const personSchema = JSON.stringify({
   <body>
     <slot />
 
-    <!-- Reading Zone Guide Overlay (mobile only) -->
-    <div id="mobileReadingZoneGuide" class="mobile-reading-zone-guide"></div>
 
-    <!-- Reading Zone Visualizer Toggle (mobile only) -->
-    <button class="reading-zone-toggle" id="readingZoneToggle" aria-label="Toggle Reading Zone Guide">
-      <span class="reading-zone-icon">👁️</span>
-    </button>
 
     <!-- Back to Top Button (mobile only) -->
     <a href="#hero" class="back-to-top" id="backToTop" aria-label="Back to top">
@@ -105,15 +99,7 @@ const personSchema = JSON.stringify({
     color: var(--text-white);
   }
 
-  /* Reading Zone Guide Overlay — mobile only */
-  .mobile-reading-zone-guide {
-    display: none;
-  }
 
-  /* Reading Zone Visualizer Toggle — mobile only */
-  .reading-zone-toggle {
-    display: none;
-  }
 
   /* Back to Top Button — mobile only */
   .back-to-top {
@@ -121,73 +107,7 @@ const personSchema = JSON.stringify({
   }
 
   @media (max-width: 768px) {
-    .mobile-reading-zone-guide {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      position: fixed;
-      top: 35vh;
-      left: 0;
-      right: 0;
-      height: 30vh;
-      border-top: 1.5px dashed rgba(127, 82, 255, 0.35);
-      border-bottom: 1.5px dashed rgba(127, 82, 255, 0.35);
-      background: linear-gradient(180deg, rgba(127, 82, 255, 0.02) 0%, rgba(33, 215, 137, 0.02) 100%);
-      pointer-events: none;
-      z-index: 140;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      padding-right: 1.25rem;
-    }
 
-    body.show-reading-zone .mobile-reading-zone-guide {
-      opacity: 1;
-    }
-
-    .mobile-reading-zone-guide::after {
-      content: attr(data-label);
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      font-weight: 600;
-      color: var(--text-gray-muted);
-      background: var(--bg-dark-charcoal);
-      border: 1px solid var(--border-color);
-      padding: 3px 8px;
-      border-radius: 4px;
-      opacity: 0.8;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    .reading-zone-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: fixed;
-      right: 1.25rem;
-      bottom: calc(72px + 1rem + 44px + 12px + env(safe-area-inset-bottom));
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--bg-dark-charcoal);
-      border: 1px solid var(--border-color);
-      color: var(--text-gray-light);
-      font-size: 1.15rem;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-      z-index: 150;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      cursor: pointer;
-    }
-
-    .reading-zone-toggle.active {
-      background: linear-gradient(135deg, #7f52ff 0%, #21d789 100%);
-      border-color: transparent;
-      color: #0b0b0e;
-      box-shadow: 0 4px 15px rgba(127, 82, 255, 0.4);
-    }
-
-    .reading-zone-toggle:active {
-      transform: scale(0.92);
-    }
 
     .back-to-top {
       display: flex;
@@ -236,28 +156,7 @@ const personSchema = JSON.stringify({
     });
   }
 
-  // --- Mobile Reading Zone Logic ---
-  const toggle = document.getElementById('readingZoneToggle');
-  const guide = document.getElementById('mobileReadingZoneGuide');
 
-  if (toggle && guide) {
-    // Determine language from the html element
-    const lang = document.documentElement.lang || 'en';
-    guide.setAttribute('data-label', lang === 'es' ? 'Zona de Lectura' : 'Reading Zone');
-
-    // Load saved guide state
-    const isEnabled = localStorage.getItem('reading-zone-guide') === 'true';
-    if (isEnabled) {
-      document.body.classList.add('show-reading-zone');
-      toggle.classList.add('active');
-    }
-
-    toggle.addEventListener('click', () => {
-      const active = document.body.classList.toggle('show-reading-zone');
-      toggle.classList.toggle('active', active);
-      localStorage.setItem('reading-zone-guide', active ? 'true' : 'false');
-    });
-  }
 
   let isScrolling = false;
   function checkIntersections() {
