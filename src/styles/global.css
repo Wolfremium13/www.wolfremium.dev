@@ -135,20 +135,20 @@ code, pre {
   transition: var(--transition-smooth);
 }
 
-.glow-card:hover {
+.glow-card:hover, .glow-card.active-hover {
   transform: translateY(-4px);
   box-shadow: var(--glow-webdev);
 }
 
-.glow-card:hover::before {
+.glow-card:hover::before, .glow-card.active-hover::before {
   background: var(--gradient-webstorm);
 }
 
-.glow-card-brand:hover {
+.glow-card-brand:hover, .glow-card-brand.active-hover {
   box-shadow: var(--glow-fullstack);
 }
 
-.glow-card-brand:hover::before {
+.glow-card-brand:hover::before, .glow-card-brand.active-hover::before {
   background: var(--gradient-brand);
 }
 

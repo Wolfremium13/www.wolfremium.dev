@@ -373,12 +373,12 @@ function getProviderStyle(provider: string) {
     background: var(--gradient-border);
   }
 
-  .cert-card:hover {
+  .cert-card:hover, .cert-card.active-hover {
     transform: translateY(-4px);
     box-shadow: var(--card-glow);
   }
 
-  .cert-card:hover::before {
+  .cert-card:hover::before, .cert-card.active-hover::before {
     background: var(--card-gradient);
   }
 

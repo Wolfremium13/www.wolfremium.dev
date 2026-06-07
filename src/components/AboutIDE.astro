@@ -562,7 +562,7 @@ function getRoleStyles(role: string) {
     transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 
-  .timeline-item:hover .timeline-marker {
+  .timeline-item:hover .timeline-marker, .timeline-item.active-hover .timeline-marker {
     transform: scale(1.6);
     box-shadow: 0 0 10px var(--marker-color);
   }
@@ -707,11 +707,11 @@ function getRoleStyles(role: string) {
   }
 
   /* Role-specific hover overrides for cards */
-  .timeline-content:hover {
+  .timeline-content:hover, .timeline-content.active-hover {
     box-shadow: var(--hover-glow) !important;
   }
 
-  .timeline-content:hover::before {
+  .timeline-content:hover::before, .timeline-content.active-hover::before {
     background: var(--hover-gradient) !important;
   }
 

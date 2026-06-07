@@ -129,12 +129,12 @@ const glows = [
     background: var(--gradient-border);
   }
 
-  .skills-card:hover {
+  .skills-card:hover, .skills-card.active-hover {
     transform: translateY(-4px);
     box-shadow: var(--hover-glow);
   }
 
-  .skills-card:hover::before {
+  .skills-card:hover::before, .skills-card.active-hover::before {
     background: var(--hover-gradient);
   }
 
@@ -177,7 +177,7 @@ const glows = [
     transition: var(--transition-fast);
   }
 
-  .skills-tag:hover {
+  .skills-tag:hover, .skills-tag.active-hover {
     background: var(--bg-dark-panel);
     border-color: var(--text-gray-dark);
     transform: translateX(4px);
@@ -197,7 +197,7 @@ const glows = [
     color: var(--text-gray-light);
   }
 
-  .skills-tag:hover .tag-name {
+  .skills-tag:hover .tag-name, .skills-tag.active-hover .tag-name {
     color: var(--text-white);
   }
 </style>
