@@ -198,13 +198,14 @@ function getRoleStyles(role: string) {
 
           {experience.map((job, idx) => {
             const roleStyle = getRoleStyles(job.role);
+            const isPresent = job.period.includes(t('experience.present'));
             return (
               <div class="timeline-item" data-role-category={roleStyle.id} data-original-index={idx} style={`--marker-color: ${roleStyle.color}`}>
                 <!-- Timeline node marker -->
-                <div class="timeline-marker" style={`background: ${roleStyle.color}`}></div>
+                <div class={`timeline-marker ${isPresent ? 'active-marker' : ''}`} style={`background: ${roleStyle.color}`}></div>
 
                 <!-- Job Detail Card -->
-                <div class="timeline-content glow-card" style={`--hover-gradient: ${roleStyle.gradient}; --hover-glow: ${roleStyle.glow}`}>
+                <div class={`timeline-content glow-card ${isPresent ? 'active-present' : ''}`} style={`--hover-gradient: ${roleStyle.gradient}; --hover-glow: ${roleStyle.glow}; --role-color: ${roleStyle.color}`}>
                   <div class="timeline-header-block">
                     <div class="job-meta">
                       <div class="role-title-wrapper">
@@ -213,7 +214,13 @@ function getRoleStyles(role: string) {
                       </div>
                       <span class="job-company-block">@ <span class="job-company-name" style={`background: ${roleStyle.gradient}; -webkit-background-clip: text; -webkit-text-fill-color: transparent;`}>{job.company}</span></span>
                     </div>
-                    <span class="job-period-badge">{job.period}</span>
+                    <span 
+                      class={`job-period-badge ${isPresent ? 'active-present' : ''}`} 
+                      style={isPresent ? `--badge-accent: ${roleStyle.color}` : ''}
+                    >
+                      {isPresent && <span class="status-pulse-dot" style={`background-color: ${roleStyle.color}; box-shadow: 0 0 8px ${roleStyle.color}`}></span>}
+                      {job.period}
+                    </span>
                   </div>
 
                   <ul class="job-bullets">
@@ -713,6 +720,90 @@ function getRoleStyles(role: string) {
 
   .timeline-content:hover::before, .timeline-content.active-hover::before {
     background: var(--hover-gradient) !important;
+  }
+
+  /* Active/Present Datebox (Period Badge) Styling */
+  .job-period-badge.active-present {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-color: color-mix(in srgb, var(--badge-accent, #21d789) 45%, var(--border-color));
+    background: color-mix(in srgb, var(--badge-accent, #21d789) 8%, var(--bg-dark-panel));
+    color: var(--text-white);
+    box-shadow: 0 0 15px color-mix(in srgb, var(--badge-accent, #21d789) 15%, transparent);
+    font-weight: 700;
+  }
+
+  .status-pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+  }
+
+  .status-pulse-dot::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background-color: inherit;
+    animation: status-pulse 2s infinite ease-out;
+  }
+
+  @keyframes status-pulse {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.85;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(3);
+      opacity: 0;
+    }
+  }
+
+  /* Active/Present Timeline Marker Styling */
+  .timeline-marker.active-marker {
+    transform: scale(1.4);
+    box-shadow: 0 0 12px var(--marker-color);
+  }
+
+  .timeline-marker.active-marker::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background-color: inherit;
+    animation: marker-pulse 2.5s infinite ease-out;
+  }
+
+  @keyframes marker-pulse {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.75;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(3.5);
+      opacity: 0;
+    }
+  }
+
+  /* Active/Present Job Card Styling */
+  .timeline-content.active-present {
+    border-color: color-mix(in srgb, var(--role-color, #7f52ff) 35%, var(--border-color));
+    box-shadow: 0 0 20px color-mix(in srgb, var(--role-color, #7f52ff) 12%, transparent);
+  }
+
+  .timeline-content.active-present::before {
+    background: color-mix(in srgb, var(--hover-gradient, var(--gradient-brand)) 40%, var(--gradient-border)) !important;
   }
 
   @media (max-width: 768px) {
