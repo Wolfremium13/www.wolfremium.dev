@@ -177,10 +177,9 @@ const glows = [
     transition: var(--transition-fast);
   }
 
-  .skills-tag:hover, .skills-tag.active-hover {
+  .skills-tag.active-hover {
     background: var(--bg-dark-panel);
     border-color: var(--text-gray-dark);
-    transform: translateX(4px);
   }
 
   .tag-bullet {
@@ -188,6 +187,7 @@ const glows = [
     color: var(--card-accent, #f97e25);
     font-weight: 700;
     font-size: 0.85rem;
+    transition: var(--transition-fast);
   }
 
   .tag-name {
@@ -195,9 +195,15 @@ const glows = [
     font-size: 0.85rem;
     font-weight: 500;
     color: var(--text-gray-light);
+    transition: var(--transition-fast);
   }
 
-  .skills-tag:hover .tag-name, .skills-tag.active-hover .tag-name {
+  .skills-tag.active-hover .tag-bullet {
+    transform: translateX(2px);
+  }
+
+  .skills-tag.active-hover .tag-name {
     color: var(--text-white);
+    transform: translateX(4px);
   }
 </style>
