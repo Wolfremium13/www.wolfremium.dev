@@ -72,16 +72,108 @@ const cvFilename = lang === 'en'
       </div>
     </div>
   </div>
+
+  <!-- Subtle fading border line at the bottom of the section -->
+  <div class="hero-bottom-border"></div>
+
+  <!-- Vertical Background Connector (No icons/text) -->
+  <div class="bottom-connector-line">
+    <div class="bottom-connector-pulse"></div>
+  </div>
+
+  <!-- Glowing transition orb between Hero and About sections -->
+  <div class="glow-orb orb-bottom-connector"></div>
 </section>
 
 <style>
   .hero-section {
     position: relative;
-    min-height: 100vh;
+    min-height: 90vh; /* Allow next section to peak slightly above the fold on desktop */
     display: flex;
     align-items: center;
     padding-top: 100px;
-    overflow: hidden;
+    padding-bottom: 120px; /* Extra padding to give spacing for vertical connector */
+  }
+
+  /* Grid pattern overlay */
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-position: center;
+    /* Soft radial mask to fade out the grid toward the bottom and edges */
+    mask-image: radial-gradient(circle at 50% 35%, black 20%, rgba(0, 0, 0, 0.25) 65%, transparent 95%);
+    -webkit-mask-image: radial-gradient(circle at 50% 35%, black 20%, rgba(0, 0, 0, 0.25) 65%, transparent 95%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Fading bottom border to make it feel like there is something below */
+  .hero-bottom-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-color) 25%, var(--border-color) 75%, transparent);
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* Centered vertical connector line flowing down into About section */
+  .bottom-connector-line {
+    position: absolute;
+    bottom: -40px; /* Bleeds down across the section divider */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--color-role-fullstack) 50%, transparent);
+    box-shadow: 0 0 10px rgba(127, 82, 255, 0.3);
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  /* Connecting pulse animation */
+  .bottom-connector-pulse {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 12px;
+    border-radius: 2px;
+    background: linear-gradient(to bottom, var(--text-white), var(--color-role-fullstack));
+    box-shadow: 0 0 8px var(--color-role-fullstack);
+    animation: flowDown 2.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes flowDown {
+    0% {
+      top: -10px;
+      opacity: 0;
+      height: 4px;
+    }
+    15% {
+      opacity: 1;
+      height: 12px;
+    }
+    85% {
+      opacity: 1;
+      height: 12px;
+    }
+    100% {
+      top: 70px;
+      opacity: 0;
+      height: 4px;
+    }
   }
 
   /* Glowing background blobs */
@@ -119,6 +211,21 @@ const cvFilename = lang === 'en'
     top: 50%;
     left: 45%;
     animation-delay: -6s;
+  }
+
+  .orb-bottom-connector {
+    width: 400px;
+    height: 250px;
+    background: radial-gradient(ellipse at center, rgba(127, 82, 255, 0.25) 0%, transparent 70%);
+    bottom: -125px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: floatOrbConnector 8s infinite ease-in-out alternate;
+  }
+
+  @keyframes floatOrbConnector {
+    0% { transform: translate(-50%, 0) scale(1); }
+    100% { transform: translate(-50%, -15px) scale(1.1); }
   }
 
   @keyframes floatOrb {
@@ -448,6 +555,12 @@ const cvFilename = lang === 'en'
     
     .btn {
       width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .bottom-connector-line {
+      display: none;
     }
   }
 </style>
