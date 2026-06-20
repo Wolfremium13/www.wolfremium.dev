@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Hero from '../components/Hero.astro';
 import AboutIDE from '../components/AboutIDE.astro';
+import Projects from '../components/Projects.astro';
 import SkillsGrid from '../components/SkillsGrid.astro';
 import Certifications from '../components/Certifications.astro';
 import Footer from '../components/Footer.astro';
@@ -33,6 +34,10 @@ const keywords = `Kevin Hierro, Full Stack Engineer, Software Engineer, Portfoli
       profileText={cvData.profile}
       education={cvData.education}
       experience={cvData.experience}
+    />
+
+    <Projects
+      lang="en"
     />
 
     <SkillsGrid

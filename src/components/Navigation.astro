@@ -26,6 +26,7 @@ const toggleText = lang === 'en' ? 'ES' : 'EN';
     <nav class="desktop-nav">
       <a href="#about" class="nav-link">{t('nav.about')}</a>
       <a href="#experience" class="nav-link">{t('nav.experience')}</a>
+      <a href="#projects" class="nav-link">{t('nav.projects')}</a>
       <a href="#skills" class="nav-link">{t('nav.skills')}</a>
       <a href="#certifications" class="nav-link">{t('nav.certifications')}</a>
     </nav>
@@ -51,6 +52,7 @@ const toggleText = lang === 'en' ? 'ES' : 'EN';
     <nav class="mobile-nav">
       <a href="#about" class="mobile-nav-link">{t('nav.about')}</a>
       <a href="#experience" class="mobile-nav-link">{t('nav.experience')}</a>
+      <a href="#projects" class="mobile-nav-link">{t('nav.projects')}</a>
       <a href="#skills" class="mobile-nav-link">{t('nav.skills')}</a>
       <a href="#certifications" class="mobile-nav-link">{t('nav.certifications')}</a>
       <a href={toggleUrl} class="mobile-nav-link mobile-lang-switch">
@@ -73,6 +75,10 @@ const toggleText = lang === 'en' ? 'ES' : 'EN';
   <a href="#experience" class="bottom-nav-item" data-section="experience" aria-label={t('nav.experience')}>
     <span class="bottom-nav-icon">◈</span>
     <span class="bottom-nav-label">{t('nav.experience')}</span>
+  </a>
+  <a href="#projects" class="bottom-nav-item" data-section="projects" aria-label={t('nav.projects')}>
+    <span class="bottom-nav-icon">⧉</span>
+    <span class="bottom-nav-label">{t('nav.projects')}</span>
   </a>
   <a href="#skills" class="bottom-nav-item" data-section="skills" aria-label={t('nav.skills')}>
     <span class="bottom-nav-icon">⬡</span>
