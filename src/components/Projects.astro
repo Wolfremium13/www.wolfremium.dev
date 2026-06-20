@@ -76,6 +76,14 @@ const cards = [
 
       <p class="project-main-description">{t('projects.estimados.description')}</p>
 
+      <div class="project-highlight-actions">
+        <a href="https://estimados-front.vercel.app/" target="_blank" rel="noopener noreferrer" class="presentation-link">
+          <span class="presentation-icon">🚀</span>
+          <span>{t('projects.estimados.presentation')}</span>
+          <span class="link-arrow">↗</span>
+        </a>
+      </div>
+
       <!-- Special Cards Grid inside the Highlight -->
       <div class="special-cards-wrapper">
         <h4 class="special-cards-title">{lang === 'en' ? 'Special Action Cards (Custom Rules)' : 'Cartas de Acción Especiales (Reglas)'}</h4>
@@ -228,6 +236,68 @@ const cards = [
     color: var(--text-gray-light);
     margin-bottom: 2rem;
     max-width: 950px;
+  }
+
+  .project-highlight-actions {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .presentation-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-white);
+    background: linear-gradient(135deg, rgba(33, 215, 137, 0.15) 0%, rgba(127, 82, 255, 0.15) 100%);
+    border: 1px solid rgba(127, 82, 255, 0.3);
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 15px rgba(127, 82, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .presentation-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-brand);
+    opacity: 0;
+    transition: var(--transition-smooth);
+    z-index: 0;
+  }
+
+  .presentation-link:hover::before {
+    opacity: 0.15;
+  }
+
+  .presentation-link:hover {
+    border-color: #21d789;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(33, 215, 137, 0.15), 0 0 10px rgba(127, 82, 255, 0.1);
+    color: var(--text-white);
+  }
+
+  .presentation-link span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .presentation-icon {
+    font-size: 1.1rem;
+  }
+
+  .presentation-link:hover .link-arrow {
+    transform: translate(2px, -2px);
   }
 
   /* Special Cards Rules Box */
