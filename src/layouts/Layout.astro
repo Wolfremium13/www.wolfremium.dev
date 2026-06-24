@@ -145,6 +145,9 @@ const personSchema = JSON.stringify({
 </style>
 
 <script>
+  import { inject } from '@vercel/analytics';
+  inject();
+
   const backToTop = document.getElementById('backToTop');
   if (backToTop) {
     window.addEventListener('scroll', () => {
