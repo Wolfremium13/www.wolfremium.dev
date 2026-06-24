@@ -67,7 +67,13 @@ export const translations = {
     'experience.role.all': 'All',
     'experience.role.crafter': 'Full Stack Developer',
     'experience.role.data': 'Data Developer',
-    'experience.role.backend': 'Web Developer'
+    'experience.role.backend': 'Web Developer',
+    '404.title': '404: Resource Not Found',
+    '404.message': 'The requested page has been refactored, moved, or deleted from this portfolio.',
+    '404.terminal.comment': '// Error: RouteNotFoundException. The path is not registered in our middleware.',
+    '404.terminal.input': 'dotnet run --project WolfremiumDev --url ',
+    '404.terminal.output': 'crit: Microsoft.AspNetCore.Hosting.Diagnostics[6]\n      Request Exception: Microsoft.AspNetCore.Routing.RouteNotFoundException: No route matches the requested path.\n      at WolfremiumDev.Routing.RouteConfig.Match(HttpContext context)\n      at Microsoft.AspNetCore.Routing.Matching.DfaMatcher.MatchAsync(HttpContext httpContext)\n      at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)\n      at System.Threading.Tasks.Task.Wait()\n\n[System.Diagnostics.Trace] Exit Code: 404 (Route not found)',
+    '404.button': 'Return to Safe Mode'
   },
   es: {
     'nav.about': 'Sobre mí',
@@ -130,7 +136,13 @@ export const translations = {
     'experience.role.all': 'Todos',
     'experience.role.crafter': 'Desarrollador Full Stack',
     'experience.role.data': 'Desarrollador de Datos',
-    'experience.role.backend': 'Desarrollador Web'
+    'experience.role.backend': 'Desarrollador Web',
+    '404.title': '404: Recurso no encontrado',
+    '404.message': 'La página solicitada ha sido refactorizada, movida o eliminada de este portafolio.',
+    '404.terminal.comment': '// Error: RouteNotFoundException. La ruta no está registrada en nuestro middleware.',
+    '404.terminal.input': 'dotnet run --project WolfremiumDev --url ',
+    '404.terminal.output': 'crit: Microsoft.AspNetCore.Hosting.Diagnostics[6]\n      Excepción de Solicitud: Microsoft.AspNetCore.Routing.RouteNotFoundException: Ninguna ruta coincide con el path solicitado.\n      at WolfremiumDev.Routing.RouteConfig.Match(HttpContext context)\n      at Microsoft.AspNetCore.Routing.Matching.DfaMatcher.MatchAsync(HttpContext httpContext)\n      at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)\n      at System.Threading.Tasks.Task.Wait()\n\n[System.Diagnostics.Trace] Código de salida: 404 (Ruta no encontrada)',
+    '404.button': 'Volver al Modo Seguro'
   }
 } as const;
 

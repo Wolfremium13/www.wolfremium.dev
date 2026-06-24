@@ -1,0 +1,419 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { parseCV } from '../utils/cvParser';
+import { useTranslations } from '../i18n/translations';
+
+const cvData = parseCV('en');
+const t = useTranslations('en');
+
+const title = `404: Page Not Found | ${cvData.name}`;
+const description = `The page you are looking for does not exist on Kevin Hierro's portfolio.`;
+---
+
+<Layout title={title} description={description} lang="en">
+  <!-- Simplified Header for 404 -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">
+        <div class="logo-box">
+          <span>KH</span>
+        </div>
+        <span class="logo-text">Kevin Hierro</span>
+      </a>
+
+      <div class="header-actions">
+        <!-- Language Switcher to Spanish 404 -->
+        <a href="/es/404" class="lang-toggle" aria-label="Switch Language to Spanish">
+          <span class="lang-globe">🌐</span>
+          <span class="lang-text">ES</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="error-container container">
+    <div class="glow-blur"></div>
+    <div class="error-content">
+      <div class="error-badge">ERROR_CODE: 404</div>
+      <h1 class="error-title">{t('404.title')}</h1>
+      <p class="error-message">{t('404.message')}</p>
+
+      <!-- Faux JetBrains Console/Terminal Window -->
+      <div class="terminal-window error-terminal">
+        <div class="terminal-header">
+          <div class="terminal-buttons">
+            <span class="terminal-button terminal-close"></span>
+            <span class="terminal-button terminal-minimize"></span>
+            <span class="terminal-button terminal-maximize"></span>
+          </div>
+          <span class="terminal-title">RouteDebugger.cs</span>
+        </div>
+        
+        <div class="terminal-body">
+          <div class="code-comment">{t('404.terminal.comment')}</div>
+          <div class="code-line">
+            <span class="code-prompt">wolfremium-dev$</span> <span class="code-command">{t('404.terminal.input')}<span id="dynamic-path">/requested-page</span></span>
+          </div>
+          <pre class="code-output" id="dynamic-output">crit: Microsoft.AspNetCore.Hosting.Diagnostics[6]
+      Request Exception: Microsoft.AspNetCore.Routing.RouteNotFoundException: No route matches the requested path.
+      at Microsoft.AspNetCore.Routing.Match(HttpContext context)
+      at Microsoft.AspNetCore.Routing.Matching.DfaMatcher.MatchAsync(HttpContext httpContext)
+      at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+      at System.Threading.Tasks.Task.Wait()
+
+[System.Diagnostics.Trace] Exit Code: 404 (Route not found)</pre>
+        </div>
+      </div>
+
+      <div class="actions-container">
+        <a href="/" class="home-btn">
+          <span class="btn-emoji">🏠</span>
+          <span class="btn-text">{t('404.button')}</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Simplified Footer -->
+  <footer class="site-footer">
+    <div class="container footer-bottom-content">
+      <p class="copyright">{t('footer.copyright').replace('{year}', new Date().getFullYear().toString())}</p>
+      <div class="footer-socials">
+        <a href={`mailto:${cvData.email}`} class="social-link">Email</a>
+        <a href={cvData.linkedin} target="_blank" rel="noopener noreferrer" class="social-link">LinkedIn</a>
+        <a href={cvData.github} target="_blank" rel="noopener noreferrer" class="social-link">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</Layout>
+
+<script>
+  // Extract path and populate dynamically in terminal output
+  const path = window.location.pathname;
+  const pathEl = document.getElementById('dynamic-path');
+  const outputEl = document.getElementById('dynamic-output');
+  
+  if (pathEl) {
+    pathEl.textContent = path;
+  }
+  
+  if (outputEl) {
+    const isEs = document.documentElement.lang === 'es';
+    const errorPrefix = isEs 
+      ? "Excepción de Solicitud: Microsoft.AspNetCore.Routing.RouteNotFoundException: Ninguna ruta coincide con el path solicitado '"
+      : "Request Exception: Microsoft.AspNetCore.Routing.RouteNotFoundException: No route matches the requested path '";
+    
+    const exitCodeText = isEs
+      ? "[System.Diagnostics.Trace] Código de salida: 404 (Ruta no encontrada)"
+      : "[System.Diagnostics.Trace] Exit Code: 404 (Route not found)";
+
+    const escapeHtml = (str: string) => 
+      str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+
+    outputEl.innerHTML = `crit: Microsoft.AspNetCore.Hosting.Diagnostics[6]
+      ${errorPrefix}<span class="highlight-path">${escapeHtml(path)}</span>'.
+      at WolfremiumDev.Routing.RouteConfig.Match(HttpContext context)
+      at Microsoft.AspNetCore.Routing.Matching.DfaMatcher.MatchAsync(HttpContext httpContext)
+      at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+      at System.Threading.Tasks.Task.Wait()
+
+<span class="exit-code-fail">${exitCodeText}</span>`;
+  }
+</script>
+
+<style>
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(11, 11, 14, 0.8);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-color);
+    transition: var(--transition-smooth);
+  }
+
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+  }
+
+  .logo-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: var(--gradient-brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg-dark-obsidian);
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 8px rgba(127, 82, 255, 0.4);
+  }
+
+  .logo-text {
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-dark-panel);
+    border: 1px solid var(--border-color);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-gray-light);
+    cursor: pointer;
+    transition: var(--transition-fast);
+  }
+
+  .lang-toggle:hover {
+    background: var(--border-color);
+    color: var(--text-white);
+    border-color: var(--text-gray-dark);
+  }
+
+  .lang-globe {
+    font-size: 0.9rem;
+  }
+
+  /* 404 Main Layout */
+  .error-container {
+    min-height: calc(100vh - 170px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 120px;
+    padding-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glow-blur {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(127, 82, 255, 0.15) 0%, rgba(33, 215, 137, 0.05) 50%, transparent 100%);
+    filter: blur(80px);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .error-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .error-badge {
+    display: inline-block;
+    background: rgba(255, 95, 86, 0.1);
+    border: 1px solid rgba(255, 95, 86, 0.3);
+    color: #ff5f56;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 15px rgba(255, 95, 86, 0.15);
+  }
+
+  .error-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .error-message {
+    font-size: 1.1rem;
+    color: var(--text-gray-light);
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+  }
+
+  /* Terminal Window */
+  .error-terminal {
+    width: 100%;
+    margin-bottom: 3rem;
+    text-align: left;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .code-comment {
+    color: var(--text-gray-dark);
+    font-style: italic;
+    margin-bottom: 0.75rem;
+  }
+
+  .code-line {
+    margin-bottom: 1rem;
+    color: var(--text-white);
+  }
+
+  .code-prompt {
+    color: #21d789;
+    font-weight: bold;
+  }
+
+  .code-command {
+    color: var(--text-gray-light);
+  }
+
+  .code-output {
+    color: #ff5f56;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    background: #0b0b0e;
+    padding: 1.25rem;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    font-family: var(--font-mono);
+    overflow-x: auto;
+  }
+
+  :global(.highlight-path) {
+    color: #ffbd2e;
+    font-weight: bold;
+  }
+
+  :global(.exit-code-fail) {
+    color: #ff5f56;
+    font-weight: bold;
+    display: block;
+    margin-top: 1rem;
+    border-top: 1px solid rgba(255, 95, 86, 0.2);
+    padding-top: 0.75rem;
+  }
+
+  /* Button Actions */
+  .actions-container {
+    margin-top: 2rem;
+  }
+
+  .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--gradient-brand);
+    color: var(--bg-dark-obsidian);
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 1rem;
+    box-shadow: 0 4px 20px rgba(127, 82, 255, 0.4);
+    transition: var(--transition-smooth);
+    cursor: pointer;
+  }
+
+  .home-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(127, 82, 255, 0.6);
+  }
+
+  .btn-emoji {
+    font-size: 1.2rem;
+    line-height: 1;
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .home-btn:hover .btn-emoji {
+    transform: scale(1.2) rotate(-10deg);
+  }
+
+  /* Footer */
+  .site-footer {
+    background: #0f0f11;
+    border-top: 1px solid var(--border-color);
+    padding: 30px 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  .footer-bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .copyright {
+    font-size: 0.8rem;
+    color: var(--text-gray-muted);
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .social-link {
+    font-size: 0.85rem;
+    color: var(--text-gray-muted);
+    transition: var(--transition-fast);
+  }
+
+  .social-link:hover {
+    color: var(--text-white);
+  }
+
+  @media (max-width: 768px) {
+    .error-title {
+      font-size: 2.2rem;
+    }
+    .error-message {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+    .error-container {
+      min-height: calc(100vh - 210px);
+      padding-top: 100px;
+      padding-bottom: 40px;
+    }
+    .footer-bottom-content {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
